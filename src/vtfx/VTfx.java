@@ -13,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import GUI.Fenster;
+
 /**
  *
  * @author Manuel
@@ -21,20 +23,21 @@ public class VTfx extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
+//        Button btn = new Button();
+//        btn.setText("Say 'Hello World'");
+//        btn.setOnAction(new EventHandler<ActionEvent>() {
+//            
+//            @Override
+//            public void handle(ActionEvent event) {
+//                System.out.println("Hello World!");
+//            }
+//        });
+//        
+//        StackPane root = new StackPane();
+//        root.getChildren().add(btn);
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
+        Fenster fenster = new Fenster();
+        Scene scene = new Scene(fenster, 800, 600);
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
