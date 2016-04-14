@@ -14,6 +14,13 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import GUI.Fenster;
+import GUI.Footer;
+import GUI.Header;
+import javafx.scene.SceneBuilder;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderPaneBuilder;
+import javafx.scene.layout.HBoxBuilder;
 
 /**
  *
@@ -23,23 +30,18 @@ public class VTfx extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-//        Button btn = new Button();
-//        btn.setText("Say 'Hello World'");
-//        btn.setOnAction(new EventHandler<ActionEvent>() {
-//            
-//            @Override
-//            public void handle(ActionEvent event) {
-//                System.out.println("Hello World!");
-//            }
-//        });
-//        
-//        StackPane root = new StackPane();
-//        root.getChildren().add(btn);
+
         
         Fenster fenster = new Fenster();
-        Scene scene = new Scene(fenster, 800, 600);
+//        Scene scene = new Scene(fenster, 800, 600);
         
-        primaryStage.setTitle("Hello World!");
+
+        BorderPane root = new BorderPane();
+        root.setTop(new Header());
+        root.setCenter(fenster);
+        root.setBottom(new Footer());
+        Scene scene = new Scene(root, 800, 600);
+        primaryStage.setTitle("VisTrain");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
