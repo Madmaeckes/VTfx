@@ -11,27 +11,50 @@ import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 
 /**
  *
  * @author Manuel
  */
-public class Footer extends HBox{
-    
-    public Label label1;
-    public Label label2;
+public class Footer extends HBox {
+
+    public Label verbindungsstatusLabel;
+    public Label messungsstatusLabel;
     public Region region1;
-    
+
     public Footer() {
-        label1 = new Label("This is the footer!");
-        label2 = new Label("The footer is awesome.");
+
+        setStyle("-fx-border-top-style: solid;"
+                + "-fx-border-width: 1;"
+                + "-fx-border-color: grey;");
+
+        messungsstatusLabel = new Label("");
+        verbindungsstatusLabel = new Label("Getrennt ");
+        verbindungsstatusLabel.setTextFill(Color.RED);
         region1 = new Region();
         region1.setPrefWidth(200);
-        label1.setAlignment(Pos.BASELINE_LEFT);
-        label2.setAlignment(Pos.BASELINE_RIGHT); 
-        getChildren().addAll(label1, region1, label2);
+//        messungsstatusLabel.setAlignment(Pos.BASELINE_LEFT);
+//        verbindungsstatusLabel.setAlignment(Pos.BASELINE_RIGHT);
+        getChildren().addAll(messungsstatusLabel, region1, verbindungsstatusLabel);
         setHgrow(region1, Priority.ALWAYS);
     }
 
+    // Setter-Methoden
+    public void setMessungsstatus(String messungsstatus) {
+        messungsstatusLabel.setText(messungsstatus);
+    }
+    
+    public void setMessungsstatusFarbe(Paint farbe) {
+        messungsstatusLabel.setTextFill(farbe);
+    }
+    
+    public void setVerbindungsstatus(String verbindungsstatus) {
+        verbindungsstatusLabel.setText(verbindungsstatus);
+    }
 
+    public void setVerbindungsstatusFarbe(Paint farbe) {
+        verbindungsstatusLabel.setTextFill(farbe);
+    }
 }
