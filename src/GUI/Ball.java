@@ -23,14 +23,15 @@ import javafx.util.Duration;
 public class Ball extends Circle {
 
     private static final Duration DURATION = Duration.millis(300);
-    private static final double FLOOR = WIDTH * 2 + 10;
+    private static double FLOOR = HEIGHT / 2 - HEIGHT_CORRECTION - 10;
     public Timeline timeline;
 
-    public Ball(final int index) {
-        initBall(index);
+    public Ball(final int index, double floor) {
+        initBall(index, floor);
     }
 
-    private void initBall(final int index) {
+    private void initBall(final int index, double floor) {
+        this.FLOOR = floor;
         setRadius(BALL_RADIUS);
         setCenterX((index + 1) * 2 * BALL_RADIUS + index * SPACE_X);
         setCenterY(INFOPANEL_HEIGHT + BALL_RADIUS);
@@ -56,11 +57,11 @@ public class Ball extends Circle {
 
     private void createTimeline() {
         timeline = new Timeline();
-        timeline.setCycleCount(2);
+        timeline.setCycleCount(1);
         timeline.setAutoReverse(true);
 
         final KeyValue kv = new KeyValue(
-                translateXProperty(),
+                translateYProperty(),
                 FLOOR,
                 Interpolator.SPLINE(0.1f, 0, 0.1f, 0));
         final KeyFrame kf = new KeyFrame(DURATION, kv);
