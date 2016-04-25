@@ -61,6 +61,7 @@ public class Header extends GridPane {
         file.getItems().addAll(newFile, save, saveAs);
         edit.getItems().addAll(undo, redo);
         menuBar.getMenus().addAll(file, edit);
+        menuBar.setPrefWidth(800);
 
         //Toolbar
         toolBar = new ToolBar();

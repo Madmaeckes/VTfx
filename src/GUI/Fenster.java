@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package GUI;
+
 import javafx.scene.paint.Color;
 import java.awt.Rectangle;
 import java.util.logging.Level;
@@ -36,15 +37,17 @@ public class Fenster extends TabPane {
     private Ball trigger;
     private Ball ball;
     private Ball ball2;
-    
+
     private Text text;
     
+    private Button fahrstufeButton;
+
     public Fenster() {
 
         setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         momentaneGeschwTab = new Tab("Momentane Geschw.");
         graphTab = new Tab("Säulendiagramm");
-      
+
 //        btn = new Button("Say 'Hello World'");
 //        btn.setOnAction(new EventHandler<ActionEvent>() {
 //            
@@ -53,20 +56,19 @@ public class Fenster extends TabPane {
 //                System.out.println("Hello World!");
 //            }
 //        });
-
         PathTest pathTest = new PathTest();
-        
+
         trigger = new Ball(0, 0);
         ball = new Ball(1, 100);
         ball2 = new Ball(2, 200);
         text = new Text("Menü");
         text.setFill(Color.WHITE);
-        text.setBoundsType(TextBoundsType.VISUAL); 
+        text.setBoundsType(TextBoundsType.VISUAL);
         StackPane stack = new StackPane();
         stack.getChildren().add(trigger);
         stack.getChildren().add(text);
         trigger.setOnMouseEntered((MouseEvent me) -> {
-            
+
             if (ball.timeline.getStatus() != Animation.Status.RUNNING) {
                 ball2.setVisible(true);
                 ball2.timeline.play();
@@ -103,19 +105,31 @@ public class Fenster extends TabPane {
         root.getChildren().add(ball);
         root.getChildren().add(ball2);
         root.getChildren().add(stack);
-      //  root.getChildren().add(trigger);
+        //  root.getChildren().add(trigger);
         BorderPane border2 = new BorderPane();
         border2.setTop(root);
         BorderPane border = new BorderPane();
         border.setRight(border2);
-       // root.setRight(ball);
-       // root.setRight(trigger);
-    //    momentaneGeschwTab.setContent(root);
+        // root.setRight(ball);
+        // root.setRight(trigger);
+        //    momentaneGeschwTab.setContent(root);
         momentaneGeschwTab.setContent(border);
-        graphTab.setContent(saulenDiagramm);
+
+        fahrstufeButton = new Button("Neue Fahrstufe");
+        fahrstufeButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                saulenDiagramm.setGeschwFuerFahrstufe("F1", 40000);
+            }
+        });
+
+        BorderPane b2 = new BorderPane();
+        b2.setRight(fahrstufeButton);
+        b2.setCenter(saulenDiagramm);
+      //  graphTab.setContent(saulenDiagramm);
+        graphTab.setContent(b2);
         getTabs().addAll(momentaneGeschwTab, graphTab);
 
     }
-    
-   
+
 }
