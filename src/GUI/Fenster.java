@@ -38,7 +38,7 @@ public class Fenster extends TabPane {
     private Ball ball2;
     
     private Text text;
-
+    
     public Fenster() {
 
         setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
@@ -54,6 +54,8 @@ public class Fenster extends TabPane {
 //            }
 //        });
 
+        PathTest pathTest = new PathTest();
+        
         trigger = new Ball(0, 0);
         ball = new Ball(1, 100);
         ball2 = new Ball(2, 200);
@@ -70,6 +72,8 @@ public class Fenster extends TabPane {
                 ball2.timeline.play();
                 ball.setVisible(true);
                 ball.timeline.play();
+                pathTest.setVisible(true);
+                pathTest.play();
             } else {
                 ball2.timeline.pause();
                 ball.timeline.pause();
@@ -77,11 +81,12 @@ public class Fenster extends TabPane {
         });
         trigger.setOnMouseExited((MouseEvent me) -> {
             if (ball.timeline.getStatus() != Animation.Status.RUNNING) {
-
                 ball2.setVisible(false);
                 ball2.reset();
                 ball.setVisible(false);
                 ball.reset();
+                pathTest.setVisible(false);
+                pathTest.reset();
                 //ball.timeline.play();
             } else {
                 ball2.setVisible(false);
@@ -94,6 +99,7 @@ public class Fenster extends TabPane {
         saulenDiagramm = new SaulenDiagramm();
 
         StackPane root = new StackPane();
+        root.getChildren().add(pathTest);
         root.getChildren().add(ball);
         root.getChildren().add(ball2);
         root.getChildren().add(stack);
