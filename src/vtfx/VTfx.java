@@ -21,12 +21,18 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderPaneBuilder;
 import javafx.scene.layout.HBoxBuilder;
+import rmx.RMXconnector;
 
 /**
  *
  * @author Manuel
  */
 public class VTfx extends Application {
+    
+    /**
+     * Verwaltet die Verbindung zur RMX-PC-Zentrale (Singleton-Objekt)
+     */
+    public static final RMXconnector rmxVerbindung = RMXconnector.getRMXconnector();
     
     @Override
     public void start(Stage primaryStage) {
