@@ -5,20 +5,30 @@
  */
 package GUI;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
+import javafx.scene.effect.Lighting;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import vtfx.Funktionen;
 
 /**
  *
@@ -32,6 +42,7 @@ public class Header extends GridPane {
     public MenuItem newFile;
     public MenuItem save;
     public MenuItem saveAs;
+    public MenuItem settings;
     public MenuItem undo;
     public MenuItem redo;
 
@@ -50,18 +61,23 @@ public class Header extends GridPane {
 
         //Menü
         menuBar = new MenuBar();
-        file = new Menu("File");
-        edit = new Menu("Einstellungen");
+        file = new Menu("Datei");
+        edit = new Menu("Über");
         newFile = new MenuItem("New File");
         save = new MenuItem("Save");
         saveAs = new MenuItem("Save As...");
-        undo = new MenuItem("Undo");
-        redo = new MenuItem("Redo");
+        settings = new MenuItem("Einstellungen");
+        undo = new MenuItem("Impressum");
+        redo = new MenuItem("Hilfe");
 
-        file.getItems().addAll(newFile, save, saveAs);
+        file.getItems().addAll(newFile, save, saveAs, settings);
         edit.getItems().addAll(undo, redo);
         menuBar.getMenus().addAll(file, edit);
         menuBar.setPrefWidth(800);
+
+        settings.setOnAction((ActionEvent t) -> {
+            Einstellungsfenster einstellungsfenster = new Einstellungsfenster();
+        });
 
         //Toolbar
         toolBar = new ToolBar();
@@ -71,6 +87,17 @@ public class Header extends GridPane {
         polygon1.setFill(Color.GREEN);
         messungStartenButton = new Button("Messung starten", polygon1);
         toolBar.getItems().addAll(verbindenButton, trennenButton, new Separator(), messungStartenButton);
+
+        verbindenButton.setOnAction((ActionEvent e) -> {
+            try {
+                Funktionen.verbinden();
+            } catch (Exception ex) {
+                Logger.getLogger(Header.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        trennenButton.setOnAction((ActionEvent e) -> {
+           Funktionen.trennen();
+        });
 
         add(menuBar, 0, 0);
         add(toolBar, 0, 1);
