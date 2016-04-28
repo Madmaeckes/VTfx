@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import java.util.Collection;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
