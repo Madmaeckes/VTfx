@@ -5,9 +5,12 @@
  */
 package GUI;
 
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.effect.Lighting;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -18,7 +21,7 @@ import javafx.stage.Stage;
  * @author Manuel
  */
 public class Einstellungsfenster {
-
+    
     public Einstellungsfenster() {
         final Stage stage = new Stage();
 
@@ -26,13 +29,13 @@ public class Einstellungsfenster {
         Group rootGroup = new Group();
 
         //create scene with set width, height and color
-        Scene scene = new Scene(rootGroup, 200, 200, Color.WHITESMOKE);
+        Scene scene = new Scene(rootGroup, 300, 400, Color.WHITESMOKE);
 
         //set scene to stage
         stage.setScene(scene);
 
         //set title to stage
-        stage.setTitle("New stage");
+        stage.setTitle("Einstellungen");
 
         //center stage on screen
         stage.centerOnScreen();
@@ -48,5 +51,22 @@ public class Einstellungsfenster {
 
         //add text to the main root group
         rootGroup.getChildren().add(text);
+        
+        //Rasterlayout
+        TilePane tilePane = new TilePane();
+        tilePane.setPrefColumns(2);
+        tilePane.setAlignment(Pos.CENTER);
+        tilePane.setPrefSize(299, 300);
+        
+        Button button1 = new Button("Hallo");
+        Text text1 = new Text(20, 20, "1");
+        Text text2 = new Text(20, 20, "2");
+        Text text3 = new Text(20, 20, "3");
+        
+        tilePane.getChildren().addAll(text1, text2, text3);
+        tilePane.getChildren().add(button1);
+        
+        rootGroup.getChildren().add(tilePane);
+        
     }
 }
