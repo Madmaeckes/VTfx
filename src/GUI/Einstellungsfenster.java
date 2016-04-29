@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Manuel
+ * @author Manuel Eble
  */
 public class Einstellungsfenster {
     
