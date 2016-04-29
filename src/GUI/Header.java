@@ -5,32 +5,18 @@
  */
 package GUI;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
-import javafx.scene.effect.Lighting;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import vtfx.Funktionen;
 
 /**
@@ -88,7 +74,8 @@ public class Header extends GridPane {
         verbindenButton.setStyle("-fx-base: green;");
         polygon1.setFill(Color.GREEN);
         messungStartenButton = new Button("Messung starten", polygon1);
-        toolBar.getItems().addAll(verbindenButton, new Separator(), messungStartenButton);
+        messungStartenButton.setDisable(true);
+        toolBar.getItems().addAll(verbindenButton, new Separator(), messungStartenButton, new Separator());
 
         verbindenButton.setOnAction((ActionEvent e) -> {
 //            try {
@@ -134,5 +121,9 @@ public class Header extends GridPane {
 
     public Button getVerbindenButton() {
         return verbindenButton;
+    }
+
+    public Button getMessungStartenButton() {
+        return messungStartenButton;
     }
 }

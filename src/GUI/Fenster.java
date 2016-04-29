@@ -15,6 +15,7 @@ import javafx.stage.Stage;
  */
 public class Fenster {
 
+    private Scene scene;
     private final Header header;
     private final Footer footer;
 
@@ -28,10 +29,14 @@ public class Fenster {
         root.setTop(header);
         root.setCenter(reiterleiste);
         root.setBottom(footer);
-        Scene scene = new Scene(root, 800, 600);
+        scene = new Scene(root, 800, 600);
         primaryStage.setTitle("VisTrain");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public Scene getScene() {
+        return scene;
     }
 
     public Header getHeader() {
