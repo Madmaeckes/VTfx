@@ -10,7 +10,10 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -32,7 +35,7 @@ import vtfx.Funktionen;
 
 /**
  *
- * @author Manuel
+ * @author Manuel Eble
  */
 public class Header extends GridPane {
 
@@ -48,14 +51,14 @@ public class Header extends GridPane {
 
     public ToolBar toolBar;
     public Button verbindenButton;
-    public Button trennenButton;
     public Button messungStartenButton;
 
-    private Circle circle1 = new Circle(5, 5, 6, Color.RED);
     private Polygon polygon1 = new Polygon(new double[]{
         0, 0,
         10, 5,
         0, 10,});
+
+    private Alert alert = new Alert(AlertType.ERROR);
 
     public Header() {
 
@@ -83,20 +86,17 @@ public class Header extends GridPane {
         toolBar = new ToolBar();
         verbindenButton = new Button("Verbinden");
         verbindenButton.setStyle("-fx-base: green;");
-        trennenButton = new Button("Trennen", circle1);
         polygon1.setFill(Color.GREEN);
         messungStartenButton = new Button("Messung starten", polygon1);
-        toolBar.getItems().addAll(verbindenButton, trennenButton, new Separator(), messungStartenButton);
+        toolBar.getItems().addAll(verbindenButton, new Separator(), messungStartenButton);
 
         verbindenButton.setOnAction((ActionEvent e) -> {
-            try {
-                Funktionen.verbinden();
-            } catch (Exception ex) {
-                Logger.getLogger(Header.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        trennenButton.setOnAction((ActionEvent e) -> {
-           Funktionen.trennen();
+//            try {
+//                Funktionen.verbinden();
+//            } catch (Exception ex) {
+//                Logger.getLogger(Header.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+            verbindenButtonActionPerformed();
         });
 
         add(menuBar, 0, 0);
@@ -104,5 +104,35 @@ public class Header extends GridPane {
         //    getChildren().add(menuBar);
         //    getChildren().add(toolBar);
 
+    }
+
+    public void verbindenButtonActionPerformed() {
+        if (verbindenButton.getText().equals("Verbinden")) {
+            try {
+                Funktionen.verbinden();
+            } catch (Exception e) {
+                alert.setAlertType(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+                GuiAktualisieren
+                        .setVerbindungsstatus(GuiAktualisieren.GETRENNT);
+            }
+        } else {
+            try {
+                Funktionen.trennen();
+            } catch (Exception e) {
+                alert.setAlertType(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            }
+        }
+    }
+
+    public Button getVerbindenButton() {
+        return verbindenButton;
     }
 }

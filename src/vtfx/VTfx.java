@@ -5,51 +5,30 @@
  */
 package vtfx;
 
+import GUI.Fenster;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import GUI.Fenster;
-import GUI.Footer;
-import GUI.Header;
-import javafx.scene.SceneBuilder;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderPaneBuilder;
-import javafx.scene.layout.HBoxBuilder;
 import rmx.RMXconnector;
 
 /**
  *
- * @author Manuel
+ * @author Manuel Eble
  */
 public class VTfx extends Application {
-    
+
+    /**
+     * Programmfenster
+     */
+    public static Fenster fenster;
     /**
      * Verwaltet die Verbindung zur RMX-PC-Zentrale (Singleton-Objekt)
      */
     public static final RMXconnector rmxVerbindung = RMXconnector.getRMXconnector();
-    
+
     @Override
     public void start(Stage primaryStage) {
-
-        
-        Fenster fenster = new Fenster();
-//        Scene scene = new Scene(fenster, 800, 600);
-        
-
-        BorderPane root = new BorderPane();
-        root.setTop(new Header());
-        root.setCenter(fenster);
-        root.setBottom(new Footer());
-        Scene scene = new Scene(root, 800, 600);
-        primaryStage.setTitle("VisTrain");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        fenster = new Fenster(primaryStage);
     }
 
     /**
@@ -58,5 +37,8 @@ public class VTfx extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
+    public static Fenster getFenster() {
+        return fenster;
+    }
 }

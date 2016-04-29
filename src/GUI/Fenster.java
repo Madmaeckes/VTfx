@@ -5,50 +5,40 @@
  */
 package GUI;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-
+import javafx.stage.Stage;
 
 /**
  *
- * @author Manuel
+ * @author Manuel Eble
  */
-public class Fenster extends TabPane {
+public class Fenster {
 
-    private final Tab momentaneGeschwTab;
-    private final Tab graphTab;
-    private SaulenDiagramm saulenDiagramm;
-    
-    private Button fahrstufeButton;
+    private final Header header;
+    private final Footer footer;
 
-    
-    public Fenster() {
+    public Fenster(Stage primaryStage) {
 
-        setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-        momentaneGeschwTab = new Tab("Momentane Geschw.");
-        graphTab = new Tab("Säulendiagramm");
+        header = new Header();
+        footer = new Footer();
+        Reiterleiste reiterleiste = new Reiterleiste();
 
-        saulenDiagramm = new SaulenDiagramm();
-        
-        fahrstufeButton = new Button("Neue Fahrstufe");
-        fahrstufeButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                saulenDiagramm.setGeschwFuerFahrstufe("F1", 40000);
-            }
-        });
-
-        BorderPane b2 = new BorderPane();
-        b2.setRight(fahrstufeButton);
-        b2.setCenter(saulenDiagramm);
-        graphTab.setContent(b2);
-        
-        getTabs().addAll(momentaneGeschwTab, graphTab);
-
+        BorderPane root = new BorderPane();
+        root.setTop(header);
+        root.setCenter(reiterleiste);
+        root.setBottom(footer);
+        Scene scene = new Scene(root, 800, 600);
+        primaryStage.setTitle("VisTrain");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
+    public Header getHeader() {
+        return header;
+    }
+
+    public Footer getFooter() {
+        return footer;
+    }
 }
