@@ -56,7 +56,6 @@ public class Einstellungsfenster {
         TilePane tilePane = new TilePane();
         tilePane.setPrefColumns(2);
         tilePane.setAlignment(Pos.CENTER);
-        tilePane.setPrefSize(299, 300);
         
         Button button1 = new Button("Hallo");
         Text text1 = new Text(20, 20, "1");
