@@ -103,6 +103,7 @@ public class Header extends GridPane {
             scaleLabel(ueberLabel, 1);
         });
         ueberLabel.setOnMouseClicked((MouseEvent e) -> {
+            Ueberfenster ueberFenster = new Ueberfenster();
         });
         hilfeLabel.setOnMouseEntered((MouseEvent e) -> {
             scaleLabel(hilfeLabel, 1.5);
@@ -111,6 +112,7 @@ public class Header extends GridPane {
             scaleLabel(hilfeLabel, 1);
         });
         hilfeLabel.setOnMouseClicked((MouseEvent e) -> {
+            Faqfenster faqFenster = new Faqfenster();
         });
 
         toolBar.getItems().addAll(verbindenButton, new Separator(), messungStartenButton, new Separator(), einstellungsLabel, new Separator(), ueberLabel, new Separator(), hilfeLabel);
