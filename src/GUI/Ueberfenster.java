@@ -32,7 +32,7 @@ public class Ueberfenster {
         stage.setScene(scene);
 
         //set title to stage
-        stage.setTitle("Einstellungen");
+        stage.setTitle("Über VisTrain");
 
         //center stage on screen
         stage.centerOnScreen();

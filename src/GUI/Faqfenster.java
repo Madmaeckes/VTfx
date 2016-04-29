@@ -32,7 +32,7 @@ public class Faqfenster {
         stage.setScene(scene);
 
         //set title to stage
-        stage.setTitle("Einstellungen");
+        stage.setTitle("FAQ");
 
         //center stage on screen
         stage.centerOnScreen();
