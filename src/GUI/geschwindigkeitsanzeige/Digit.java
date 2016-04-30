@@ -47,10 +47,12 @@ public class Digit extends Parent {
     }
  
     public final void showNumber(Integer num) {
+        System.out.println("Show me your numbers");
         if (num < 0 || num > 9) {
             num = 0; // default to 0 for non-valid numbers
         }
         for (int i = 0; i < 7; i++) {
+            System.out.println("Show me" + i);
             polygons[i].setFill(DIGIT_COMBINATIONS[num][i] ? onColor : offColor);
             polygons[i].setEffect(DIGIT_COMBINATIONS[num][i] ? onEffect : offEffect);
         }

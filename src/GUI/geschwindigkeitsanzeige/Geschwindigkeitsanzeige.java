@@ -1,27 +1,30 @@
 /* ....Show License.... */
 package GUI.geschwindigkeitsanzeige;
- 
+
 import java.util.Calendar;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
- 
+
 public class Geschwindigkeitsanzeige extends Parent {
- 
+
     private Calendar calendar = Calendar.getInstance();
     private Digit[] digits;
     private Timeline delayTimeline, secondTimeline;
- 
+
     private Circle circle;
-    
+    private char[] charArray;
+
     public Geschwindigkeitsanzeige(Color onColor, Color offColor) {
         // create effect for on LEDs
         //Glow onEffect = new Glow(1.7f);
@@ -42,10 +45,18 @@ public class Geschwindigkeitsanzeige extends Parent {
             digits[i] = digit;
             getChildren().add(digit);
         }
-        
+
         circle = new Circle(80 * 3 - 23, 100, 7, onColor);
         circle.setEffect(onDotEffect);
         getChildren().add(circle);
+        Button button1 = new Button();
+        button1.setOnAction((ActionEvent e) -> {
+            System.out.println("HALLSOO HUSSO");
+            setMomentaneGeschw(123.66);
+            System.out.println("HALLSOO HUSSO2222");
+
+        });
+        getChildren().add(button1);
 //        // create dots
 //        Group dots = new Group(
 //                new Circle(80 + 54 + 20, 44, 6, onColor),
@@ -57,7 +68,7 @@ public class Geschwindigkeitsanzeige extends Parent {
 //        // update digits to current time and start timer to update every second
 //        refreshClocks();
     }
- 
+
     private void refreshClocks() {
         calendar.setTimeInMillis(System.currentTimeMillis());
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
@@ -70,7 +81,29 @@ public class Geschwindigkeitsanzeige extends Parent {
         digits[4].showNumber(seconds / 10);
         digits[5].showNumber(seconds % 10);
     }
- 
+
+    public void setMomentaneGeschw(double geschw) {
+        charArray = new char[6];
+        String s = Double.toString(geschw);
+        s.getChars(0, 6, charArray, 0);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                digits[0].showNumber((int) charArray[0]);
+                digits[1].showNumber((int) charArray[1]);
+                digits[2].showNumber((int) charArray[2]);
+                digits[3].showNumber((int) charArray[4]);
+                digits[4].showNumber((int) charArray[5]);
+                System.out.println(charArray[0]);
+                System.out.println(charArray[1]);
+                System.out.println(charArray[2]);
+                System.out.println(charArray[3]);
+                System.out.println(charArray[4]);
+                System.out.println(charArray[5]);
+            }
+        });
+    }
+
     public void play() {
         // wait till start of next second then start a timeline to call refreshClocks() every second
         delayTimeline = new Timeline();
@@ -79,16 +112,16 @@ public class Geschwindigkeitsanzeige extends Parent {
                     if (secondTimeline != null) {
                         secondTimeline.stop();
                     }
-            secondTimeline = new Timeline();
-            secondTimeline.setCycleCount(Timeline.INDEFINITE);
-            secondTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), (ActionEvent event1) -> {
-                refreshClocks();
-            }));
-            secondTimeline.play();
-        }));
+                    secondTimeline = new Timeline();
+                    secondTimeline.setCycleCount(Timeline.INDEFINITE);
+                    secondTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), (ActionEvent event1) -> {
+                        refreshClocks();
+                    }));
+                    secondTimeline.play();
+                }));
         delayTimeline.play();
     }
- 
+
     public void stop() {
         delayTimeline.stop();
         if (secondTimeline != null) {
