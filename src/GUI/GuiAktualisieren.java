@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,7 +18,7 @@ import javafx.scene.shape.Circle;
  *
  * @author Manuel Eble
  */
-public class GuiAktualisieren {
+public class GuiAktualisieren{
 
     // Konstanten des Verbindungsstaus
     public static final int VERBINDET = 1;
@@ -34,36 +37,57 @@ public class GuiAktualisieren {
 
         switch (verbindungsstatus) {
             case VERBINDET:
-                scene.setCursor(Cursor.WAIT);
-                verbindenButton.setDisable(true);
-                footer.setVerbindungsstatus("Verbindet... ");
-                footer.setVerbindungsstatusFarbe(Color.BLACK);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        scene.setCursor(Cursor.WAIT);
+                        verbindenButton.setDisable(true);
+                        footer.setVerbindungsstatus("Verbindet... ");
+                        footer.setVerbindungsstatusFarbe(Color.BLACK);
+                    }
+                });
                 break;
             case VERBUNDEN:
-                scene.setCursor(Cursor.DEFAULT);
-                messungStartenButton.setDisable(false);
-                verbindenButton.setStyle(null);
-                verbindenButton.setGraphic(roterKreis);
-                verbindenButton.setText("Trennen");
-                verbindenButton.setDisable(false);
-                footer.setVerbindungsstatus("Verbunden ");
-                footer.setVerbindungsstatusFarbe(Color.GREEN);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        scene.setCursor(Cursor.DEFAULT);
+                        messungStartenButton.setDisable(false);
+                        verbindenButton.setStyle(null);
+                        verbindenButton.setGraphic(roterKreis);
+                        verbindenButton.setText("Trennen");
+                        verbindenButton.setDisable(false);
+                        footer.setVerbindungsstatus("Verbunden ");
+                        footer.setVerbindungsstatusFarbe(Color.GREEN);
+                    }
+                });
                 break;
             case TRENNT:
-                scene.setCursor(Cursor.WAIT);
-                verbindenButton.setDisable(true);
-                footer.setVerbindungsstatus("Trennt... ");
-                footer.setVerbindungsstatusFarbe(Color.BLACK);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        scene.setCursor(Cursor.WAIT);
+                        verbindenButton.setDisable(true);
+                        footer.setVerbindungsstatus("Trennt... ");
+                        footer.setVerbindungsstatusFarbe(Color.BLACK);
+                    }
+                });
                 break;
             case GETRENNT:
-                scene.setCursor(Cursor.DEFAULT);
-                messungStartenButton.setDisable(true);
-                verbindenButton.setStyle("-fx-base: green;");
-                verbindenButton.setText("Verbinden");
-                verbindenButton.setDisable(false);
-                footer.setVerbindungsstatus("Getrennt ");
-                footer.setVerbindungsstatusFarbe(Color.RED);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        scene.setCursor(Cursor.DEFAULT);
+                        messungStartenButton.setDisable(true);
+                        verbindenButton.setGraphic(null);
+                        verbindenButton.setStyle("-fx-base: green;");
+                        verbindenButton.setText("Verbinden");
+                        verbindenButton.setDisable(false);
+                        footer.setVerbindungsstatus("Getrennt ");
+                        footer.setVerbindungsstatusFarbe(Color.RED);
+                    }
+                });
                 break;
-        }
+        };
     }
 }
