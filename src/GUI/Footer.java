@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 
 /**
  *
- * @author Manuel
+ * @author Manuel Eble
  */
 public class Footer extends HBox {
 
@@ -45,11 +45,11 @@ public class Footer extends HBox {
     public void setMessungsstatus(String messungsstatus) {
         messungsstatusLabel.setText(messungsstatus);
     }
-    
+
     public void setMessungsstatusFarbe(Paint farbe) {
         messungsstatusLabel.setTextFill(farbe);
     }
-    
+
     public void setVerbindungsstatus(String verbindungsstatus) {
         verbindungsstatusLabel.setText(verbindungsstatus);
     }
