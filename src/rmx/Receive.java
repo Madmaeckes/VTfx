@@ -80,7 +80,11 @@ public class Receive {
         for (int i = 0; i < response.length; i++) {
             response[i] = (byte) is.read();
         }
-
+        
+        for(int i = 0; i < response.length; i++) {
+            System.out.print(response[i]);   
+        }
+        System.out.println("");
         // Fertiges Antwortarray rueckgeben
         return response;
     }
