@@ -38,6 +38,7 @@ public class GuiAktualisieren {
                 verbindenButton.setDisable(true);
                 footer.setVerbindungsstatus("Verbindet... ");
                 footer.setVerbindungsstatusFarbe(Color.BLACK);
+                System.out.println("Verbindet fertig");
                 break;
             case VERBUNDEN:
                 scene.setCursor(Cursor.DEFAULT);
@@ -58,6 +59,7 @@ public class GuiAktualisieren {
             case GETRENNT:
                 scene.setCursor(Cursor.DEFAULT);
                 messungStartenButton.setDisable(true);
+                verbindenButton.setGraphic(null);
                 verbindenButton.setStyle("-fx-base: green;");
                 verbindenButton.setText("Verbinden");
                 verbindenButton.setDisable(false);

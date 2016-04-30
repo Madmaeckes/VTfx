@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import vtfx.Funktionen;
 
@@ -47,6 +48,7 @@ public class Header extends GridPane {
     public Label ueberLabel;
     public Label hilfeLabel;
 
+    private static final Circle roterKreis = new Circle(5, 5, 6, Color.RED);
     private Polygon polygon1 = new Polygon(new double[]{
         0, 0,
         10, 5,
@@ -128,7 +130,9 @@ public class Header extends GridPane {
     public void verbindenButtonActionPerformed() {
         if (verbindenButton.getText().equals("Verbinden")) {
             try {
-                Funktionen.verbinden();
+                GuiAktualisieren.setVerbindungsstatus(1);
+             //   GuiAktualisieren.setVerbindungsstatus(2);
+                //Funktionen.verbinden();
             } catch (Exception e) {
                 alert.setAlertType(AlertType.ERROR);
                 alert.setTitle("Error");
@@ -140,7 +144,9 @@ public class Header extends GridPane {
             }
         } else {
             try {
-                Funktionen.trennen();
+                GuiAktualisieren.setVerbindungsstatus(3);
+                GuiAktualisieren.setVerbindungsstatus(4);
+                //Funktionen.trennen();
             } catch (Exception e) {
                 alert.setAlertType(AlertType.ERROR);
                 alert.setTitle("Error");
