@@ -48,7 +48,6 @@ public class Header extends GridPane {
     public Label ueberLabel;
     public Label hilfeLabel;
 
-    private static final Circle roterKreis = new Circle(5, 5, 6, Color.RED);
     private Polygon polygon1 = new Polygon(new double[]{
         0, 0,
         10, 5,
@@ -130,9 +129,7 @@ public class Header extends GridPane {
     public void verbindenButtonActionPerformed() {
         if (verbindenButton.getText().equals("Verbinden")) {
             try {
-                GuiAktualisieren.setVerbindungsstatus(1);
-             //   GuiAktualisieren.setVerbindungsstatus(2);
-                //Funktionen.verbinden();
+                Funktionen.verbinden();
             } catch (Exception e) {
                 alert.setAlertType(AlertType.ERROR);
                 alert.setTitle("Error");
@@ -144,9 +141,7 @@ public class Header extends GridPane {
             }
         } else {
             try {
-                GuiAktualisieren.setVerbindungsstatus(3);
-                GuiAktualisieren.setVerbindungsstatus(4);
-                //Funktionen.trennen();
+                Funktionen.trennen();
             } catch (Exception e) {
                 alert.setAlertType(AlertType.ERROR);
                 alert.setTitle("Error");
