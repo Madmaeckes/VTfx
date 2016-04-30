@@ -18,7 +18,7 @@ import javafx.scene.shape.Circle;
  *
  * @author Manuel Eble
  */
-public class GuiAktualisieren extends Service {
+public class GuiAktualisieren{
 
     // Konstanten des Verbindungsstaus
     public static final int VERBINDET = 1;
@@ -89,10 +89,5 @@ public class GuiAktualisieren extends Service {
                 });
                 break;
         };
-    }
-
-    @Override
-    protected Task createTask() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
