@@ -1,5 +1,6 @@
 package rmx;
 
+import datenaufnahme.Fahrtstatus;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.BitSet;
@@ -267,7 +268,7 @@ public class Receive {
         // Wert aus RMX-Adresse
         // <0x06><RMX><ADRRMX><VALUE>
         // [0] [1] [2] [3]
-
+        
         byte[] b = new byte[1];
         b[0] = message[3];
         BitSet bitset = BitSet.valueOf(b);
