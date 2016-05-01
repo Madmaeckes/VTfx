@@ -11,7 +11,7 @@ import javafx.scene.transform.Shear;
  * Simple 7 segment LED style digit. It supports the numbers 0 through 9.
  */
 public class Digit extends Parent {
- 
+    //Zahlen 1-9, 10 steht fuer Zahl aus
     private static final boolean[][] DIGIT_COMBINATIONS = new boolean[][]{
         new boolean[]{true, false, true, true, true, true, true},
         new boolean[]{false, false, false, false, true, false, true},
@@ -22,7 +22,9 @@ public class Digit extends Parent {
         new boolean[]{true, true, true, true, false, true, true},
         new boolean[]{true, false, false, false, true, false, true},
         new boolean[]{true, true, true, true, true, true, true},
-        new boolean[]{true, true, true, true, true, false, true}};
+        new boolean[]{true, true, true, true, true, false, true},
+        new boolean[]{false, false, false, false, false, false, false}};
+    //Einzelne Elemente einer Ziffer
     private final Polygon[] polygons = new Polygon[]{
         new Polygon(2, 0, 52, 0, 42, 10, 12, 10),
         new Polygon(12, 49, 42, 49, 52, 54, 42, 59, 12f, 59f, 2f, 54f),
@@ -47,7 +49,7 @@ public class Digit extends Parent {
     }
  
     public final void showNumber(Integer num) {
-        if (num < 0 || num > 9) {
+        if (num < 0 || num > 10) {
             num = 0; // default to 0 for non-valid numbers
         }
         for (int i = 0; i < 7; i++) {

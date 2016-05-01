@@ -76,16 +76,33 @@ public class Geschwindigkeitsanzeige extends Parent {
     }
 
     public void setMomentaneGeschw(double geschw) {
+        //Auf zwei Nachkommastellen runden
         String s = Double.toString(Math.round(geschw * 100) / 100.0);
+        //Ziffern des double geschw in String[] umspeichern
         String[] digits2 = s.split("(?<=.)");
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                digits[0].showNumber(Integer.parseInt(digits2[0]));
-                digits[1].showNumber(Integer.parseInt(digits2[1]));
-                digits[2].showNumber(Integer.parseInt(digits2[2]));
-                digits[3].showNumber(Integer.parseInt(digits2[4]));
-                digits[4].showNumber(Integer.parseInt(digits2[5]));
+                //Vorangehende Ziffern bei kleineren Geschwindigkeiten ausschalten
+                if (geschw <= 10) {
+                    digits[0].showNumber(10);
+                    digits[1].showNumber(10);
+                    digits[2].showNumber(Integer.parseInt(digits2[0]));
+                    digits[3].showNumber(Integer.parseInt(digits2[2]));
+                    digits[4].showNumber(Integer.parseInt(digits2[3]));
+                } else if (geschw <= 100) {
+                    digits[0].showNumber(10);
+                    digits[1].showNumber(Integer.parseInt(digits2[0]));
+                    digits[2].showNumber(Integer.parseInt(digits2[1]));
+                    digits[3].showNumber(Integer.parseInt(digits2[3]));
+                    digits[4].showNumber(Integer.parseInt(digits2[4]));
+                } else {
+                    digits[0].showNumber(Integer.parseInt(digits2[0]));
+                    digits[1].showNumber(Integer.parseInt(digits2[1]));
+                    digits[2].showNumber(Integer.parseInt(digits2[2]));
+                    digits[3].showNumber(Integer.parseInt(digits2[4]));
+                    digits[4].showNumber(Integer.parseInt(digits2[5]));
+                }
             }
         });
     }
