@@ -2,6 +2,7 @@ package rmx;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.BitSet;
 
 import javax.swing.JOptionPane;
 
@@ -69,8 +70,10 @@ public class Receive {
         // Erstes Byte einlesen, pruefen ob es sich um ein HEADBYTE handelt
         // Wenn ja, ueberspringen und die Laenge danach einlesen
         commandLength = is.read();
+//        System.out.print("<<" + Integer.toHexString(commandLength) + ">>");
         while (commandLength == Connection.HEADBYTE) {
             commandLength = is.read();
+//            System.out.print("[" + Integer.toHexString(commandLength) + "]");
         }
 
         // Antwortarray korrekter Laenge initialisieren
@@ -81,10 +84,10 @@ public class Receive {
             response[i] = (byte) is.read();
         }
         
-        for(int i = 0; i < response.length; i++) {
-            System.out.print(response[i]);   
-        }
-        System.out.println("");
+//        for(int i = 0; i < response.length; i++) {
+//            System.out.print("<" + Integer.toHexString(response[i]) + ">");   
+//        }
+//        System.out.println("");
         // Fertiges Antwortarray rueckgeben
         return response;
     }
@@ -256,6 +259,7 @@ public class Receive {
 
     /**
      * Verarbeitung empfangener RMX-Adressinformationen.
+     * Eintragen von neuen aktiven RMX-Kanaelen und aktiven Bits.
      *
      * @param message
      */
@@ -264,8 +268,14 @@ public class Receive {
         // <0x06><RMX><ADRRMX><VALUE>
         // [0] [1] [2] [3]
 
-        // DataToComInterface.updateBusAdress(message[1], message[2],
-        // message[3]);
+        byte[] b = new byte[1];
+        b[0] = message[3];
+        BitSet bitset = BitSet.valueOf(b);
+        if (bitset.cardinality() != 1) {
+            return; //Fail beim Gleisabschnittswechsel(2) oder unbesetzt(0)
+        }
+        int adr = ((Byte) message[2]).intValue();
+        Fahrtstatus.getFahrtstatus().updateGleisabschnitt(adr, bitset.length());
     }
 
     /**
@@ -292,8 +302,8 @@ public class Receive {
                 byteTrainName[i] = message[i + 5];
             }
 
-            trainName = CommunicationUtils.bytesToString(byteTrainName);
-            System.out.println("+lok: " + trainName);
+            //trainName = CommunicationUtils.bytesToString(byteTrainName);
+            //System.out.println("+lok: " + trainName);
             //GuiAktualisieren.lokHinzufuegen(trainName);
         }
 
@@ -424,9 +434,9 @@ public class Receive {
 
         // int adrLong = CommunicationUtils.bytesToInt(message[1], message[2]);
         // Aktuelle Richtung des Zuges setzen
-        // DataToComInterface.setTrainDirection(adrLong, message[4]);
+        Fahrtstatus.getFahrtstatus().setReverse((boolean) (message[4]!=0));
         // Aktuelle Fahrstufe/Geschwindigkeit des Zuges setzen
-        // DataToComInterface.setTrainSpeed(adrLong, message[3]);
+        Fahrtstatus.getFahrtstatus().setFahrstufe(message[3]);
     }
 
     /**

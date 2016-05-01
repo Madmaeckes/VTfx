@@ -1,5 +1,6 @@
 package rmx;
 
+import GUI.GuiAktualisieren;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ConnectException;
@@ -310,7 +311,7 @@ public class Connection {
                             errorList.add("While connecting: " + e.getMessage());
                         } finally {
                             System.out.println("verbindungsstatus: " + connectionStatus);
-                            //GuiAktualisieren.setVerbindungsstatus(connectionStatus);
+                            GuiAktualisieren.setVerbindungsstatus(connectionStatus);
                         }
 
                         break;
@@ -376,7 +377,7 @@ public class Connection {
                             errorList.add("While disconnecting: " + e.getMessage());
                         } finally {
                             System.out.println("verbindungsstatus: " + connectionStatus);
-                            //GuiAktualisieren.setVerbindungsstatus(connectionStatus);
+                            GuiAktualisieren.setVerbindungsstatus(connectionStatus);
                         }
                         break;
 
