@@ -5,13 +5,19 @@
  */
 package GUI;
 
+import GUI.geschwindigkeitsanzeige.Digit;
+import GUI.geschwindigkeitsanzeige.Geschwindigkeitsanzeige;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.effect.Glow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.BorderPane;
-
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -22,17 +28,19 @@ public class Reiterleiste extends TabPane {
     private final Tab momentaneGeschwTab;
     private final Tab graphTab;
     private SaulenDiagramm saulenDiagramm;
-    
-    private Button fahrstufeButton;
 
+    private Geschwindigkeitsanzeige geschwindigkeitsanzeige;
+    private Button fahrstufeButton;
     
+    private HBox digitAnzeige;
+
     public Reiterleiste() {
         setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         momentaneGeschwTab = new Tab("Momentane Geschw.");
         graphTab = new Tab("Säulendiagramm");
 
         saulenDiagramm = new SaulenDiagramm();
-        
+
         fahrstufeButton = new Button("Neue Fahrstufe");
         fahrstufeButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -40,12 +48,15 @@ public class Reiterleiste extends TabPane {
                 saulenDiagramm.setGeschwFuerFahrstufe("F1", 40000);
             }
         });
-
+        geschwindigkeitsanzeige = new Geschwindigkeitsanzeige(Color.GREENYELLOW, Color.rgb(255, 255, 255));
+        BorderPane b3 = new BorderPane();
+        b3.setCenter(geschwindigkeitsanzeige);
+        momentaneGeschwTab.setContent(b3);
         BorderPane b2 = new BorderPane();
         b2.setRight(fahrstufeButton);
         b2.setCenter(saulenDiagramm);
         graphTab.setContent(b2);
-        
+
         getTabs().addAll(momentaneGeschwTab, graphTab);
 
     }
