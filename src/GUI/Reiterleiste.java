@@ -49,11 +49,11 @@ public class Reiterleiste extends TabPane {
             }
         });
         
-        geschwindigkeitsanzeige = new Geschwindigkeitsanzeige(Color.BLUE, Color.rgb(255, 255, 255));
+        geschwindigkeitsanzeige = new Geschwindigkeitsanzeige(Color.GREENYELLOW, Color.rgb(255, 255, 255));
 
         Button button1 = new Button();
         button1.setOnAction((ActionEvent e) -> {
-            geschwindigkeitsanzeige.setMomentaneGeschw(3.66980);
+            GuiAktualisieren.setMomentaneGeschw(3.66980);
 
         });
 
@@ -70,4 +70,8 @@ public class Reiterleiste extends TabPane {
 
     }
 
+    public Geschwindigkeitsanzeige getGeschwindigkeitsanzeige() {
+        return geschwindigkeitsanzeige;
+    }
+    
 }

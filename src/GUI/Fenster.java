@@ -18,12 +18,13 @@ public class Fenster {
     private Scene scene;
     private final Header header;
     private final Footer footer;
+    private Reiterleiste reiterleiste;
 
     public Fenster(Stage primaryStage) {
 
         header = new Header();
         footer = new Footer();
-        Reiterleiste reiterleiste = new Reiterleiste();
+        reiterleiste = new Reiterleiste();
 
         BorderPane root = new BorderPane();
         root.setTop(header);
@@ -43,6 +44,10 @@ public class Fenster {
         return header;
     }
 
+    public Reiterleiste getReiterleiste() {
+        return reiterleiste;
+    }
+    
     public Footer getFooter() {
         return footer;
     }

@@ -80,9 +80,6 @@ public class Geschwindigkeitsanzeige extends Parent {
         String s = Double.toString(Math.round(geschw * 100) / 100.0);
         //Ziffern des double geschw in String[] umspeichern
         String[] digits2 = s.split("(?<=.)");
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
                 //Vorangehende Ziffern bei kleineren Geschwindigkeiten ausschalten
                 if (geschw <= 10) {
                     digits[0].showNumber(10);
@@ -103,8 +100,6 @@ public class Geschwindigkeitsanzeige extends Parent {
                     digits[3].showNumber(Integer.parseInt(digits2[4]));
                     digits[4].showNumber(Integer.parseInt(digits2[5]));
                 }
-            }
-        });
     }
 
     public void play() {

@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import GUI.geschwindigkeitsanzeige.Geschwindigkeitsanzeige;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -18,7 +19,7 @@ import javafx.scene.shape.Circle;
  *
  * @author Manuel Eble
  */
-public class GuiAktualisieren{
+public class GuiAktualisieren {
 
     // Konstanten des Verbindungsstaus
     public static final int VERBINDET = 1;
@@ -27,6 +28,16 @@ public class GuiAktualisieren{
     public static final int GETRENNT = 4;
 
     private static final Circle roterKreis = new Circle(5, 5, 6, Color.RED);
+
+    public static void setMomentaneGeschw(double geschw) {
+        Geschwindigkeitsanzeige geschwindigkeitsanzeige = vtfx.VTfx.getFenster().getReiterleiste().getGeschwindigkeitsanzeige();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                geschwindigkeitsanzeige.setMomentaneGeschw(geschw);
+            }
+        });
+    }
 
     public static void setVerbindungsstatus(final int verbindungsstatus) {
 
