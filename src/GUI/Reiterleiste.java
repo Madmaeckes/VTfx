@@ -31,7 +31,7 @@ public class Reiterleiste extends TabPane {
 
     private Geschwindigkeitsanzeige geschwindigkeitsanzeige;
     private Button fahrstufeButton;
-    
+
     private HBox digitAnzeige;
 
     public Reiterleiste() {
@@ -48,9 +48,18 @@ public class Reiterleiste extends TabPane {
                 saulenDiagramm.setGeschwFuerFahrstufe("F1", 40000);
             }
         });
+        
         geschwindigkeitsanzeige = new Geschwindigkeitsanzeige(Color.GREENYELLOW, Color.rgb(255, 255, 255));
+
+        Button button1 = new Button();
+        button1.setOnAction((ActionEvent e) -> {
+            geschwindigkeitsanzeige.setMomentaneGeschw(123.66);
+
+        });
+
         BorderPane b3 = new BorderPane();
         b3.setCenter(geschwindigkeitsanzeige);
+        b3.setTop(button1);
         momentaneGeschwTab.setContent(b3);
         BorderPane b2 = new BorderPane();
         b2.setRight(fahrstufeButton);

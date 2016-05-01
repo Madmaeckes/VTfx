@@ -49,14 +49,7 @@ public class Geschwindigkeitsanzeige extends Parent {
         circle = new Circle(80 * 3 - 23, 100, 7, onColor);
         circle.setEffect(onDotEffect);
         getChildren().add(circle);
-        Button button1 = new Button();
-        button1.setOnAction((ActionEvent e) -> {
-            System.out.println("HALLSOO HUSSO");
-            setMomentaneGeschw(123.66);
-            System.out.println("HALLSOO HUSSO2222");
 
-        });
-        getChildren().add(button1);
 //        // create dots
 //        Group dots = new Group(
 //                new Circle(80 + 54 + 20, 44, 6, onColor),
@@ -83,23 +76,16 @@ public class Geschwindigkeitsanzeige extends Parent {
     }
 
     public void setMomentaneGeschw(double geschw) {
-        charArray = new char[6];
         String s = Double.toString(geschw);
-        s.getChars(0, 6, charArray, 0);
+        String[] digits2 = s.split("(?<=.)");
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                digits[0].showNumber((int) charArray[0]);
-                digits[1].showNumber((int) charArray[1]);
-                digits[2].showNumber((int) charArray[2]);
-                digits[3].showNumber((int) charArray[4]);
-                digits[4].showNumber((int) charArray[5]);
-                System.out.println(charArray[0]);
-                System.out.println(charArray[1]);
-                System.out.println(charArray[2]);
-                System.out.println(charArray[3]);
-                System.out.println(charArray[4]);
-                System.out.println(charArray[5]);
+                digits[0].showNumber(Integer.parseInt(digits2[0]));
+                digits[1].showNumber(Integer.parseInt(digits2[1]));
+                digits[2].showNumber(Integer.parseInt(digits2[2]));
+                digits[3].showNumber(Integer.parseInt(digits2[4]));
+                digits[4].showNumber(Integer.parseInt(digits2[5]));
             }
         });
     }
