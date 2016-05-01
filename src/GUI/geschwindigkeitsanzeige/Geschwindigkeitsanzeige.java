@@ -76,7 +76,7 @@ public class Geschwindigkeitsanzeige extends Parent {
     }
 
     public void setMomentaneGeschw(double geschw) {
-        String s = Double.toString(geschw);
+        String s = Double.toString(Math.round(geschw * 100) / 100.0);
         String[] digits2 = s.split("(?<=.)");
         Platform.runLater(new Runnable() {
             @Override

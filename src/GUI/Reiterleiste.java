@@ -53,7 +53,7 @@ public class Reiterleiste extends TabPane {
 
         Button button1 = new Button();
         button1.setOnAction((ActionEvent e) -> {
-            geschwindigkeitsanzeige.setMomentaneGeschw(123.66);
+            geschwindigkeitsanzeige.setMomentaneGeschw(123.66789);
 
         });
 
