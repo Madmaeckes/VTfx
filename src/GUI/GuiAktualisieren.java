@@ -38,7 +38,11 @@ public class GuiAktualisieren {
             }
         });
     }
-
+    /**
+     * Aktualisiert die Statusleiste und den Verbindenbutton.
+     * 
+     * @param verbindungsstatus 1 Verbindet, 2 Verbunden, 3 Trennt, 4 Getrennt
+     */
     public static void setVerbindungsstatus(final int verbindungsstatus) {
 
         Scene scene = vtfx.VTfx.getFenster().getScene();

@@ -129,6 +129,7 @@ public class Header extends GridPane {
     public void verbindenButtonActionPerformed() {
         if (verbindenButton.getText().equals("Verbinden")) {
             try {
+                GuiAktualisieren.setVerbindungsstatus(1);
                 Funktionen.verbinden();
             } catch (Exception e) {
                 alert.setAlertType(AlertType.ERROR);
@@ -141,6 +142,7 @@ public class Header extends GridPane {
             }
         } else {
             try {
+                GuiAktualisieren.setVerbindungsstatus(3);
                 Funktionen.trennen();
             } catch (Exception e) {
                 alert.setAlertType(AlertType.ERROR);
