@@ -11,9 +11,10 @@ public class Gleisabschnitt {
     private int adrRMX;
     private int bit;
 
-    /* Verweis auf angrenzende Gleisabschnitte */
+    /**
+     * Verweis auf nachfolgenden Gleisabschnitt
+     */
     private Gleisabschnitt next;
-    private Gleisabschnitt prev;
 
     /**
      *
@@ -89,14 +90,6 @@ public class Gleisabschnitt {
 
     public void setNext(Gleisabschnitt next) {
         this.next = next;
-    }
-
-    public Gleisabschnitt getPrev() {
-        return prev;
-    }
-
-    public void setPrev(Gleisabschnitt prev) {
-        this.prev = prev;
     }
 
     public double getLetzteGemesseneGeschwindigkeit() {
