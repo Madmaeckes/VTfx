@@ -6,11 +6,9 @@
 package GUI;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -18,10 +16,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import vtfx.Funktionen;
 
@@ -48,12 +44,12 @@ public class Header extends GridPane {
     public Label ueberLabel;
     public Label hilfeLabel;
 
-    private Polygon polygon1 = new Polygon(new double[]{
+    private final Polygon polygon1 = new Polygon(new double[]{
         0, 0,
         10, 5,
         0, 10,});
 
-    private Alert alert = new Alert(AlertType.ERROR);
+    private final Alert alert = new Alert(AlertType.ERROR);
 
     public Header() {
 
@@ -154,6 +150,12 @@ public class Header extends GridPane {
         }
     }
 
+    /**
+     * Ändert die Größe eines übergebenen Labels auf die übergebene Größe scale
+     *
+     * @param l Label dessen Größe geändert werden soll
+     * @param scale Größe, wobei 1 für Standardgröße steht
+     */
     public void scaleLabel(Label l, double scale) {
         l.setScaleX(scale);
         l.setScaleY(scale);

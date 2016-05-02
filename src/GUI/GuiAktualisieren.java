@@ -7,8 +7,6 @@ package GUI;
 
 import GUI.geschwindigkeitsanzeige.Geschwindigkeitsanzeige;
 import javafx.application.Platform;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,6 +27,12 @@ public class GuiAktualisieren {
 
     private static final Circle roterKreis = new Circle(5, 5, 6, Color.RED);
 
+    /**
+     * Setzt die momentane Geschwindigkeit, sodass diese von der Klasse
+     * Geschwindigkeitsanzeige angezeigt wird.
+     *
+     * @param geschw momentane Geschwindigkeit zwischen 0 und 999.99
+     */
     public static void setMomentaneGeschw(double geschw) {
         Geschwindigkeitsanzeige geschwindigkeitsanzeige = vtfx.VTfx.getFenster().getReiterleiste().getGeschwindigkeitsanzeige();
         Platform.runLater(new Runnable() {
@@ -38,9 +42,42 @@ public class GuiAktualisieren {
             }
         });
     }
+
+    /**
+     * Setzt die Farbe der digitalen Geschwindigkeitsanzeige
+     *
+     * @param onColor Farbe der aktiven Digitalen Ziffern
+     */
+    public static void setFarbeFuerDigitalanzeige(Color onColor) {
+        Geschwindigkeitsanzeige geschwindigkeitsanzeige = vtfx.VTfx.getFenster().getReiterleiste().getGeschwindigkeitsanzeige();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                geschwindigkeitsanzeige.setFarbe(onColor);
+            }
+        });
+    }
+
+    /**
+     * Setzt eine neue Säule im Säulendiagramm, mit übergebener Fahrstufe als
+     * Beschriftung und übergebener Geschwindigkeit als Säulenhöhe
+     *
+     * @param fahrstufe Bezeichnung der momentanen Fahrstufe als String
+     * @param geschw Geschwindigkeit zur übergebenen Fahrstufe als double
+     */
+    public static void setGeschwFuerFahrstufe(String fahrstufe, double geschw) {
+        SaulenDiagramm saulenDiagramm = vtfx.VTfx.getFenster().getReiterleiste().getSaulenDiagramm();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                saulenDiagramm.setGeschwFuerFahrstufe(fahrstufe, geschw);
+            }
+        });
+    }
+
     /**
      * Aktualisiert die Statusleiste und den Verbindenbutton.
-     * 
+     *
      * @param verbindungsstatus 1 Verbindet, 2 Verbunden, 3 Trennt, 4 Getrennt
      */
     public static void setVerbindungsstatus(final int verbindungsstatus) {

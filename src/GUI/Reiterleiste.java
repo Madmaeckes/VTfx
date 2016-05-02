@@ -5,16 +5,12 @@
  */
 package GUI;
 
-import GUI.geschwindigkeitsanzeige.Digit;
 import GUI.geschwindigkeitsanzeige.Geschwindigkeitsanzeige;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.effect.Glow;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -31,6 +27,7 @@ public class Reiterleiste extends TabPane {
 
     private Geschwindigkeitsanzeige geschwindigkeitsanzeige;
     private Button fahrstufeButton;
+    public Messabschnittslaengen messabschnittslaengen;
 
     private HBox digitAnzeige;
 
@@ -45,14 +42,16 @@ public class Reiterleiste extends TabPane {
         fahrstufeButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                saulenDiagramm.setGeschwFuerFahrstufe("F1", 40000);
+                GuiAktualisieren.setGeschwFuerFahrstufe("F1", 40000);
+                GuiAktualisieren.setGeschwFuerFahrstufe("F2", 55000);
             }
         });
-        
-        geschwindigkeitsanzeige = new Geschwindigkeitsanzeige(Color.GREENYELLOW, Color.rgb(255, 255, 255));
+
+        geschwindigkeitsanzeige = new Geschwindigkeitsanzeige(Color.rgb(255, 255, 255));
 
         Button button1 = new Button();
         button1.setOnAction((ActionEvent e) -> {
+            GuiAktualisieren.setFarbeFuerDigitalanzeige(Color.CORAL);
             GuiAktualisieren.setMomentaneGeschw(3.66980);
 
         });
@@ -61,6 +60,8 @@ public class Reiterleiste extends TabPane {
         b3.setCenter(geschwindigkeitsanzeige);
         b3.setTop(button1);
         momentaneGeschwTab.setContent(b3);
+//        messabschnittslaengen = new Messabschnittslaengen();
+//        momentaneGeschwTab.setContent(messabschnittslaengen);
         BorderPane b2 = new BorderPane();
         b2.setRight(fahrstufeButton);
         b2.setCenter(saulenDiagramm);
@@ -73,5 +74,9 @@ public class Reiterleiste extends TabPane {
     public Geschwindigkeitsanzeige getGeschwindigkeitsanzeige() {
         return geschwindigkeitsanzeige;
     }
-    
+
+    public SaulenDiagramm getSaulenDiagramm() {
+        return saulenDiagramm;
+    }
+
 }

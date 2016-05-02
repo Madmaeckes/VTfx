@@ -4,12 +4,8 @@ package GUI.geschwindigkeitsanzeige;
 import java.util.Calendar;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.paint.Color;
@@ -25,7 +21,10 @@ public class Geschwindigkeitsanzeige extends Parent {
     private Circle circle;
     private char[] charArray;
 
-    public Geschwindigkeitsanzeige(Color onColor, Color offColor) {
+    private Color onColor;
+
+    public Geschwindigkeitsanzeige(Color offColor) {
+        onColor = Color.GREENYELLOW;
         // create effect for on LEDs
         //Glow onEffect = new Glow(1.7f);
         Glow onEffect = new Glow(0.5);
@@ -80,26 +79,26 @@ public class Geschwindigkeitsanzeige extends Parent {
         String s = Double.toString(Math.round(geschw * 100) / 100.0);
         //Ziffern des double geschw in String[] umspeichern
         String[] digits2 = s.split("(?<=.)");
-                //Vorangehende Ziffern bei kleineren Geschwindigkeiten ausschalten
-                if (geschw <= 10) {
-                    digits[0].showNumber(10);
-                    digits[1].showNumber(10);
-                    digits[2].showNumber(Integer.parseInt(digits2[0]));
-                    digits[3].showNumber(Integer.parseInt(digits2[2]));
-                    digits[4].showNumber(Integer.parseInt(digits2[3]));
-                } else if (geschw <= 100) {
-                    digits[0].showNumber(10);
-                    digits[1].showNumber(Integer.parseInt(digits2[0]));
-                    digits[2].showNumber(Integer.parseInt(digits2[1]));
-                    digits[3].showNumber(Integer.parseInt(digits2[3]));
-                    digits[4].showNumber(Integer.parseInt(digits2[4]));
-                } else {
-                    digits[0].showNumber(Integer.parseInt(digits2[0]));
-                    digits[1].showNumber(Integer.parseInt(digits2[1]));
-                    digits[2].showNumber(Integer.parseInt(digits2[2]));
-                    digits[3].showNumber(Integer.parseInt(digits2[4]));
-                    digits[4].showNumber(Integer.parseInt(digits2[5]));
-                }
+        //Vorangehende Ziffern bei kleineren Geschwindigkeiten ausschalten
+        if (geschw <= 10) {
+            digits[0].showNumber(10);
+            digits[1].showNumber(10);
+            digits[2].showNumber(Integer.parseInt(digits2[0]));
+            digits[3].showNumber(Integer.parseInt(digits2[2]));
+            digits[4].showNumber(Integer.parseInt(digits2[3]));
+        } else if (geschw <= 100) {
+            digits[0].showNumber(10);
+            digits[1].showNumber(Integer.parseInt(digits2[0]));
+            digits[2].showNumber(Integer.parseInt(digits2[1]));
+            digits[3].showNumber(Integer.parseInt(digits2[3]));
+            digits[4].showNumber(Integer.parseInt(digits2[4]));
+        } else {
+            digits[0].showNumber(Integer.parseInt(digits2[0]));
+            digits[1].showNumber(Integer.parseInt(digits2[1]));
+            digits[2].showNumber(Integer.parseInt(digits2[2]));
+            digits[3].showNumber(Integer.parseInt(digits2[4]));
+            digits[4].showNumber(Integer.parseInt(digits2[5]));
+        }
     }
 
     public void play() {
@@ -125,5 +124,12 @@ public class Geschwindigkeitsanzeige extends Parent {
         if (secondTimeline != null) {
             secondTimeline.stop();
         }
+    }
+
+    public void setFarbe(Color farbe) {
+        for(int i = 0; i < 5; i++) {
+            digits[i].setFarbe(farbe);
+        }
+        circle.setFill(farbe);
     }
 }

@@ -5,26 +5,16 @@
  */
 package GUI;
 
-import java.util.Collection;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.util.Duration;
 
 /**
  *
- * @author Manuel
+ * @author Manuel Eble
  */
 public class SaulenDiagramm extends Pane {
 
@@ -41,9 +31,13 @@ public class SaulenDiagramm extends Pane {
     final static String france = "France";
     final static String italy = "Italy";
     final static String usa = "USA";
-    
+
     public Button fahrstufeButton;
 
+    /**
+     * Erzeugt ein Säulendiagramm auf dem über die Methode
+     * setGeschwFuerFahrstufe() neue Säulen gesetzt werden können
+     */
     public SaulenDiagramm() {
 
         bc = new BarChart<>(xAxis, yAxis);
@@ -91,7 +85,6 @@ public class SaulenDiagramm extends Pane {
 //        }));
 //        tl.setCycleCount(Animation.INDEFINITE);
 //        tl.play();
-        
         bc.getData().addAll(series1, series2, series3);
 
     }
@@ -99,7 +92,7 @@ public class SaulenDiagramm extends Pane {
     /**
      * Setzt einen Balken in Höhe der übergebenen Geschwindigkeit für die
      * übergebene Fahrstufe
-     * 
+     *
      * @param fahrstufe Die Fahrstufe in der die Lok fehrt
      * @param geschwindigkeit Die gemessene Geschwindigkeit der Lok
      */
