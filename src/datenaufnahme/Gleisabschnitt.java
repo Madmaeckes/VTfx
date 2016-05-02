@@ -1,9 +1,8 @@
-
 package datenaufnahme;
 
 /**
  * Kapselt RMX-Kanal und Bit von Gleisabschnitten.
- * 
+ *
  * @author Manuel Weber
  */
 public class Gleisabschnitt {
@@ -11,18 +10,31 @@ public class Gleisabschnitt {
     /* RMX-Kanal und Bit-Zahl */
     private int adrRMX;
     private int bit;
-    
-    /***
+
+    /* Verweis auf angrenzende Gleisabschnitte */
+    private Gleisabschnitt next;
+    private Gleisabschnitt prev;
+
+    /**
+     *
      * Laenge des Gleisabschnitts in cm.
      */
     private int laenge;
-    
-    /***
+
+    /**
+     *
      * Wahrheitswert, ob es sich bei dem Abschnitt um eine Messstrecke handelt
      * (ansonsten wird nicht gemessen).
      */
     private boolean messstrecke;
-    
+
+    /**
+     * 
+     * Falls Messreihe und bereits Durchfahrt stattgefunden: gemessene
+     * Geschwindigkeit der letzten Durchfahrt
+     * /!\ -1 wenn Fehler bei der letzten Messung
+     */
+    private double letzteGemesseneGeschwindigkeit;
 
     public Gleisabschnitt(int adrRMX, int bit) {
         this.adrRMX = adrRMX;
@@ -70,5 +82,28 @@ public class Gleisabschnitt {
     public void setMessstrecke(boolean messstrecke) {
         this.messstrecke = messstrecke;
     }
-    
+
+    public Gleisabschnitt getNext() {
+        return next;
+    }
+
+    public void setNext(Gleisabschnitt next) {
+        this.next = next;
+    }
+
+    public Gleisabschnitt getPrev() {
+        return prev;
+    }
+
+    public void setPrev(Gleisabschnitt prev) {
+        this.prev = prev;
+    }
+
+    public double getLetzteGemesseneGeschwindigkeit() {
+        return letzteGemesseneGeschwindigkeit;
+    }
+
+    protected void setLetzteGemesseneGeschwindigkeit(double letzteGemesseneGeschwindigkeit) {
+        this.letzteGemesseneGeschwindigkeit = letzteGemesseneGeschwindigkeit;
+    }
 }
