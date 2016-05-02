@@ -12,6 +12,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
+/**
+ *
+ * @author Manuel Eble
+ */
 public class Geschwindigkeitsanzeige extends Parent {
 
     private Calendar calendar = Calendar.getInstance();
@@ -127,7 +131,7 @@ public class Geschwindigkeitsanzeige extends Parent {
     }
 
     public void setFarbe(Color farbe) {
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             digits[i].setFarbe(farbe);
         }
         circle.setFill(farbe);
