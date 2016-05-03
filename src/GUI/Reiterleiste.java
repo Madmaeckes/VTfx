@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import GUI.einstellungen.Messabschnittstabelle;
+import GUI.einstellungen.Messabschnittslaengen;
+import GUI.einstellungen.Messabschnittstabelle.TabellenModell;
 import GUI.geschwindigkeitsanzeige.Geschwindigkeitsanzeige;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,6 +31,7 @@ public class Reiterleiste extends TabPane {
     private Geschwindigkeitsanzeige geschwindigkeitsanzeige;
     private Button fahrstufeButton;
     public Messabschnittslaengen messabschnittslaengen;
+    public Messabschnittstabelle messabschnittstabelle;
 
     private HBox digitAnzeige;
 
@@ -62,6 +66,8 @@ public class Reiterleiste extends TabPane {
         momentaneGeschwTab.setContent(b3);
 //        messabschnittslaengen = new Messabschnittslaengen();
 //        momentaneGeschwTab.setContent(messabschnittslaengen);
+//        messabschnittstabelle = new Messabschnittstabelle();
+//        momentaneGeschwTab.setContent(messabschnittstabelle);
         BorderPane b2 = new BorderPane();
         b2.setRight(fahrstufeButton);
         b2.setCenter(saulenDiagramm);
