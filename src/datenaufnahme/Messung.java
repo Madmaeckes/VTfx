@@ -1,18 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package datenaufnahme;
 
 import GUI.GuiAktualisieren;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
-import java.util.Set;
 
 /**
+ * Zentrale Klasse zur Aufnahme von Messwerten. Das Messungs-Objekt beobachtet
+ * (Observer) permanent den Fahrtstatus, bei dessen Erzeugung es erstellt wird.
  *
  * @author Manuel Weber
  */
@@ -74,14 +69,16 @@ public class Messung implements java.util.Observer {
         this.messungAktiv = false;
     }
 
+    /**
+     * Andert das momentan befahrene Gleis. Nimmt bei Verlassen einer
+     * Messstrecke einen Messwert auf (wenn Messungen aktiviert sind). Startet
+     * bei Einfahren in eine Messstrecke die Uhr.
+     *
+     * @param g jetzt besetzter Gleisabschnitt
+     */
     private void updateGleis(Gleisabschnitt g) {
         System.out.println("|");
-        if (messungAktiv
-                && gleisabschnitt.isMessstrecke()
-                && gleisabschnitt.getNext().equals(g)) {
-            /* wenn Messungen aktiviert sind, der verlassene Abschnitt
-            eine Messstrecke ist und in die nachfolgende Strecke 
-            eingefahren wurde */
+        if (messungAktiv && gleisabschnitt.isMessstrecke()) {
             geschwindigkeitBerechnen();
         }
         if (g.isMessstrecke()) {
@@ -92,24 +89,11 @@ public class Messung implements java.util.Observer {
     }
 
     /**
-     * MUSS bei jeder Aenderung von Fahrstufe / Fahrtrichtung / Gleisabschnitt
-     * aufgerufen werden. Findet beim Durchfahren einer Messstrecke eine
-     * Aenderung von Fahrstufe / Fahrtrichtung statt, kann diese Durchfahrt
-     * nicht ausgewertet werden!
+     * Berechnet die Geschwindigkeit die fuer den letzten Gleisabschnitt
+     * gemessen wurde und gibt sie an die Gui weiter. Wurde der Gleisabschnitt
+     * mit konstanter Fahrstufe (/Fahrtrichtung) durchfahren (kein error), wird
+     * der wert zu den Fahrstufen-Messwerten hinzugefuegt.
      */
-//    public void updatedFahrtstatus() {
-//        System.out.println("$");
-//        Gleisabschnitt g = Fahrtstatus.getFahrtstatus().gleisabschnitt;
-//        // Aenderung des Gleisabschnitts
-//        if (!g.equals(this.gleisabschnitt)) {
-//            updateGleis(g);
-//            return;
-//        }
-//        // Aenderung von Fahrstufe / Fahrtrichtung
-//        if (gleisabschnitt.isMessstrecke()) {
-//            this.error = true;
-//        }
-//    }
     private void geschwindigkeitBerechnen() {
         long t = System.currentTimeMillis() - startzeit;
         double s = gleisabschnitt.getLaenge();
@@ -147,8 +131,24 @@ public class Messung implements java.util.Observer {
         return fahrstufe;
     }
 
+    /**
+     * Beobachtet Aenderungen von Fahrstufe / Fahrtrichtung / Gleisabschnitt.
+     * Findet beim Durchfahren einer Messstrecke eine Aenderung von Fahrstufe /
+     * Fahrtrichtung statt, kann diese Durchfahrt nicht ausgewertet werden! Bei
+     * Aenderung des Gleisabschnitts muss ggf. ein Messwert aufgenommen werden.
+     */
     @Override
     public void update(Observable o, Object arg) {
         System.out.println("^changed");
+//        Gleisabschnitt g = Fahrtstatus.getFahrtstatus().gleisabschnitt;
+//        // Aenderung des Gleisabschnitts
+//        if (!g.equals(this.gleisabschnitt)) {
+//            updateGleis(g);
+//            return;
+//        }
+//        // Aenderung von Fahrstufe / Fahrtrichtung
+//        if (gleisabschnitt.isMessstrecke()) {
+//            this.error = true;
+//        }
     }
 }

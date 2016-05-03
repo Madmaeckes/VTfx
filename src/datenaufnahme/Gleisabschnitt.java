@@ -12,11 +12,6 @@ public class Gleisabschnitt {
     private int bit;
 
     /**
-     * Verweis auf nachfolgenden Gleisabschnitt
-     */
-    private Gleisabschnitt next;
-
-    /**
      *
      * Laenge des Gleisabschnitts in cm.
      */
@@ -82,14 +77,6 @@ public class Gleisabschnitt {
 
     public void setMessstrecke(boolean messstrecke) {
         this.messstrecke = messstrecke;
-    }
-
-    public Gleisabschnitt getNext() {
-        return next;
-    }
-
-    public void setNext(Gleisabschnitt next) {
-        this.next = next;
     }
 
     public double getLetzteGemesseneGeschwindigkeit() {

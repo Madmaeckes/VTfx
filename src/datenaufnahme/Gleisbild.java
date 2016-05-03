@@ -70,10 +70,6 @@ public class Gleisbild {
     // Ende Singleton-Pattern ---------------------------------------
 
     private Set<Gleisabschnitt> gleisabschnitte;
-    
-    private Gleisabschnitt index;
-    
-    private Gleisabschnitt last;
 
     /**
      * Fuegt den uebergebenen Gleisabschnitt am Ende der vorhandenen Gleise
@@ -82,30 +78,11 @@ public class Gleisbild {
      * @param gleisabschnitt
      */
     public void add(Gleisabschnitt gleisabschnitt) {
-        if (gleisabschnitte.size() == 0) {
-            index = gleisabschnitt;
-            last = gleisabschnitt;
-        } else {
-            last.setNext(gleisabschnitt);
-            last = gleisabschnitt;
-        }
         gleisabschnitte.add(gleisabschnitt);
     }
 
-    /**
-     * Fuegt einen neuen Gleisabschnitt (gleisabschnitt) als Nachfolger eines
-     * bestimmten Vorgaengergleisabschnitts (vorgaenger) ein.
-     *
-     * @param gleisabschnitt
-     * @param vorgaenger
-     */
-    public void add(Gleisabschnitt gleisabschnitt, Gleisabschnitt vorgaenger) throws Exception{
-        if (!gleisabschnitte.contains(vorgaenger)) {
-            throw new Exception("Vorgaengergleis existiert nicht!");
-        }
-        gleisabschnitt.setNext(vorgaenger.getNext());
-        vorgaenger.setNext(gleisabschnitt);
-        gleisabschnitte.add(gleisabschnitt);
+    public void del(Gleisabschnitt gleisabschnitt) {
+        gleisabschnitte.remove(gleisabschnitt);
     }
 
     public int size() {
