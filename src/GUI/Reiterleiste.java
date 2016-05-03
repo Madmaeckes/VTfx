@@ -61,13 +61,14 @@ public class Reiterleiste extends TabPane {
         });
 
         BorderPane b3 = new BorderPane();
-        b3.setCenter(geschwindigkeitsanzeige);
+        messabschnittstabelle = new Messabschnittstabelle();
         b3.setTop(button1);
+        b3.setCenter(geschwindigkeitsanzeige);
+        b3.setBottom(messabschnittstabelle);
         momentaneGeschwTab.setContent(b3);
 //        messabschnittslaengen = new Messabschnittslaengen();
 //        momentaneGeschwTab.setContent(messabschnittslaengen);
-//        messabschnittstabelle = new Messabschnittstabelle();
-//        momentaneGeschwTab.setContent(messabschnittstabelle);
+       // momentaneGeschwTab.setContent(messabschnittstabelle);
         BorderPane b2 = new BorderPane();
         b2.setRight(fahrstufeButton);
         b2.setCenter(saulenDiagramm);
