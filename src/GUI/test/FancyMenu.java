@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package GUI.test;
 
+import GUI.test.Ball;
 import javafx.animation.Animation;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
