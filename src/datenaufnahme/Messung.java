@@ -9,55 +9,32 @@ import GUI.GuiAktualisieren;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Observable;
 import java.util.Set;
 
 /**
  *
  * @author Manuel Weber
  */
-public class Messung {
-
-    // Singelton-Pattern --------------------------------------------
-    /**
-     * Singelton-Objekt
-     */
-    private static Messung messungsInstanz;
+public class Messung implements java.util.Observer {
 
     /**
-     * Privater Konstruktor verhindert die Instanziierung von aussen.
+     * Privater Konstruktor verhindert die Instanziierung von aussen. Es soll
+     * ausschliesslich ein Messungs-Objekt verknuepft mit dem Fahrtstatus
+     * (singleton) erzeugt werden.
      */
-    private Messung() {
-        messungsInstanz = new Messung();
-        messungsInstanz.setGleisbild(new ArrayList<>());
+    protected Messung() {
+        gleisbild = new ArrayList<>();
         messreihe = new double[2][999][2];
+        System.out.println("new!");
     }
 
-    /**
-     * Gibt das Messungs-Objekt zurueck.
-     *
-     * @return Messungs-Objekt (Singleton-Objekt)
-     */
-    public static synchronized Messung getMessung() {
-        if (messungsInstanz == null) {
-            messungsInstanz = new Messung();
-        }
-        return messungsInstanz;
-    }
-
-    /**
-     * Unterbindet das Klonen des Objekts (Singleton)
-     */
-    public Object clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException();
-    }
-
-    // Ende Singleton-Pattern ---------------------------------------
     private List<Gleisabschnitt> gleisbild;
 
     /**
      * Wahrheitswert, ob momentan gemessen werden soll
      */
-    private boolean messungAktiv;
+    private boolean messungAktiv = true;
 
     /**
      * momentan befahrener Gleisabschnitt (evtl. mit aktiver Messung)
@@ -97,7 +74,8 @@ public class Messung {
         this.messungAktiv = false;
     }
 
-    public void updateGleis(Gleisabschnitt g) {
+    private void updateGleis(Gleisabschnitt g) {
+        System.out.println("|");
         if (messungAktiv
                 && gleisabschnitt.isMessstrecke()
                 && gleisabschnitt.getNext().equals(g)) {
@@ -107,22 +85,31 @@ public class Messung {
             geschwindigkeitBerechnen();
         }
         if (g.isMessstrecke()) {
+            System.out.println("go!");
             startzeit = System.currentTimeMillis();
             error = false;
         }
     }
 
     /**
-     * MUSS bei jeder Aenderung von Fahrstufe / Fahrtrichtung aufgerufen werden.
-     * Findet diese beim Durchfahren einer Messstrecke statt, kann diese
-     * Durchfahrt nicht ausgewertet werden!
+     * MUSS bei jeder Aenderung von Fahrstufe / Fahrtrichtung / Gleisabschnitt
+     * aufgerufen werden. Findet beim Durchfahren einer Messstrecke eine
+     * Aenderung von Fahrstufe / Fahrtrichtung statt, kann diese Durchfahrt
+     * nicht ausgewertet werden!
      */
-    public void updatedFahrtparameter() {
-        if (gleisabschnitt.isMessstrecke()) {
-            this.error = true;
-        }
-    }
-
+//    public void updatedFahrtstatus() {
+//        System.out.println("$");
+//        Gleisabschnitt g = Fahrtstatus.getFahrtstatus().gleisabschnitt;
+//        // Aenderung des Gleisabschnitts
+//        if (!g.equals(this.gleisabschnitt)) {
+//            updateGleis(g);
+//            return;
+//        }
+//        // Aenderung von Fahrstufe / Fahrtrichtung
+//        if (gleisabschnitt.isMessstrecke()) {
+//            this.error = true;
+//        }
+//    }
     private void geschwindigkeitBerechnen() {
         long t = System.currentTimeMillis() - startzeit;
         double s = gleisabschnitt.getLaenge();
@@ -139,9 +126,11 @@ public class Messung {
             messreihe[fstat][fs][1] += t;
             // Gui Diagramm aktualisieren
             gleisabschnitt.setLetzteGemesseneGeschwindigkeit(v);
+            System.out.println("> " + v);
         } else {
             // auf fehlerhafte Messung hinweisen
             gleisabschnitt.setLetzteGemesseneGeschwindigkeit(-1);
+            System.out.println("> " + (-1));
         }
     }
 
@@ -156,5 +145,10 @@ public class Messung {
 
     public int getFahrstufe() {
         return fahrstufe;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println("^changed");
     }
 }

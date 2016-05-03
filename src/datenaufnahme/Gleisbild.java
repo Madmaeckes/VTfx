@@ -26,6 +26,26 @@ public class Gleisbild {
      */
     private Gleisbild() {
         gleisabschnitte = new HashSet<>();
+        Gleisabschnitt g1 = new Gleisabschnitt(0,2);
+        Gleisabschnitt g2 = new Gleisabschnitt(0,3);
+        Gleisabschnitt g3 = new Gleisabschnitt(0,4);
+        Gleisabschnitt g4 = new Gleisabschnitt(0,5);
+        Gleisabschnitt g5 = new Gleisabschnitt(1,1);
+        g1.setLaenge(10);
+        g2.setLaenge(10);
+        g3.setLaenge(10);
+        g4.setLaenge(10);
+        g5.setLaenge(10);
+        g1.setMessstrecke(false);
+        g2.setMessstrecke(true);
+        g3.setMessstrecke(true);
+        g4.setMessstrecke(true);
+        g5.setMessstrecke(false);
+        add(g1);
+        add(g2);
+        add(g3);
+        add(g4);
+        add(g5);
     }
 
     /**

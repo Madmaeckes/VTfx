@@ -5,12 +5,14 @@
  */
 package datenaufnahme;
 
+import java.util.Observable;
+
 /**
  * Momentane Position, Fahrtrichtung und Fahrstufe der Lok.
- * 
+ *
  * @author Manuel Weber
  */
-public class Fahrtstatus {
+public class Fahrtstatus extends Observable {
 
     // Singelton-Pattern --------------------------------------------
     /**
@@ -23,17 +25,19 @@ public class Fahrtstatus {
      */
     private Fahrtstatus() {
         gleisabschnitt = new Gleisabschnitt(0, 0);
-        vorherigerGleisabschnitt = gleisabschnitt;     
+        vorherigerGleisabschnitt = gleisabschnitt;
     }
 
     /**
-     * Gibt das Fahrtstatus-Objekt zurueck.
+     * Gibt das Fahrtstatus-Objekt zurueck. Erzeugt (wenn noch nicht vorhanden
+     * das Singleton-Objekt und das dazugehoerige Messungs-Objekt.
      *
      * @return Fahrtstatus-Objekt (Singleton-Objekt)
      */
     public static synchronized Fahrtstatus getFahrtstatus() {
         if (fahrtstatusInstanz == null) {
             fahrtstatusInstanz = new Fahrtstatus();
+            fahrtstatusInstanz.addObserver(new Messung());
         }
         return fahrtstatusInstanz;
     }
@@ -46,40 +50,44 @@ public class Fahrtstatus {
     }
 
     // Ende Singleton-Pattern ---------------------------------------
-   
     private int fahrstufe;
 
     private boolean reverse;
-    
+
     public Gleisabschnitt gleisabschnitt;
-    
+
     private Gleisabschnitt vorherigerGleisabschnitt;
-    
+
     /**
-     * Aktualisiert den aktiven Gleisabschnitt, 
-     * falls ein zulaessiger Wechsel stattfand.
+     * Aktualisiert den aktiven Gleisabschnitt, falls ein zulaessiger Wechsel
+     * stattfand.
+     *
      * @param adrRMX
-     * @param bit 
+     * @param bit
      */
     public void updateGleisabschnitt(int adrRMX, int bit) {
         Gleisabschnitt g = new Gleisabschnitt(adrRMX, bit);
-          
+
         // nur nachfolgenden Gleisabschnitt zulassen
-        if (g.equals(this.gleisabschnitt)) 
+        if (g.equals(this.gleisabschnitt)) {
             return;
-        if (g.equals(this.vorherigerGleisabschnitt))
+        }
+        if (g.equals(this.vorherigerGleisabschnitt)) {
             return;
-           
+        }
+
         //aktuellen und letzten GLeisabschnitt merken
         this.vorherigerGleisabschnitt = new Gleisabschnitt(
                 this.gleisabschnitt.getAdrRMX(),
                 this.gleisabschnitt.getBit());
         this.gleisabschnitt = new Gleisabschnitt(adrRMX, bit);
+        setChanged();
+        notifyObservers();
         System.out.println("Gleisabshcnitt: " + adrRMX + "-" + bit);
-        System.out.println("[" +this.gleisabschnitt.getAdrRMX() 
-                        + "-" + this.gleisabschnitt.getBit() + "  "
-                       +this.vorherigerGleisabschnitt.getAdrRMX() 
-                        + "-" + this.vorherigerGleisabschnitt.getBit() + "]");
+        System.out.println("[" + this.gleisabschnitt.getAdrRMX()
+                + "-" + this.gleisabschnitt.getBit() + "  "
+                + this.vorherigerGleisabschnitt.getAdrRMX()
+                + "-" + this.vorherigerGleisabschnitt.getBit() + "]");
     }
 
     /* Getter & Setter */
@@ -90,6 +98,8 @@ public class Fahrtstatus {
     public void setFahrstufe(int fahrstufe) {
         this.fahrstufe = fahrstufe;
         System.out.println("Fahrstufe: " + fahrstufe);
+//        setChanged();
+//        notifyObservers();
     }
 
     public boolean isReverse() {
@@ -103,5 +113,7 @@ public class Fahrtstatus {
         } else {
             System.out.println("vorwärts");
         }
+//        setChanged();
+//        notifyObservers();
     }
 }
