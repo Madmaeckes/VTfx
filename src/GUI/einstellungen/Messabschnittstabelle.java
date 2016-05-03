@@ -5,6 +5,8 @@
  */
 package GUI.einstellungen;
 
+import datenaufnahme.Gleisabschnitt;
+import datenaufnahme.Gleisbild;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -53,7 +55,7 @@ public class Messabschnittstabelle extends VBox {
 
     public Messabschnittstabelle() {
 
-        table.setEditable(true);
+        table.setEditable(false);
         table.setPrefHeight(300);
         table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
@@ -185,6 +187,8 @@ public class Messabschnittstabelle extends VBox {
                         addBit.getText(),
                         addLaenge.getText(),
                         addIstMessstrecke.isSelected()));
+                Gleisabschnitt gleisabschnitt = new Gleisabschnitt(Integer.parseInt(addAdresse.getText()), Integer.parseInt(addBit.getText()));
+                Gleisbild.getGleisbild().add(gleisabschnitt);
                 addAdresse.clear();
                 addBit.clear();
                 addLaenge.clear();
@@ -250,7 +254,7 @@ public class Messabschnittstabelle extends VBox {
             this.istMessstrecke.set(istMessstrecke);
         }
 
-       // @SuppressWarnings("unused")
+        // @SuppressWarnings("unused")
         public SimpleBooleanProperty istMessstreckeProperty() {
             return istMessstrecke;
         }
