@@ -1,16 +1,19 @@
 /* ....Show License.... */
 package GUI.geschwindigkeitsanzeige;
- 
+
 import javafx.scene.Parent;
 import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Shear;
- 
+
 /**
  * Simple 7 segment LED style digit. It supports the numbers 0 through 9.
+ *
+ * @author Manuel Eble
  */
 public class Digit extends Parent {
+
     //Zahlen 1-9, 10 steht fuer Zahl aus
     private static final boolean[][] DIGIT_COMBINATIONS = new boolean[][]{
         new boolean[]{true, false, true, true, true, true, true},
@@ -33,11 +36,11 @@ public class Digit extends Parent {
         new Polygon(44, 12, 54, 2, 54, 52, 44, 47),
         new Polygon(0, 56, 10, 61, 10, 96, 0, 106),
         new Polygon(44, 61, 54, 56, 54, 106, 44, 96)};
-    private final Color onColor;
+    private Color onColor;
     private final Color offColor;
     private final Effect onEffect;
     private final Effect offEffect;
- 
+
     public Digit(Color onColor, Color offColor, Effect onEffect, Effect offEffect) {
         this.onColor = onColor;
         this.offColor = offColor;
@@ -47,7 +50,7 @@ public class Digit extends Parent {
         getTransforms().add(new Shear(-0.1, 0));
         showNumber(0);
     }
- 
+
     public final void showNumber(Integer num) {
         if (num < 0 || num > 10) {
             num = 0; // default to 0 for non-valid numbers
@@ -56,5 +59,9 @@ public class Digit extends Parent {
             polygons[i].setFill(DIGIT_COMBINATIONS[num][i] ? onColor : offColor);
             polygons[i].setEffect(DIGIT_COMBINATIONS[num][i] ? onEffect : offEffect);
         }
+    }
+
+    public void setFarbe(Color onColor) {
+        this.onColor = onColor;
     }
 }

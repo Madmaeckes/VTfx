@@ -5,8 +5,11 @@
  */
 package GUI;
 
+import java.net.URL;
 import javafx.scene.Scene;
+import static javafx.scene.input.DataFormat.URL;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 
 /**
@@ -47,7 +50,7 @@ public class Fenster {
     public Reiterleiste getReiterleiste() {
         return reiterleiste;
     }
-    
+
     public Footer getFooter() {
         return footer;
     }
