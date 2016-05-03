@@ -119,6 +119,7 @@ public class Messung implements java.util.Observer {
     }
 
     /* Getter & Setter */
+    
     public List<Gleisabschnitt> getGleisbild() {
         return gleisbild;
     }
