@@ -31,6 +31,7 @@ import javafx.util.Callback;
 
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+
 /**
  *
  * @author Manuel Eble
@@ -47,7 +48,7 @@ public class Messabschnittstabelle extends VBox {
                     new TabellenModell("1", "01", "21", false)
             );
     private final HBox hbox = new HBox();
-    
+
     private static final DataFormat SERIALIZED_MIME_TYPE = new DataFormat("application/x-java-serialized-object");
 
     public Messabschnittstabelle() {
@@ -98,14 +99,6 @@ public class Messabschnittstabelle extends VBox {
                         t.getTablePosition().getRow())).setLaenge(t.getNewValue());
             }
         });
-
-//        Callback<TableColumn<TabellenModell, Boolean>, TableCell<TabellenModell, Boolean>> booleanCellFactory = 
-//            new Callback<TableColumn<TabellenModell, Boolean>, TableCell<TabellenModell, Boolean>>() {
-//            @Override
-//                public TableCell<TabellenModell, Boolean> call(TableColumn<TabellenModell, Boolean> p) {
-//                    return new BooleanCell();
-//            }
-//        };
         TableColumn<TabellenModell, Boolean> istMessstreckeSpalte = new TableColumn<>("Ist Messstrecke");
         istMessstreckeSpalte.setCellValueFactory(
                 new PropertyValueFactory<TabellenModell, Boolean>("istMessstrecke"));
@@ -216,7 +209,7 @@ public class Messabschnittstabelle extends VBox {
         private final SimpleStringProperty laenge;
         private final SimpleBooleanProperty istMessstrecke;
 
-        private TabellenModell(String adresse, String bit, String laenge, Boolean istMessstrecke) {
+        private TabellenModell(String adresse, String bit, String laenge, boolean istMessstrecke) {
             this.adresse = new SimpleStringProperty(adresse);
             this.bit = new SimpleStringProperty(bit);
             this.laenge = new SimpleStringProperty(laenge);
@@ -255,6 +248,11 @@ public class Messabschnittstabelle extends VBox {
             System.out.println("SET IST MESSSTRECKE");
             System.out.println(istMessstrecke);
             this.istMessstrecke.set(istMessstrecke);
+        }
+
+       // @SuppressWarnings("unused")
+        public SimpleBooleanProperty istMessstreckeProperty() {
+            return istMessstrecke;
         }
     }
 }
