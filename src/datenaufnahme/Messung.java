@@ -148,13 +148,11 @@ public class Messung implements java.util.Observer {
     public void update(Observable o, Object arg) {
         try {
             Gleisabschnitt g = Fahrtstatus.getFahrtstatus().gleisabschnitt;
-            System.out.println("^changed");
             // Aenderung des Gleisabschnitt
             if (!g.equals(gleisabschnitt)) {
                 updateGleis(g);
                 return;
             }
-            System.out.println("..");
             // Aenderung von Fahrstufe / Fahrtrichtung
             if (gleisabschnitt.isMessstrecke()) {
                 System.out.println("error");

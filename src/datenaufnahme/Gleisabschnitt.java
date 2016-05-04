@@ -2,6 +2,8 @@ package datenaufnahme;
 
 /**
  * Kapselt RMX-Kanal und Bit von Gleisabschnitten.
+ * Konstruktor: RMX-Kanal-Adresse, Bit
+ * Setter fuer Laenge und Messstrecke(boolean)
  *
  * @author Manuel Weber
  */
@@ -12,20 +14,17 @@ public class Gleisabschnitt {
     private int bit;
 
     /**
-     *
      * Laenge des Gleisabschnitts in cm.
      */
     private int laenge;
 
     /**
-     *
      * Wahrheitswert, ob es sich bei dem Abschnitt um eine Messstrecke handelt
      * (ansonsten wird nicht gemessen).
      */
     private boolean messstrecke;
 
     /**
-     * 
      * Falls Messreihe und bereits Durchfahrt stattgefunden: gemessene
      * Geschwindigkeit der letzten Durchfahrt
      * /!\ -1 wenn Fehler bei der letzten Messung
