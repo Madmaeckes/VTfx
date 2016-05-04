@@ -19,6 +19,8 @@ public class Gleisbild {
     private Gleisbild() {
         size = 0;
         anzahlMessstrecken = 0;
+
+        //Test-Gleisbild
         Gleisabschnitt g1 = new Gleisabschnitt(0, 2);
         Gleisabschnitt g2 = new Gleisabschnitt(0, 3);
         Gleisabschnitt g3 = new Gleisabschnitt(0, 4);
@@ -55,13 +57,17 @@ public class Gleisbild {
 
     /**
      * Unterbindet das Klonen des Objekts (Singleton)
+     *
+     * @return
+     * @throws java.lang.CloneNotSupportedException
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
 
     // Ende Singleton-Pattern ---------------------------------------
-    private Gleisabschnitt[][] gleise = new Gleisabschnitt[112][10];
+    private final Gleisabschnitt[][] gleise = new Gleisabschnitt[112][10];
 
     /**
      * Anzahl der definierten Gleisabschnitte
@@ -99,16 +105,16 @@ public class Gleisbild {
      * Entfernt einen angelegten Gleisabschnitt aus dem Gleisbild.
      *
      * @param gleisabschnitt
-     * @throws wenn der uebergebene Geisabschnitt nicht im Gleisbild enthalten
-     * ist.
+     * @throws java.lang.NullPointerException wenn der uebergebene Geisabschnitt
+     * nicht im Gleisbild enthalten ist.
      */
-    public void del(Gleisabschnitt gleisabschnitt) throws Exception {
+    public void del(Gleisabschnitt gleisabschnitt) throws NullPointerException {
         int adr = gleisabschnitt.getAdrRMX();
         int bit = gleisabschnitt.getBit();
         Gleisabschnitt g = getGleisabschnitt(adr, bit);
         size--;
         if (g.isMessstrecke()) {
-           anzahlMessstrecken--; //entfernte Messstrecke
+            anzahlMessstrecken--; //entfernte Messstrecke
         }
         gleise[adr][bit] = null;
     }
@@ -123,13 +129,13 @@ public class Gleisbild {
      * @param adr
      * @param bit
      * @return gleisabschnitt mit adr/bit
-     * @throws wenn der uebergebene Geisabschnitt nicht im Gleisbild enthalten
-     * ist.
+     * @throws java.lang.NullPointerException wenn der uebergebene Geisabschnitt
+     * nicht im Gleisbild enthalten ist.
      */
     protected Gleisabschnitt getGleisabschnitt(int adr, int bit)
-            throws Exception {
+            throws NullPointerException {
         if (gleise[adr][bit] == null) {
-            throw new Exception("Gleisabschnitt nicht gefunden.");
+            throw new NullPointerException("Gleisabschnitt nicht gefunden.");
         }
         return gleise[adr][bit];
     }
@@ -138,7 +144,7 @@ public class Gleisbild {
      * @return Anzahl aller angelegten Gleisabschnitte
      */
     public int size() {
-        return size();
+        return size;
     }
 
     /**

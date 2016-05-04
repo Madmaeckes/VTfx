@@ -1,4 +1,3 @@
-
 package datenaufnahme;
 
 import java.util.Observable;
@@ -63,14 +62,18 @@ public class Fahrtstatus extends Observable {
      */
     public void updateGleisabschnitt(int adrRMX, int bit) {
         Gleisabschnitt g;
-        g = Gleisbild.getGleisbild().getGleisabschnitt(adrRMX, bit);
-        if (g == null) {
+        try {
+            g = Gleisbild.getGleisbild().getGleisabschnitt(adrRMX, bit);
+        } catch (NullPointerException e) {
+            //unbekannten Gleisabschnitt gefunden
             g = new Gleisabschnitt(adrRMX, bit);
             System.out.println("new Gleis");
             Gleisbild.getGleisbild().add(g);
+            //ggf. Gui updaten
         }
 
-        // nur nachfolgenden Gleisabschnitt zulassen
+        /* Besetzmeldungsoptimierung (Einfahren in momentan besetzten
+        oder vorherigen Gleisabschnitt ist logisch ausgeschlossen) */
         if (g.equals(this.gleisabschnitt)) {
             return;
         }
