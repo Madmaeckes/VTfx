@@ -10,8 +10,8 @@ package datenaufnahme;
 public class Gleisabschnitt {
 
     /* RMX-Kanal und Bit-Zahl */
-    private int adrRMX;
-    private int bit;
+    private final int adrRMX;
+    private final int bit;
 
     /**
      * Laenge des Gleisabschnitts in cm.
@@ -34,6 +34,8 @@ public class Gleisabschnitt {
     public Gleisabschnitt(int adrRMX, int bit) {
         this.adrRMX = adrRMX;
         this.bit = bit;
+        this.laenge = 0;
+        this.messstrecke = false;
     }
 
     @Override
@@ -50,16 +52,8 @@ public class Gleisabschnitt {
         return adrRMX;
     }
 
-    public void setAdrRMX(int adrRMX) {
-        this.adrRMX = adrRMX;
-    }
-
     public int getBit() {
         return bit;
-    }
-
-    public void setBit(int bit) {
-        this.bit = bit;
     }
 
     public double getLaenge() {

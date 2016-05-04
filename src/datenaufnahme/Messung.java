@@ -104,7 +104,6 @@ public class Messung implements java.util.Observer {
         long t = System.currentTimeMillis() - startzeit;
         double s = gleisabschnitt.getLaenge();
         double v = s / t;
-        GuiAktualisieren.setMomentaneGeschw(v);
         if (!error) {
             // Zu den Messwerten hinzufügen wenn ohne Fahrdatenaenderung
             int fstat = 0;
@@ -114,7 +113,12 @@ public class Messung implements java.util.Observer {
             int fs = Fahrtstatus.getFahrtstatus().getFahrstufe();
             messreihe[fstat][fs][0] += s;
             messreihe[fstat][fs][1] += t;
-            // Gui Diagramm aktualisieren
+            // Gui aktualisieren
+            GuiAktualisieren.setMomentaneGeschw(v);
+            double fsv = messreihe[fstat][fs][0] / messreihe[fstat][fs][1];
+            if (fstat == 1)
+                fs = -fs;
+            GuiAktualisieren.setGeschwFuerFahrstufe(String.valueOf(fs), fsv);
             gleisabschnitt.setLetzteGemesseneGeschwindigkeit(v);
             System.out.println("> " + v);
         } else {

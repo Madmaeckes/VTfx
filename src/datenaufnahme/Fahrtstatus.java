@@ -66,6 +66,8 @@ public class Fahrtstatus extends Observable {
         g = Gleisbild.getGleisbild().getGleisabschnitt(adrRMX, bit);
         if (g == null) {
             g = new Gleisabschnitt(adrRMX, bit);
+            System.out.println("new Gleis");
+            Gleisbild.getGleisbild().add(g);
         }
 
         // nur nachfolgenden Gleisabschnitt zulassen
