@@ -16,7 +16,7 @@ public class Gleisabschnitt {
     /**
      * Laenge des Gleisabschnitts in cm.
      */
-    private int laenge;
+    private double laenge;
 
     /**
      * Wahrheitswert, ob es sich bei dem Abschnitt um eine Messstrecke handelt
@@ -62,11 +62,11 @@ public class Gleisabschnitt {
         this.bit = bit;
     }
 
-    public int getLaenge() {
+    public double getLaenge() {
         return laenge;
     }
 
-    public void setLaenge(int laenge) {
+    public void setLaenge(double laenge) {
         this.laenge = laenge;
     }
 
