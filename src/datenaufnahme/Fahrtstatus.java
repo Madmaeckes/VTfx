@@ -66,7 +66,11 @@ public class Fahrtstatus extends Observable {
      * @param bit
      */
     public void updateGleisabschnitt(int adrRMX, int bit) {
-        Gleisabschnitt g = new Gleisabschnitt(adrRMX, bit);
+        Gleisabschnitt g;
+        g = Gleisbild.getGleisbild().getGleisabschnitt(adrRMX, bit);
+        if (g == null) {
+            g = new Gleisabschnitt(adrRMX, bit);
+        }
 
         // nur nachfolgenden Gleisabschnitt zulassen
         if (g.equals(this.gleisabschnitt)) {
@@ -76,15 +80,15 @@ public class Fahrtstatus extends Observable {
             return;
         }
 
-        //aktuellen und letzten GLeisabschnitt merken
+        //aktuellen und letzten Gleisabschnitt merken
         this.vorherigerGleisabschnitt = new Gleisabschnitt(
                 this.gleisabschnitt.getAdrRMX(),
                 this.gleisabschnitt.getBit());
-        this.gleisabschnitt = new Gleisabschnitt(adrRMX, bit);
+        this.gleisabschnitt = g;
         setChanged();
         notifyObservers();
-        System.out.println("Gleisabshcnitt: " + adrRMX + "-" + bit);
-        System.out.println("[" + this.gleisabschnitt.getAdrRMX()
+        System.out.print("Gleisabshcnitt: " + adrRMX + "-" + bit);
+        System.out.println("  [" + this.gleisabschnitt.getAdrRMX()
                 + "-" + this.gleisabschnitt.getBit() + "  "
                 + this.vorherigerGleisabschnitt.getAdrRMX()
                 + "-" + this.vorherigerGleisabschnitt.getBit() + "]");
@@ -98,8 +102,8 @@ public class Fahrtstatus extends Observable {
     public void setFahrstufe(int fahrstufe) {
         this.fahrstufe = fahrstufe;
         System.out.println("Fahrstufe: " + fahrstufe);
-//        setChanged();
-//        notifyObservers();
+        setChanged();
+        notifyObservers();
     }
 
     public boolean isReverse() {
@@ -113,7 +117,7 @@ public class Fahrtstatus extends Observable {
         } else {
             System.out.println("vorwärts");
         }
-//        setChanged();
-//        notifyObservers();
+        setChanged();
+        notifyObservers();
     }
 }

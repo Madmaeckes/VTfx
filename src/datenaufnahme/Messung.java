@@ -22,6 +22,8 @@ public class Messung implements java.util.Observer {
         gleisbild = new ArrayList<>();
         messreihe = new double[2][999][2];
         System.out.println("new!");
+        // Null-Pointer beim Startgleis verhindern
+        gleisabschnitt = new Gleisabschnitt(-1, -1);
     }
 
     private List<Gleisabschnitt> gleisbild;
@@ -77,15 +79,19 @@ public class Messung implements java.util.Observer {
      * @param g jetzt besetzter Gleisabschnitt
      */
     private void updateGleis(Gleisabschnitt g) {
-        System.out.println("|");
-        if (messungAktiv && gleisabschnitt.isMessstrecke()) {
-            geschwindigkeitBerechnen();
+        if (gleisabschnitt.getAdrRMX() != -1) { 
+            //wenn nicht Startgleis
+            if (messungAktiv && gleisabschnitt.isMessstrecke()) {
+                geschwindigkeitBerechnen();
+            }
+            System.out.println(g.isMessstrecke());
+            if (g.isMessstrecke()) {
+                System.out.println("go!");
+                startzeit = System.currentTimeMillis();
+                error = false;
+            }
         }
-        if (g.isMessstrecke()) {
-            System.out.println("go!");
-            startzeit = System.currentTimeMillis();
-            error = false;
-        }
+        gleisabschnitt = g;
     }
 
     /**
@@ -118,6 +124,7 @@ public class Messung implements java.util.Observer {
         }
     }
 
+
     /* Getter & Setter */
     public List<Gleisabschnitt> getGleisbild() {
         return gleisbild;
@@ -139,16 +146,22 @@ public class Messung implements java.util.Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("^changed");
-//        Gleisabschnitt g = Fahrtstatus.getFahrtstatus().gleisabschnitt;
-//        // Aenderung des Gleisabschnitts
-//        if (!g.equals(this.gleisabschnitt)) {
-//            updateGleis(g);
-//            return;
-//        }
-//        // Aenderung von Fahrstufe / Fahrtrichtung
-//        if (gleisabschnitt.isMessstrecke()) {
-//            this.error = true;
-//        }
+        try {
+            Gleisabschnitt g = Fahrtstatus.getFahrtstatus().gleisabschnitt;
+            System.out.println("^changed");
+            // Aenderung des Gleisabschnitt
+            if (!g.equals(gleisabschnitt)) {
+                updateGleis(g);
+                return;
+            }
+            System.out.println("..");
+            // Aenderung von Fahrstufe / Fahrtrichtung
+            if (gleisabschnitt.isMessstrecke()) {
+                System.out.println("error");
+                this.error = true;
+            }
+        } catch (Exception e) {
+            System.out.println("!!! " + e.getLocalizedMessage());
+        }
     }
 }
