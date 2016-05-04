@@ -18,6 +18,7 @@ public class Gleisbild {
      */
     private Gleisbild() {
         size = 0;
+        anzahlMessstrecken = 0;
         Gleisabschnitt g1 = new Gleisabschnitt(0, 2);
         Gleisabschnitt g2 = new Gleisabschnitt(0, 3);
         Gleisabschnitt g3 = new Gleisabschnitt(0, 4);
@@ -60,30 +61,56 @@ public class Gleisbild {
     }
 
     // Ende Singleton-Pattern ---------------------------------------
-    private Gleisabschnitt[][] g = new Gleisabschnitt[112][10];
+    private Gleisabschnitt[][] gleise = new Gleisabschnitt[112][10];
 
+    /**
+     * Anzahl der definierten Gleisabschnitte
+     */
     private int size;
 
     /**
-     * Fuegt den uebergebenen Gleisabschnitt am Ende der vorhandenen Gleise
-     * hinzu.
+     * Anzahl der definierten Messstrecken
+     */
+    private int anzahlMessstrecken;
+
+    /**
+     * Fuegt den uebergebenen Gleisabschnitt dem Gleisbild hinzu. Existiert
+     * bereits ein Gleisabschnitt mit gleicher Adresse/Bit-Zahl, so wird dieser
+     * ueberschrieben.
      *
      * @param gleisabschnitt
      */
     public void add(Gleisabschnitt gleisabschnitt) {
-        g[gleisabschnitt.getAdrRMX()][gleisabschnitt.getBit()]
-                = gleisabschnitt;
-        size++;
+        int adr = gleisabschnitt.getAdrRMX();
+        int bit = gleisabschnitt.getBit();
+        if (gleise[adr][bit] == null) {
+            size++; //neu angelegt
+        }
+        if (gleisabschnitt.isMessstrecke()) {
+            if (gleise[adr][bit] == null || !gleise[adr][bit].isMessstrecke()) {
+                //Messstrecke neu angelegt oder zuvor keine Messstrecke
+                anzahlMessstrecken++;
+            }
+        }
+        gleise[adr][bit] = gleisabschnitt;
     }
 
     /**
      * Entfernt einen angelegten Gleisabschnitt aus dem Gleisbild.
-     * @param gleisabschnitt 
+     *
+     * @param gleisabschnitt
+     * @throws wenn der uebergebene Geisabschnitt nicht im Gleisbild enthalten
+     * ist.
      */
-    public void del(Gleisabschnitt gleisabschnitt) {
-        g[gleisabschnitt.getAdrRMX()][gleisabschnitt.getBit()]
-                = null;
+    public void del(Gleisabschnitt gleisabschnitt) throws Exception {
+        int adr = gleisabschnitt.getAdrRMX();
+        int bit = gleisabschnitt.getBit();
+        Gleisabschnitt g = getGleisabschnitt(adr, bit);
         size--;
+        if (g.isMessstrecke()) {
+           anzahlMessstrecken--; //entfernte Messstrecke
+        }
+        gleise[adr][bit] = null;
     }
 
     /**
@@ -96,9 +123,15 @@ public class Gleisbild {
      * @param adr
      * @param bit
      * @return gleisabschnitt mit adr/bit
+     * @throws wenn der uebergebene Geisabschnitt nicht im Gleisbild enthalten
+     * ist.
      */
-    protected Gleisabschnitt getGleisabschnitt(int adr, int bit) {
-        return g[adr][bit];
+    protected Gleisabschnitt getGleisabschnitt(int adr, int bit)
+            throws Exception {
+        if (gleise[adr][bit] == null) {
+            throw new Exception("Gleisabschnitt nicht gefunden.");
+        }
+        return gleise[adr][bit];
     }
 
     /**
@@ -106,5 +139,12 @@ public class Gleisbild {
      */
     public int size() {
         return size();
+    }
+
+    /**
+     * @return Anzahl aller angelegten Messstrecken
+     */
+    public int getAnzahlMessstrecken() {
+        return anzahlMessstrecken;
     }
 }

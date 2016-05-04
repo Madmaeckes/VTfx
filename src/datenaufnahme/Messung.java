@@ -60,10 +60,20 @@ public class Messung implements java.util.Observer {
      * Sammlung von gemessener Gesamtstrecke und Gesamtzeit je
      * Fahrstufe/Fahrtrichtung: [fahrtrichtung][fahrstufe][s bzw. t]
      * ([2][999][2], 0 = vorwaerts bzw. s, 1 = rueckwaerts bzw. t)
+     *
+     * @throws wenn <3 Gleisabschnitte oder keine Messstrecke vorhanden
      */
     private double[][][] messreihe;
 
-    public void start() {
+    public void start() throws Exception {
+        if (Gleisbild.getGleisbild().size() < 3) {
+            throw new Exception("Eine Messung kann erst ab min. 3 "
+                    + "angelegten Gleisabschnitten gestartet werden!");
+        }
+        if (Gleisbild.getGleisbild().getAnzahlMessstrecken() < 1) {
+            throw new Exception("Eine Messung kann erst ab min. einer "
+                    + "angelegten Messstrecke gestartet werden!");
+        }
         this.messungAktiv = true;
     }
 
@@ -79,7 +89,7 @@ public class Messung implements java.util.Observer {
      * @param g jetzt besetzter Gleisabschnitt
      */
     private void updateGleis(Gleisabschnitt g) {
-        if (gleisabschnitt.getAdrRMX() != -1) { 
+        if (gleisabschnitt.getAdrRMX() != -1) {
             //wenn nicht Startgleis
             if (messungAktiv && gleisabschnitt.isMessstrecke()) {
                 geschwindigkeitBerechnen();
@@ -116,8 +126,9 @@ public class Messung implements java.util.Observer {
             // Gui aktualisieren
             GuiAktualisieren.setMomentaneGeschw(v);
             double fsv = messreihe[fstat][fs][0] / messreihe[fstat][fs][1];
-            if (fstat == 1)
+            if (fstat == 1) {
                 fs = -fs;
+            }
             GuiAktualisieren.setGeschwFuerFahrstufe(String.valueOf(fs), fsv);
             gleisabschnitt.setLetzteGemesseneGeschwindigkeit(v);
             System.out.println("> " + v);
