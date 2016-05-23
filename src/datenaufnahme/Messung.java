@@ -31,7 +31,7 @@ public class Messung implements java.util.Observer {
     /**
      * Wahrheitswert, ob momentan gemessen werden soll
      */
-    private boolean messungAktiv = true;
+    private boolean messungAktiv = false;
 
     /**
      * momentan befahrener Gleisabschnitt (evtl. mit aktiver Messung)

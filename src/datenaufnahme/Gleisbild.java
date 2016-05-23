@@ -89,6 +89,8 @@ public class Gleisbild {
     public void add(Gleisabschnitt gleisabschnitt) {
         int adr = gleisabschnitt.getAdrRMX();
         int bit = gleisabschnitt.getBit();
+        System.out.println("added Gleis " + adr + "-" + bit + 
+                " Messstrecke=" + gleisabschnitt.isMessstrecke());
         if (gleise[adr][bit] == null) {
             size++; //neu angelegt
         }

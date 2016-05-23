@@ -187,7 +187,12 @@ public class Messabschnittstabelle extends VBox {
                         addBit.getText(),
                         addLaenge.getText(),
                         addIstMessstrecke.isSelected()));
-                Gleisabschnitt gleisabschnitt = new Gleisabschnitt(Integer.parseInt(addAdresse.getText()), Integer.parseInt(addBit.getText()));
+                Gleisabschnitt gleisabschnitt = new Gleisabschnitt(
+                        Integer.parseInt(addAdresse.getText()),
+                        Integer.parseInt(addBit.getText())
+                );
+                gleisabschnitt.setMessstrecke(addIstMessstrecke.isSelected());
+                gleisabschnitt.setLaenge(Double.parseDouble(addLaenge.getText()));
                 Gleisbild.getGleisbild().add(gleisabschnitt);
                 addAdresse.clear();
                 addBit.clear();
