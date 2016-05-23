@@ -14,6 +14,11 @@ public class Fahrtstatus extends Observable {
      * Singelton-Objekt
      */
     private static Fahrtstatus fahrtstatusInstanz;
+    
+    /**
+     * Singleton-Objekt der zugehoerigen Messung
+     */
+    private static Messung messung;
 
     /**
      * Privater Konstruktor verhindert die Instanziierung von aussen.
@@ -32,7 +37,8 @@ public class Fahrtstatus extends Observable {
     public static synchronized Fahrtstatus getFahrtstatus() {
         if (fahrtstatusInstanz == null) {
             fahrtstatusInstanz = new Fahrtstatus();
-            fahrtstatusInstanz.addObserver(new Messung());
+            messung = new Messung();
+            fahrtstatusInstanz.addObserver(messung);
         }
         return fahrtstatusInstanz;
     }
@@ -120,5 +126,9 @@ public class Fahrtstatus extends Observable {
         }
         setChanged();
         notifyObservers();
+    }
+
+    public static Messung getMessung() {
+        return messung;
     }
 }

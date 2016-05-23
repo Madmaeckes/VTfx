@@ -111,8 +111,9 @@ public class Messung implements java.util.Observer {
      * der wert zu den Fahrstufen-Messwerten hinzugefuegt.
      */
     private void geschwindigkeitBerechnen() {
-        long t = System.currentTimeMillis() - startzeit;
+        double t = (double)(System.currentTimeMillis() - startzeit) / 1000;
         double s = gleisabschnitt.getLaenge();
+        System.out.println("gemessen: " + s +"cm in "+t+"s");
         double v = s / t;
         if (!error) {
             // Zu den Messwerten hinzufügen wenn ohne Fahrdatenaenderung

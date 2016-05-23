@@ -1,11 +1,12 @@
 package vtfx;
 
+import datenaufnahme.Fahrtstatus;
 import java.util.concurrent.TimeoutException;
 import rmx.RMXconnector;
 
 /**
  * Stellt die zentralen Programm-Funktionen zum Aufruf durch die GUI bereit.
- * 
+ *
  * @author Manuel Weber
  */
 public class Funktionen {
@@ -44,4 +45,25 @@ public class Funktionen {
         }
     }
 
+    /**
+     * Startet eine Messung 
+     * @throws Exception wenn keine Verbindung zur RMX-PC-Zentrale besteht
+     *                     oder das Gleisbild nichthinreichend definiert ist.
+     */
+    public static void messungStarten() throws Exception {
+        if (VTfx.rmxVerbindung.getVerbindungsStatus() == RMXconnector.VERBUNDEN) {
+            Fahrtstatus.getFahrtstatus().getMessung().start();
+        } else {
+            throw new Exception ("Nur bei bestehender Verbindung "
+                    + "mit der RMX-PC-Zentrale kann eine Messung "
+                    + "gestartet werden!");
+        }
+    }
+    
+    /**
+     * Stoppt eine laufende Messung
+     */
+    public static void messungStoppen() {
+     Fahrtstatus.getFahrtstatus().getMessung().stop();
+    }
 }

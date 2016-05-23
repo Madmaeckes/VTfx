@@ -117,22 +117,34 @@ public class Header extends GridPane {
         verbindenButton.setOnAction((ActionEvent e) -> {
             verbindenButtonActionPerformed();
         });
+        
+        messungStartenButton.setOnAction((ActionEvent e) -> {
+            messungStartenButtonActionPerformed();
+        });
 
         //  add(menuBar, 0, 0);
         add(toolBar, 0, 0);
     }
 
+    /**
+     * Zeigt eine Fehlermeldung an.
+     * @param e Exception deren Message angezeigt werden soll.
+     */
+    private void popAlert(Exception e) {
+        alert.setAlertType(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(e.getMessage());
+        alert.showAndWait();
+    }
+    
     public void verbindenButtonActionPerformed() {
         if (verbindenButton.getText().equals("Verbinden")) {
             try {
                 GuiAktualisieren.setVerbindungsstatus(1);
                 Funktionen.verbinden();
             } catch (Exception e) {
-                alert.setAlertType(AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText(e.getMessage());
-                alert.showAndWait();
+                popAlert(e);
                 GuiAktualisieren
                         .setVerbindungsstatus(GuiAktualisieren.GETRENNT);
             }
@@ -141,14 +153,18 @@ public class Header extends GridPane {
                 GuiAktualisieren.setVerbindungsstatus(3);
                 Funktionen.trennen();
             } catch (Exception e) {
-                alert.setAlertType(AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText(e.getMessage());
-                alert.showAndWait();
+                popAlert(e);
             }
         }
     }
+    
+     public void messungStartenButtonActionPerformed() {
+         try {
+            Funktionen.messungStarten();
+         } catch (Exception e) {
+             popAlert(e);
+         }
+     }
 
     /**
      * Ändert die Größe eines übergebenen Labels auf die übergebene Größe scale
