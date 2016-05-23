@@ -16,13 +16,13 @@ import javafx.scene.layout.RowConstraints;
  *
  * @author Manuel Eble
  */
-public class Messabschnittslaengen extends GridPane {
+public class Gleisabschnittslaengen extends GridPane {
 
     public Label label;
     public NumberTextField textField;
     public Button button;
 
-    public Messabschnittslaengen() {
+    public Gleisabschnittslaengen() {
         this.setHgap(10);
         setVgap(10);
         

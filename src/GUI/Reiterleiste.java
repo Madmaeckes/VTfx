@@ -5,9 +5,9 @@
  */
 package GUI;
 
-import GUI.einstellungen.Messabschnittstabelle;
-import GUI.einstellungen.Messabschnittslaengen;
-import GUI.einstellungen.Messabschnittstabelle.TabellenModell;
+import GUI.einstellungen.Gleisabschnittstabelle;
+import GUI.einstellungen.Gleisabschnittslaengen;
+import GUI.einstellungen.Gleisabschnittstabelle.TabellenModell;
 import GUI.geschwindigkeitsanzeige.Geschwindigkeitsanzeige;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,8 +30,8 @@ public class Reiterleiste extends TabPane {
 
     private Geschwindigkeitsanzeige geschwindigkeitsanzeige;
     private Button fahrstufeButton;
-    public Messabschnittslaengen messabschnittslaengen;
-    public Messabschnittstabelle messabschnittstabelle;
+    protected Gleisabschnittslaengen messabschnittslaengen;
+    protected Gleisabschnittstabelle messabschnittstabelle;
 
     private HBox digitAnzeige;
 
@@ -61,7 +61,7 @@ public class Reiterleiste extends TabPane {
         });
 
         BorderPane b3 = new BorderPane();
-        messabschnittstabelle = new Messabschnittstabelle();
+        messabschnittstabelle = new Gleisabschnittstabelle();
         b3.setTop(button1);
         b3.setCenter(geschwindigkeitsanzeige);
         b3.setBottom(messabschnittstabelle);

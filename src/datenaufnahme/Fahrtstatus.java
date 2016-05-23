@@ -1,5 +1,6 @@
 package datenaufnahme;
 
+import GUI.GuiAktualisieren;
 import java.util.Observable;
 
 /**
@@ -75,7 +76,8 @@ public class Fahrtstatus extends Observable {
             g = new Gleisabschnitt(adrRMX, bit);
             System.out.println("new Gleis");
             Gleisbild.getGleisbild().add(g);
-            //ggf. Gui updaten
+            //ggf. Gui updaten:
+            GuiAktualisieren.addGleisabschnitt(g);
         }
 
         /* Besetzmeldungsoptimierung (Einfahren in momentan besetzten

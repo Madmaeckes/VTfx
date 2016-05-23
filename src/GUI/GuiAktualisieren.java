@@ -5,7 +5,9 @@
  */
 package GUI;
 
+import GUI.einstellungen.Gleisabschnittstabelle;
 import GUI.geschwindigkeitsanzeige.Geschwindigkeitsanzeige;
+import datenaufnahme.Gleisabschnitt;
 import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -73,6 +75,20 @@ public class GuiAktualisieren {
                 saulenDiagramm.setGeschwFuerFahrstufe(fahrstufe, geschw);
             }
         });
+    }
+    
+    /**
+     * Traegt einen uebergebenen Gleisabschnitt in die Gleisabschnittstabelle ein.
+     * @param gleisabschnitt 
+     */
+    public static void addGleisabschnitt(Gleisabschnitt gleisabschnitt) {
+        Gleisabschnittstabelle tabelle = 
+            vtfx.VTfx.getFenster().getReiterleiste().messabschnittstabelle;
+        tabelle.addTabelleneintrag(Integer.toString(gleisabschnitt.getAdrRMX()), 
+                Integer.toString(gleisabschnitt.getBit()), 
+                Double.toString(gleisabschnitt.getLaenge()), 
+                gleisabschnitt.isMessstrecke() 
+        );
     }
 
     /**

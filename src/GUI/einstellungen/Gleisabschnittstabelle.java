@@ -38,7 +38,7 @@ import javafx.scene.input.TransferMode;
  *
  * @author Manuel Eble
  */
-public class Messabschnittstabelle extends VBox {
+public class Gleisabschnittstabelle extends VBox {
 
     private TableView<TabellenModell> table = new TableView<TabellenModell>();
     private final ObservableList<TabellenModell> data
@@ -53,7 +53,7 @@ public class Messabschnittstabelle extends VBox {
 
     private static final DataFormat SERIALIZED_MIME_TYPE = new DataFormat("application/x-java-serialized-object");
 
-    public Messabschnittstabelle() {
+    public Gleisabschnittstabelle() {
 
         table.setEditable(false);
         table.setPrefHeight(300);
@@ -182,7 +182,7 @@ public class Messabschnittstabelle extends VBox {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                data.add(new TabellenModell(
+               addTabelleneintrag(new TabellenModell(
                         addAdresse.getText(),
                         addBit.getText(),
                         addLaenge.getText(),
@@ -200,15 +200,37 @@ public class Messabschnittstabelle extends VBox {
                 addIstMessstrecke.setSelected(true);
             }
         });
+       
 
         hbox.getChildren().addAll(addAdresse, addBit, addLaenge, addIstMessstrecke, addButton);
         hbox.setHgrow(addIstMessstrecke, Priority.ALWAYS);
         addIstMessstrecke.setMaxWidth(addIstMessstrecke.getPrefWidth());
         hbox.setSpacing(3);
         table.setItems(data);
-        table.getColumns().addAll(adressenSpalte, bitSpalte, laengenSpalte, istMessstreckeSpalte);
+        table.getColumns().addAll(adressenSpalte, bitSpalte, 
+                laengenSpalte, istMessstreckeSpalte);
         getChildren().addAll(table, hbox);
         setSpacing(3);
+    }
+    
+    /**
+     * Traegt eine neue Zeile in die Messabschnittstabelle ein
+     * @param modeldata Daten der neuen Zeile konform mit dem Tabellenmodell
+     */
+     protected void addTabelleneintrag(TabellenModell modeldata) {
+        this.data.add(modeldata);
+    }
+    
+     /**
+      * Traegt eine neue Zeile in die Messabschnittstabelle ein
+      * @param adr
+      * @param bit 
+      * @param laenge der Strecke in cm
+      * @param isMessstrecke Wahrheitswert
+      */
+    public void addTabelleneintrag(String adr, String bit, 
+            String laenge, boolean isMessstrecke) {
+         addTabelleneintrag(new TabellenModell(adr, bit, laenge, isMessstrecke));
     }
 
     public static class TabellenModell {
