@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package vtfx;
 
 import java.util.Locale;
@@ -10,12 +6,14 @@ import java.util.Observable;
 import java.util.prefs.Preferences;
 
 /**
- *
- * @author 612st
+ * Kapselt die Einstellungen des Nutzers und haelt alle Aenderungen an
+ * diesen in der Registry fest.
+ * 
+ * @author Steffen Hirner, Manuel Weber
  */
 public class Einstellungen extends Observable {
     
-//    Singleton-Pattern
+//----    Singleton-Pattern  ---------
 	private static Einstellungen singletonInstanz;
 
 	public static Einstellungen getEinstellungen() {
@@ -25,19 +23,32 @@ public class Einstellungen extends Observable {
 		}
 		return singletonInstanz;
 	}
-        	private Einstellungen() {
-		laden();
-	}
         
-        	/**
+        private Einstellungen() {
+            laden();
+	}
+//---------------------------------------               
+        
+        /**
 	 * Knoten unter dem in der Registy die Einstellungen gespeichert oder
 	 * ausgelesen werden.
 	 */
 	private final Preferences registry = Preferences.userRoot()
 			.node("SOFTWARE").node("VisTrain");
         
+        /*
+         Einstellungsattribute
+        */
+        
         private double massstab;
+        
         private int betriebsart;
+        
+        /**
+         * Wahrheitswert ob neu befahrene, unbekannte Gleisabschnitte
+         * automatisch im Gleisbild ergaenzt werden sollen. 
+         */
+        private boolean gleisexploration;
         
         /**
 	 * Laedt die Einstellungen aus der Registry.
@@ -45,6 +56,8 @@ public class Einstellungen extends Observable {
 	private void laden() {
 		massstab = registry.getDouble("Massstab", 50);
 		betriebsart = registry.getInt("Betriebsart", 0);
+                gleisexploration = registry.
+                        getBoolean("Gleisexploration", false);
         }
 
         public void setMassstab(double massstab) {
@@ -65,4 +78,12 @@ public class Einstellungen extends Observable {
 		return betriebsart;
 	}
 
+        public boolean isGleisexploration() {
+            return gleisexploration;
+        }
+
+        public void setGleisexploration(boolean gleisexploration) {
+            this.gleisexploration = gleisexploration;
+            registry.putBoolean("Gleisexploration", gleisexploration);
+        }       
 }

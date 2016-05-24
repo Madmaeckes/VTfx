@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.SelectionMode;
@@ -33,6 +34,7 @@ import javafx.util.Callback;
 
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import vtfx.Einstellungen;
 
 /**
  *
@@ -220,7 +222,18 @@ public class Gleisabschnittstabelle extends VBox {
          * der Tabelle und dem Gleismodell hinzugefügt werden sollen.
          */
         final CheckBox addIstExplorativ = new CheckBox("Gleisexploration");
-        addIstExplorativ.setSelected(true);
+        addIstExplorativ.setSelected(
+                Einstellungen.getEinstellungen().isGleisexploration());
+        addIstExplorativ.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                if (addIstExplorativ.isSelected()) {
+                    Einstellungen.getEinstellungen().setGleisexploration(true);
+                } else {
+                    Einstellungen.getEinstellungen().setGleisexploration(false);
+                }
+            }
+        });
        
 
         hbox.getChildren().addAll(addAdresse, addBit, addLaenge, 
