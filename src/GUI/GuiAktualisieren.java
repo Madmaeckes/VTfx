@@ -28,6 +28,9 @@ public class GuiAktualisieren {
     public static final int GETRENNT = 4;
 
     private static final Circle roterKreis = new Circle(5, 5, 6, Color.RED);
+    
+    private static Gleisabschnittstabelle gleisabschnittstabelle = 
+            vtfx.VTfx.getFenster().getReiterleiste().messabschnittstabelle;
 
     /**
      * Setzt die momentane Geschwindigkeit, sodass diese von der Klasse
@@ -82,13 +85,21 @@ public class GuiAktualisieren {
      * @param gleisabschnitt 
      */
     public static void addGleisabschnitt(Gleisabschnitt gleisabschnitt) {
-        Gleisabschnittstabelle tabelle = 
-            vtfx.VTfx.getFenster().getReiterleiste().messabschnittstabelle;
-        tabelle.addTabelleneintrag(Integer.toString(gleisabschnitt.getAdrRMX()), 
+        gleisabschnittstabelle.addTabelleneintrag(Integer.toString(gleisabschnitt.getAdrRMX()), 
                 Integer.toString(gleisabschnitt.getBit()), 
                 Double.toString(gleisabschnitt.getLaenge()), 
-                gleisabschnitt.isMessstrecke() 
-        );
+                gleisabschnitt.isMessstrecke());
+    }
+    
+    /**
+     * Traegt einen neuen letzten Messwert in die entsprechende Zeile der
+     * Gleisabschnittstabelle ein.
+     * 
+     * @param g Gleisabschnitt auf dem gemessen wurde
+     * @param v gemessene Geschnidigkeit
+     */
+    public static void updateMesswet(Gleisabschnitt g, double v) {
+        gleisabschnittstabelle.updateMesswert(g, String.valueOf(v) + "cm/s");
     }
 
     /**

@@ -126,6 +126,7 @@ public class Messung implements java.util.Observer {
             messreihe[fstat][fs][1] += t;
             // Gui aktualisieren
             GuiAktualisieren.setMomentaneGeschw(v);
+            GuiAktualisieren.updateMesswet(gleisabschnitt, v);
             double fsv = messreihe[fstat][fs][0] / messreihe[fstat][fs][1];
             if (fstat == 1) {
                 fs = -fs;
