@@ -5,8 +5,6 @@
  */
 package GUI;
 
-import javafx.geometry.Pos;
-import static javafx.geometry.Pos.TOP_LEFT;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
@@ -15,6 +13,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.paint.Color;
 
 /**
+ * A footer which shows status information about the connection and the
+ * measurement.
  *
  * @author Manuel Eble
  */
@@ -35,8 +35,6 @@ public class Footer extends HBox {
         verbindungsstatusLabel.setTextFill(Color.RED);
         region1 = new Region();
         region1.setPrefWidth(200);
-//        messungsstatusLabel.setAlignment(Pos.BASELINE_LEFT);
-//        verbindungsstatusLabel.setAlignment(Pos.BASELINE_RIGHT);
         getChildren().addAll(messungsstatusLabel, region1, verbindungsstatusLabel);
         setHgrow(region1, Priority.ALWAYS);
     }

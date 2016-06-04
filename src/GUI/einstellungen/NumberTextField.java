@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
 /**
- * TextFeld welches als Eingabe ausschließlich Zahlen und eine leange von
+ * TextFeld welches als Eingabe ausschließlich Zahlen mit eine leange von
  * maximal 5 Zeichen erlaubt.
  *
  * @author Manuel Eble

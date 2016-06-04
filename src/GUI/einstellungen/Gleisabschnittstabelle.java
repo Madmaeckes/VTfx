@@ -272,9 +272,9 @@ public class Gleisabschnittstabelle extends VBox {
     public void addTabelleneintrag(String adr, String bit,
             String laenge, boolean isMessstrecke) {
 
-        // element merken zum spaeteren auffinden
         TabellenModell modeldata
                 = new TabellenModell(adr, bit, laenge, isMessstrecke);
+        // Element merken zum spaeteren auffinden
         this.tabellenElemente[Integer.parseInt(adr)][Integer.parseInt(bit)]
                 = modeldata;
 

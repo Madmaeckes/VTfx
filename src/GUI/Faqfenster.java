@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
+ * Creates new stage which shows frequently asked questions.
  *
  * @author Manuel Eble
  */

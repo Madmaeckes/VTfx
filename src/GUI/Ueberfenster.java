@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 
 /**
  *
+ * Class that creates a new stage with a description about the developers.
+ * 
  * @author Manuel Eble
  */
 public class Ueberfenster {
