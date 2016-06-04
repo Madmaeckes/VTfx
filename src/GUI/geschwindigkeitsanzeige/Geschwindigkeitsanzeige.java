@@ -6,6 +6,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.paint.Color;
@@ -26,15 +28,20 @@ public class Geschwindigkeitsanzeige extends Parent {
     private char[] charArray;
 
     private Color onColor;
+    
+    private Label kmhLabel;
 
     public Geschwindigkeitsanzeige(Color offColor) {
+        
+        
         onColor = Color.GREENYELLOW;
         // create effect for on LEDs
         //Glow onEffect = new Glow(1.7f);
-        Glow onEffect = new Glow(0.5);
-        onEffect.setInput(new InnerShadow());
+        Glow onEffect = new Glow(0.1);
+        onEffect.setInput(new InnerShadow(5, Color.BLACK));
+        this.setEffect(onEffect);
         // create effect for on dot LEDs
-        Glow onDotEffect = new Glow(1.7f);
+        Glow onDotEffect = new Glow(0.1);
         onDotEffect.setInput(new InnerShadow(5, Color.BLACK));
         // create effect for off LEDs
         //InnerShadow offEffect = new InnerShadow();
@@ -52,6 +59,13 @@ public class Geschwindigkeitsanzeige extends Parent {
         circle = new Circle(80 * 3 - 23, 100, 7, onColor);
         circle.setEffect(onDotEffect);
         getChildren().add(circle);
+        
+        kmhLabel = new Label("parent");
+        kmhLabel.setLayoutX(5 * 80 - 20);
+      //  kmhLabel.setLayoutY(95);
+        getChildren().add(kmhLabel);
+        Button randomB = new Button("halo");
+        getChildren().add(randomB);
 
 //        // create dots
 //        Group dots = new Group(
