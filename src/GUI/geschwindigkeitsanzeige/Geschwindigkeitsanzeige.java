@@ -64,9 +64,6 @@ public class Geschwindigkeitsanzeige extends Parent {
         kmhLabel.setLayoutX(5 * 80 - 20);
       //  kmhLabel.setLayoutY(95);
         getChildren().add(kmhLabel);
-        Button randomB = new Button("halo");
-        getChildren().add(randomB);
-
 //        // create dots
 //        Group dots = new Group(
 //                new Circle(80 + 54 + 20, 44, 6, onColor),

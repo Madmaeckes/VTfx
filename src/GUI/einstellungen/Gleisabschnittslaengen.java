@@ -27,7 +27,7 @@ public class Gleisabschnittslaengen extends GridPane {
         setVgap(10);
         
         label = new Label("Anzahl Sensoren:");
-        textField = new NumberTextField();
+        textField = new NumberTextField(true);
         button = new Button("Enter");
         button.setOnAction((ActionEvent e) -> {
             setAnzahlSensoren(Integer.parseInt(textField.getText()));
