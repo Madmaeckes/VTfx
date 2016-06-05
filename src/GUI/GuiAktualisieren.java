@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 
 /**
  *
@@ -28,6 +29,10 @@ public class GuiAktualisieren {
     public static final int GETRENNT = 4;
 
     private static final Circle roterKreis = new Circle(5, 5, 6, Color.RED);
+    private static final Polygon gruenerPfeil = new Polygon(new double[]{
+        0, 0,
+        10, 5,
+        0, 10,});
 
     private static Gleisabschnittstabelle gleisabschnittstabelle
             = vtfx.VTfx.getFenster().getReiterleiste().messabschnittstabelle;
@@ -180,5 +185,40 @@ public class GuiAktualisieren {
                 });
                 break;
         };
+    }
+
+    public static void setMessungsstatus(final String messungsstatus) {
+
+        Button messungStartenButton = vtfx.VTfx.getFenster().getHeader().getMessungStartenButton();
+        Footer footer = vtfx.VTfx.getFenster().getFooter();
+
+        switch (messungsstatus) {
+            case "MISST":
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        messungStartenButton.setDisable(false);
+                        messungStartenButton.setText("Messung abbrechen");
+                        messungStartenButton.setGraphic(roterKreis);
+                        footer.setMessungsstatus("Misst...");
+                        footer.setMessungsstatusFarbe(Color.GREEN);
+                    }
+                });
+                break;
+            case "MESSUNG_GESTOPPT":
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        messungStartenButton.setDisable(false);
+                        messungStartenButton.setText("Messung starten");
+                        gruenerPfeil.setFill(Color.GREEN);
+                        messungStartenButton.setGraphic(gruenerPfeil);
+                        footer.setMessungsstatus("Messung gestoppt");
+                        footer.setMessungsstatusFarbe(Color.RED);
+                    }
+                });
+                break;
+        }
+
     }
 }

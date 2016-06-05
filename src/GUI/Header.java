@@ -143,7 +143,10 @@ public class Header extends GridPane {
         alert.showAndWait();
     }
 
-    //Initiiert Verbindung und aktualisiert ggf. die Gui
+    /**
+     * Initiiert die Verbindung und aktualisiert ggf. die Gui.
+     *
+     */
     public void verbindenButtonActionPerformed() {
         if (verbindenButton.getText().equals("Verbinden")) {
             try {
@@ -164,11 +167,24 @@ public class Header extends GridPane {
         }
     }
 
+    /**
+     * Initiiert die Messung und aktualisiert ggf. die Gui.
+     */
     public void messungStartenButtonActionPerformed() {
+        if (messungStartenButton.getText().equals("Messung starten")) {
         try {
+            GuiAktualisieren.setMessungsstatus("MISST");
             Funktionen.messungStarten();
         } catch (Exception e) {
             popAlert(e);
+        }
+        } else {
+            try {
+                GuiAktualisieren.setMessungsstatus("MESSUNG_GESTOPPT");
+                Funktionen.messungStoppen();
+            } catch (Exception e) {
+                popAlert(e);
+            }
         }
     }
 
