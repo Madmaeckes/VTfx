@@ -28,9 +28,9 @@ public class GuiAktualisieren {
     public static final int GETRENNT = 4;
 
     private static final Circle roterKreis = new Circle(5, 5, 6, Color.RED);
-    
-    private static Gleisabschnittstabelle gleisabschnittstabelle = 
-            vtfx.VTfx.getFenster().getReiterleiste().messabschnittstabelle;
+
+    private static Gleisabschnittstabelle gleisabschnittstabelle
+            = vtfx.VTfx.getFenster().getReiterleiste().messabschnittstabelle;
 
     /**
      * Setzt die momentane Geschwindigkeit, sodass diese von der Klasse
@@ -79,27 +79,39 @@ public class GuiAktualisieren {
             }
         });
     }
-    
+
     /**
-     * Traegt einen uebergebenen Gleisabschnitt in die Gleisabschnittstabelle ein.
-     * @param gleisabschnitt 
+     * Traegt einen uebergebenen Gleisabschnitt in die Gleisabschnittstabelle
+     * ein.
+     *
+     * @param gleisabschnitt
      */
     public static void addGleisabschnitt(Gleisabschnitt gleisabschnitt) {
-        gleisabschnittstabelle.addTabelleneintrag(Integer.toString(gleisabschnitt.getAdrRMX()), 
-                Integer.toString(gleisabschnitt.getBit()), 
-                Double.toString(gleisabschnitt.getLaenge()), 
+        gleisabschnittstabelle.addTabelleneintrag(Integer.toString(gleisabschnitt.getAdrRMX()),
+                Integer.toString(gleisabschnitt.getBit()),
+                Double.toString(gleisabschnitt.getLaenge()),
                 gleisabschnitt.isMessstrecke());
     }
-    
+
     /**
      * Traegt einen neuen letzten Messwert in die entsprechende Zeile der
      * Gleisabschnittstabelle ein.
-     * 
+     *
      * @param g Gleisabschnitt auf dem gemessen wurde
      * @param v gemessene Geschnidigkeit
      */
     public static void updateMesswet(Gleisabschnitt g, double v) {
         gleisabschnittstabelle.updateMesswert(g, String.valueOf(v) + "cm/s");
+    }
+
+    /**
+     * Markiert die Zeile in der Gleisabschnittstabelle, die den uebergebenen
+     * Gleisabschnitt g enthaelt.
+     *
+     * @param g
+     */
+    public static void markiereTabellenZeile(Gleisabschnitt g) {
+        gleisabschnittstabelle.markiereZeile(g);
     }
 
     /**
