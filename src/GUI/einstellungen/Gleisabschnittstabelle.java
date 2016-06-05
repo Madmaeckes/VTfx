@@ -7,6 +7,7 @@ package GUI.einstellungen;
 
 import datenaufnahme.Gleisabschnitt;
 import datenaufnahme.Gleisbild;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -15,6 +16,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -172,6 +175,22 @@ public class Gleisabschnittstabelle extends VBox {
                     event.consume();
                 }
             });
+
+            // Kontextmenue
+            final ContextMenu kontextMenu = new ContextMenu();
+            MenuItem loeschenItem = new MenuItem("L\u00f6schen");
+            loeschenItem.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    table.getItems().remove(row.getItem());
+                }
+            });
+            kontextMenu.getItems().addAll(loeschenItem);
+            // Kontextmenue nur fuer nicht-leere Zeilen anzeigen.
+            row.contextMenuProperty().bind(
+                    Bindings.when(Bindings.isNotNull(row.itemProperty()))
+                    .then(kontextMenu)
+                    .otherwise((ContextMenu) null));
 
             return row;
         });
