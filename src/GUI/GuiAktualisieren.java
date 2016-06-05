@@ -70,7 +70,7 @@ public class GuiAktualisieren {
      * @param fahrstufe Bezeichnung der momentanen Fahrstufe als String
      * @param geschw Geschwindigkeit zur übergebenen Fahrstufe als double
      */
-    public static void setGeschwFuerFahrstufe(String fahrstufe, double geschw) {
+    public static void setGeschwFuerFahrstufe(int fahrstufe, double geschw) {
         SaulenDiagramm saulenDiagramm = vtfx.VTfx.getFenster().getReiterleiste().getSaulenDiagramm();
         Platform.runLater(new Runnable() {
             @Override

@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -14,23 +17,15 @@ import javafx.scene.layout.Pane;
 
 /**
  *
- * @author Manuel Eble
+ * @author Manuel Eble, Manuel Weber
  */
 public class SaulenDiagramm extends Pane {
 
-    final BarChart<String, Number> bc;
-    XYChart.Series series1;
-    XYChart.Series series2;
-    XYChart.Series series3;
-    XYChart.Series series4;
+    final private BarChart<String, Number> bc;
+    
+    XYChart.Series series = new XYChart.Series<>();
     final CategoryAxis xAxis = new CategoryAxis();
     final NumberAxis yAxis = new NumberAxis();
-
-    final static String austria = "Austria";
-    final static String brazil = "Brazil";
-    final static String france = "France";
-    final static String italy = "Italy";
-    final static String usa = "USA";
 
     public Button fahrstufeButton;
 
@@ -43,50 +38,17 @@ public class SaulenDiagramm extends Pane {
         bc = new BarChart<>(xAxis, yAxis);
         bc.setTitle("Fahrstufendiagramm");
         xAxis.setLabel("Fahrstufe");
-        yAxis.setLabel("Value");
-
-        series1 = new XYChart.Series();
-        series1.setName("2003");
-        series1.getData().add(new XYChart.Data(austria, 25601.34));
-        series1.getData().add(new XYChart.Data(brazil, 20148.82));
-        series1.getData().add(new XYChart.Data(france, 10000));
-        series1.getData().add(new XYChart.Data(italy, 35407.15));
-        series1.getData().add(new XYChart.Data(usa, 12000));
-
-        series2 = new XYChart.Series();
-        series2.setName("2004");
-        series2.getData().add(new XYChart.Data(austria, 57401.85));
-        series2.getData().add(new XYChart.Data(brazil, 41941.19));
-        series2.getData().add(new XYChart.Data(france, 45263.37));
-        series2.getData().add(new XYChart.Data(italy, 117320.16));
-        series2.getData().add(new XYChart.Data(usa, 14845.27));
-
-        series3 = new XYChart.Series();
-        series3.setName("2005");
-        series3.getData().add(new XYChart.Data(austria, 45000.65));
-        series3.getData().add(new XYChart.Data(brazil, 44835.76));
-        series3.getData().add(new XYChart.Data(france, 18722.18));
-        series3.getData().add(new XYChart.Data(italy, 17557.31));
-        series3.getData().add(new XYChart.Data(usa, 92633.68));
-
+        yAxis.setLabel("Geschwindigkeit");
+            
         this.getChildren().add(bc);
-
-//        Timeline tl = new Timeline();
-//        tl.getKeyFrames().add(new KeyFrame(Duration.millis(5000),
-//                new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent actionEvent) {
-//                for (XYChart.Series<String, Number> series : bc.getData()) {
-//                    for (XYChart.Data<String, Number> data : series.getData()) {
-//                        data.setYValue(Math.random() * 100);
-//                    }
-//                }
-//            }
-//        }));
-//        tl.setCycleCount(Animation.INDEFINITE);
-//        tl.play();
-        bc.getData().addAll(series1, series2, series3);
-
+        this.clear();
+  
+        bc.getData().add(series);
+        bc.getXAxis().setAnimated(false);
+        bc.getXAxis().setAutoRanging(false);
+        bc.getYAxis().setAnimated(true);
+        bc.getYAxis().setAutoRanging(true);
+        bc.setBarGap(-3);
     }
 
     /**
@@ -96,10 +58,18 @@ public class SaulenDiagramm extends Pane {
      * @param fahrstufe Die Fahrstufe in der die Lok fehrt
      * @param geschwindigkeit Die gemessene Geschwindigkeit der Lok
      */
-    public void setGeschwFuerFahrstufe(String fahrstufe, double geschwindigkeit) {
-        series4 = new XYChart.Series();
-        series4.setName(fahrstufe);
-        series4.getData().add(new XYChart.Data(fahrstufe, geschwindigkeit));
-        bc.getData().add(series4);
+    public void setGeschwFuerFahrstufe(int fahrstufe, double geschwindigkeit) {
+
+        series.getData().add(
+                new XYChart.Data(
+                        String.valueOf(fahrstufe), geschwindigkeit));
+        
+        //System.out.println(Arrays.toString(series.getData().toArray()));
+    }
+    
+    public void clear() {
+        System.out.println("cleared");
+        series = new XYChart.Series<>();
+        series.setName("Messung");
     }
 }

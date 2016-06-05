@@ -24,6 +24,9 @@ import javafx.scene.paint.Color;
  */
 public class Reiterleiste extends TabPane {
 
+    int ii = 0;
+    int i = 0;
+    
     private final Tab momentaneGeschwTab;
     private final Tab graphTab;
     private SaulenDiagramm saulenDiagramm;
@@ -46,8 +49,13 @@ public class Reiterleiste extends TabPane {
         fahrstufeButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GuiAktualisieren.setGeschwFuerFahrstufe("F1", 40000);
-                GuiAktualisieren.setGeschwFuerFahrstufe("F2", 55000);
+                
+                for (int i = -120; i <=121; i++)  {
+                    ii = Math.abs(i);
+                
+                GuiAktualisieren.setGeschwFuerFahrstufe(i, ii);
+                }
+                //GuiAktualisieren.setGeschwFuerFahrstufe(2, ii/2);
             }
         });
 
