@@ -131,7 +131,7 @@ public class Messung implements java.util.Observer {
             if (fstat == 1) {
                 fs = -fs;
             }
-            GuiAktualisieren.setGeschwFuerFahrstufe(String.valueOf(fs), fsv);
+            GuiAktualisieren.setGeschwFuerFahrstufe(fs, fsv);
             gleisabschnitt.setLetzteGemesseneGeschwindigkeit(v);
             System.out.println("> " + v);
         } else {

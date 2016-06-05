@@ -5,9 +5,6 @@
  */
 package GUI;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -53,7 +50,7 @@ public class SaulenDiagramm extends Pane {
 
     /**
      * Setzt einen Balken in Höhe der übergebenen Geschwindigkeit für die
-     * übergebene Fahrstufe
+     * übergebene Fahrstufe.
      *
      * @param fahrstufe Die Fahrstufe in der die Lok fehrt
      * @param geschwindigkeit Die gemessene Geschwindigkeit der Lok
@@ -67,9 +64,11 @@ public class SaulenDiagramm extends Pane {
         //System.out.println(Arrays.toString(series.getData().toArray()));
     }
     
+    /**
+     * Leert das monentane Fahrstufendiagramm.
+     */
     public void clear() {
-        System.out.println("cleared");
         series = new XYChart.Series<>();
-        series.setName("Messung");
+        series.setName("Fahrstufenmessung");
     }
 }
