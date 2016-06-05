@@ -6,12 +6,11 @@
 package GUI;
 
 import GUI.einstellungen.Gleisabschnittstabelle;
-import GUI.einstellungen.Gleisabschnittslaengen;
-import GUI.einstellungen.Gleisabschnittstabelle.TabellenModell;
 import GUI.geschwindigkeitsanzeige.Geschwindigkeitsanzeige;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
@@ -29,16 +28,15 @@ public class Reiterleiste extends TabPane {
     
     private final Tab momentaneGeschwTab;
     private final Tab graphTab;
-    private SaulenDiagramm saulenDiagramm;
+    private final SaulenDiagramm saulenDiagramm;
 
-    private Geschwindigkeitsanzeige geschwindigkeitsanzeige;
-    private Button fahrstufeButton;
-    protected Gleisabschnittslaengen messabschnittslaengen;
-    protected Gleisabschnittstabelle messabschnittstabelle;
+    private final Geschwindigkeitsanzeige geschwindigkeitsanzeige;
+    private final Button fahrstufeButton;
+    protected final Gleisabschnittstabelle messabschnittstabelle;
 
-    private HBox digitAnzeige;
+    private final Label testLabel;
 
-    public Reiterleiste() {
+    public Reiterleiste() {        
         setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         momentaneGeschwTab = new Tab("Momentane Geschw.");
         graphTab = new Tab("Säulendiagramm");
@@ -59,24 +57,23 @@ public class Reiterleiste extends TabPane {
             }
         });
 
-        geschwindigkeitsanzeige = new Geschwindigkeitsanzeige(Color.rgb(255, 255, 255));
+        geschwindigkeitsanzeige = new Geschwindigkeitsanzeige();
 
         Button button1 = new Button();
         button1.setOnAction((ActionEvent e) -> {
             GuiAktualisieren.setFarbeFuerDigitalanzeige(Color.CORAL);
-            GuiAktualisieren.setMomentaneGeschw(3.66980);
+            GuiAktualisieren.setMomentaneGeschw(823.66980);
 
         });
 
+        testLabel = new Label("km/h");
+        
         BorderPane b3 = new BorderPane();
         messabschnittstabelle = new Gleisabschnittstabelle();
         b3.setTop(button1);
         b3.setCenter(geschwindigkeitsanzeige);
         b3.setBottom(messabschnittstabelle);
         momentaneGeschwTab.setContent(b3);
-//        messabschnittslaengen = new Messabschnittslaengen();
-//        momentaneGeschwTab.setContent(messabschnittslaengen);
-       // momentaneGeschwTab.setContent(messabschnittstabelle);
         BorderPane b2 = new BorderPane();
         b2.setRight(fahrstufeButton);
         b2.setCenter(saulenDiagramm);

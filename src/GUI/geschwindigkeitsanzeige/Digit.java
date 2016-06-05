@@ -1,4 +1,3 @@
-/* ....Show License.... */
 package GUI.geschwindigkeitsanzeige;
 
 import javafx.scene.Parent;

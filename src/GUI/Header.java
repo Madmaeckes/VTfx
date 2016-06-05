@@ -22,6 +22,7 @@ import javafx.scene.shape.Polygon;
 import vtfx.Funktionen;
 
 /**
+ * Contains the menu.
  *
  * @author Manuel Eble
  */
@@ -53,7 +54,8 @@ public class Header extends GridPane {
 
     public Header() {
 
-//        //Menü
+//        //Drop-Down-Menu//
+//
 //        menuBar = new MenuBar();
 //        file = new Menu("Datei");
 //        edit = new Menu("Über");
@@ -72,7 +74,8 @@ public class Header extends GridPane {
 //        settings.setOnAction((ActionEvent t) -> {
 //            Einstellungsfenster einstellungsfenster = new Einstellungsfenster();
 //        });
-        //Toolbar
+        //  add(menuBar, 0, 0);
+        //Toolbar//
         toolBar = new ToolBar();
         toolBar.setPrefWidth(800);
         verbindenButton = new Button("Verbinden");
@@ -112,22 +115,24 @@ public class Header extends GridPane {
             Faqfenster faqFenster = new Faqfenster();
         });
 
-        toolBar.getItems().addAll(verbindenButton, new Separator(), messungStartenButton, new Separator(), einstellungsLabel, new Separator(), ueberLabel, new Separator(), hilfeLabel);
-
         verbindenButton.setOnAction((ActionEvent e) -> {
             verbindenButtonActionPerformed();
         });
-        
+
         messungStartenButton.setOnAction((ActionEvent e) -> {
             messungStartenButtonActionPerformed();
         });
 
-        //  add(menuBar, 0, 0);
+        //Add elements to toolBar
+        toolBar.getItems().addAll(verbindenButton, new Separator(), messungStartenButton, new Separator(), einstellungsLabel, new Separator(), ueberLabel, new Separator(), hilfeLabel);
+
+        //Add toolBar to header
         add(toolBar, 0, 0);
     }
 
     /**
      * Zeigt eine Fehlermeldung an.
+     *
      * @param e Exception deren Message angezeigt werden soll.
      */
     private void popAlert(Exception e) {
@@ -137,7 +142,8 @@ public class Header extends GridPane {
         alert.setContentText(e.getMessage());
         alert.showAndWait();
     }
-    
+
+    //Initiiert Verbindung und aktualisiert ggf. die Gui
     public void verbindenButtonActionPerformed() {
         if (verbindenButton.getText().equals("Verbinden")) {
             try {
@@ -157,17 +163,17 @@ public class Header extends GridPane {
             }
         }
     }
-    
-     public void messungStartenButtonActionPerformed() {
-         try {
+
+    public void messungStartenButtonActionPerformed() {
+        try {
             Funktionen.messungStarten();
-         } catch (Exception e) {
-             popAlert(e);
-         }
-     }
+        } catch (Exception e) {
+            popAlert(e);
+        }
+    }
 
     /**
-     * Ändert die Größe eines übergebenen Labels auf die übergebene Größe scale
+     * Aendert die Größe eines übergebenen Labels auf die übergebene Größe scale
      *
      * @param l Label dessen Größe geändert werden soll
      * @param scale Größe, wobei 1 für Standardgröße steht

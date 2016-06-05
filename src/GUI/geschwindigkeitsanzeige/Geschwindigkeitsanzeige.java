@@ -1,44 +1,50 @@
-/* ....Show License.... */
 package GUI.geschwindigkeitsanzeige;
 
 import java.util.Calendar;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.util.Duration;
 
 /**
- *
+ * Creates a speedometer out of five digits.
+ * 
  * @author Manuel Eble
  */
 public class Geschwindigkeitsanzeige extends Parent {
 
-    private Calendar calendar = Calendar.getInstance();
-    private Digit[] digits;
-    private Timeline delayTimeline, secondTimeline;
+    private final Digit[] digits;
 
-    private Circle circle;
-    private char[] charArray;
+    private final Circle circle;
 
-    private Color onColor;
+    private final Color onColor;
+    private final Color offColor;
+    private final Glow onEffect;
+    private final Glow offEffect;
+    
+    private Label kmhLabel;
 
-    public Geschwindigkeitsanzeige(Color offColor) {
+    public Geschwindigkeitsanzeige() {
+        
         onColor = Color.GREENYELLOW;
         // create effect for on LEDs
         //Glow onEffect = new Glow(1.7f);
-        Glow onEffect = new Glow(0.5);
-        onEffect.setInput(new InnerShadow());
+        onEffect = new Glow(0.1);
+        onEffect.setInput(new InnerShadow(5, Color.BLACK));
+       // this.setEffect(onEffect);
         // create effect for on dot LEDs
-        Glow onDotEffect = new Glow(1.7f);
+        Glow onDotEffect = new Glow(0.1);
         onDotEffect.setInput(new InnerShadow(5, Color.BLACK));
+        
+        offEffect = new Glow();
+        offEffect.setInput(new InnerShadow(5, Color.LIGHTGREY));
+        
+        offColor = Color.ALICEBLUE;
         // create effect for off LEDs
         //InnerShadow offEffect = new InnerShadow();
-        InnerShadow offEffect = new InnerShadow(1, Color.WHITESMOKE);
+  //      InnerShadow offEffect = new InnerShadow(0, Color.WHITE);
         // create digits
         digits = new Digit[5];
         for (int i = 0; i < 5; i++) {
@@ -52,31 +58,13 @@ public class Geschwindigkeitsanzeige extends Parent {
         circle = new Circle(80 * 3 - 23, 100, 7, onColor);
         circle.setEffect(onDotEffect);
         getChildren().add(circle);
-
-//        // create dots
-//        Group dots = new Group(
-//                new Circle(80 + 54 + 20, 44, 6, onColor),
-//                new Circle(80 + 54 + 17, 64, 6, onColor),
-//                new Circle((80 * 3) + 54 + 20, 44, 6, onColor),
-//                new Circle((80 * 3) + 54 + 17, 64, 6, onColor));
-//        dots.setEffect(onDotEffect);
-//        getChildren().add(dots);
-//        // update digits to current time and start timer to update every second
-//        refreshClocks();
+        
+      //  kmhLabel = new Label("parent");
+      //  kmhLabel.setLayoutX(5 * 80 - 20);
+      //  kmhLabel.setLayoutY(95);
+      //  getChildren().add(kmhLabel);
     }
 
-    private void refreshClocks() {
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        int hours = calendar.get(Calendar.HOUR_OF_DAY);
-        int minutes = calendar.get(Calendar.MINUTE);
-        int seconds = calendar.get(Calendar.SECOND);
-        digits[0].showNumber(hours / 10);
-        digits[1].showNumber(hours % 10);
-        digits[2].showNumber(minutes / 10);
-        digits[3].showNumber(minutes % 10);
-        digits[4].showNumber(seconds / 10);
-        digits[5].showNumber(seconds % 10);
-    }
 
     public void setMomentaneGeschw(double geschw) {
         //Auf zwei Nachkommastellen runden
@@ -102,31 +90,6 @@ public class Geschwindigkeitsanzeige extends Parent {
             digits[2].showNumber(Integer.parseInt(digits2[2]));
             digits[3].showNumber(Integer.parseInt(digits2[4]));
             digits[4].showNumber(Integer.parseInt(digits2[5]));
-        }
-    }
-
-    public void play() {
-        // wait till start of next second then start a timeline to call refreshClocks() every second
-        delayTimeline = new Timeline();
-        delayTimeline.getKeyFrames().add(
-                new KeyFrame(new Duration(1000 - (System.currentTimeMillis() % 1000)), (ActionEvent event) -> {
-                    if (secondTimeline != null) {
-                        secondTimeline.stop();
-                    }
-                    secondTimeline = new Timeline();
-                    secondTimeline.setCycleCount(Timeline.INDEFINITE);
-                    secondTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), (ActionEvent event1) -> {
-                        refreshClocks();
-                    }));
-                    secondTimeline.play();
-                }));
-        delayTimeline.play();
-    }
-
-    public void stop() {
-        delayTimeline.stop();
-        if (secondTimeline != null) {
-            secondTimeline.stop();
         }
     }
 

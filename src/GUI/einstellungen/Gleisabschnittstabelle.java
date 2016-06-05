@@ -7,18 +7,15 @@ package GUI.einstellungen;
 
 import datenaufnahme.Gleisabschnitt;
 import datenaufnahme.Gleisbild;
-import java.util.Arrays;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableRow;
@@ -31,14 +28,13 @@ import javafx.scene.input.DataFormat;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.util.Callback;
 
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import vtfx.Einstellungen;
 
 /**
- *
+ * 
  * @author Manuel Eble
  */
 public class Gleisabschnittstabelle extends VBox {
@@ -52,14 +48,13 @@ public class Gleisabschnittstabelle extends VBox {
                     new TabellenModell("0", "03", "42", true),
                     new TabellenModell("1", "01", "21", false)
             );
-    
+
     /**
-     * Speichert die in die Tabelle eingetragenen Elemente 
-     * sortiert nach Adresse und Bitzahl zum spaeteren auffinden
-     * der passenden Zeile
+     * Speichert die in die Tabelle eingetragenen Elemente sortiert nach Adresse
+     * und Bitzahl zum spaeteren auffinden der passenden Zeile
      */
     private TabellenModell[][] tabellenElemente = new TabellenModell[112][10];
-    
+
     private final HBox hbox = new HBox();
 
     private static final DataFormat SERIALIZED_MIME_TYPE = new DataFormat("application/x-java-serialized-object");
@@ -69,8 +64,7 @@ public class Gleisabschnittstabelle extends VBox {
         table.setEditable(false);
         table.setPrefHeight(300);
         table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        
-        
+
         ///////////////////////
         ///Tabellenspalten////
         /////////////////////
@@ -182,13 +176,13 @@ public class Gleisabschnittstabelle extends VBox {
             return row;
         });
 
-        final NumberTextField addAdresse = new NumberTextField();
+        final NumberTextField addAdresse = new NumberTextField(true, 3, "[0-1]");
         addAdresse.setPromptText("Adresse");
         addAdresse.setMaxWidth(adressenSpalte.getPrefWidth());
-        final NumberTextField addBit = new NumberTextField();
+        final NumberTextField addBit = new NumberTextField(true, 1, "[0-9]");
         addBit.setMaxWidth(bitSpalte.getPrefWidth());
         addBit.setPromptText("Bit");
-        final NumberTextField addLaenge = new NumberTextField();
+        final NumberTextField addLaenge = new NumberTextField(true, 5, "[0-9,]");
         addLaenge.setMaxWidth(laengenSpalte.getPrefWidth());
         addLaenge.setPromptText("Länge");
         final CheckBox addIstMessstrecke = new CheckBox("Messstrecke");
@@ -199,7 +193,7 @@ public class Gleisabschnittstabelle extends VBox {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-               addTabelleneintrag(addAdresse.getText(),
+                addTabelleneintrag(addAdresse.getText(),
                         addBit.getText(),
                         addLaenge.getText(),
                         addIstMessstrecke.isSelected());
@@ -208,7 +202,7 @@ public class Gleisabschnittstabelle extends VBox {
                         Integer.parseInt(addBit.getText())
                 );
                 gleisabschnitt.setMessstrecke(addIstMessstrecke.isSelected());
-                gleisabschnitt.setLaenge(Double.parseDouble(addLaenge.getText()));
+                gleisabschnitt.setLaenge(Double.parseDouble(addLaenge.getText().replaceAll(",", ".")));
                 Gleisbild.getGleisbild().add(gleisabschnitt);
                 addAdresse.clear();
                 addBit.clear();
@@ -216,10 +210,10 @@ public class Gleisabschnittstabelle extends VBox {
                 addIstMessstrecke.setSelected(true);
             }
         });
-        
+
         /**
-         * Checkbox ob neu befahrene, unbekannte Gleisabschnitte automatisch
-         * der Tabelle und dem Gleismodell hinzugefügt werden sollen.
+         * Checkbox ob neu befahrene, unbekannte Gleisabschnitte automatisch der
+         * Tabelle und dem Gleismodell hinzugefügt werden sollen.
          */
         final CheckBox addIstExplorativ = new CheckBox("Gleisexploration");
         addIstExplorativ.setSelected(
@@ -234,20 +228,19 @@ public class Gleisabschnittstabelle extends VBox {
                 }
             }
         });
-       
 
-        hbox.getChildren().addAll(addAdresse, addBit, addLaenge, 
+        hbox.getChildren().addAll(addAdresse, addBit, addLaenge,
                 addIstMessstrecke, addButton, addIstExplorativ);
         hbox.setHgrow(addIstMessstrecke, Priority.ALWAYS);
         addIstMessstrecke.setMaxWidth(addIstMessstrecke.getPrefWidth());
         hbox.setSpacing(3);
         table.setItems(data);
-        table.getColumns().addAll(adressenSpalte, bitSpalte, 
+        table.getColumns().addAll(adressenSpalte, bitSpalte,
                 laengenSpalte, istMessstreckeSpalte, messwertSpalte);
         getChildren().addAll(table, hbox);
         setSpacing(3);
     }
-     
+
     /**
      * @param g Gleisabschnitt dessen zugehoeriger Tabelleneintrag gesucht ist
      * @return Tabelleneintrag mit entsprechender Adresse/Bitzahl
@@ -255,36 +248,36 @@ public class Gleisabschnittstabelle extends VBox {
     private TabellenModell getTabelleneintragOfGleis(Gleisabschnitt g) {
         return tabellenElemente[g.getAdrRMX()][g.getBit()];
     }
-    
+
     /**
-     * Traegt einen neuen letzten Messwert in die 
-     * Tabellenzeile eines Gleisabschnittes ein.
-     * 
+     * Traegt einen neuen letzten Messwert in die Tabellenzeile eines
+     * Gleisabschnittes ein.
+     *
      * @param g Gleisabschnitt mit neuem Messwert
      * @param messwert neu einzutragender Wert
      */
-    public void updateMesswert (Gleisabschnitt g, String messwert) {
+    public void updateMesswert(Gleisabschnitt g, String messwert) {
         TabellenModell modeldata = getTabelleneintragOfGleis(g);
         modeldata.setMesswert(messwert);
     }
-    
-     /**
-      * Traegt eine neue Zeile in die Messabschnittstabelle ein
-      * @param adr
-      * @param bit 
-      * @param laenge der Strecke in cm
-      * @param isMessstrecke Wahrheitswert
-      */
-    public void addTabelleneintrag(String adr, String bit, 
+
+    /**
+     * Traegt eine neue Zeile in die Messabschnittstabelle ein
+     *
+     * @param adr
+     * @param bit
+     * @param laenge der Strecke in cm
+     * @param isMessstrecke Wahrheitswert
+     */
+    public void addTabelleneintrag(String adr, String bit,
             String laenge, boolean isMessstrecke) {
-        
-         // element merken zum spaeteren auffinden
-        TabellenModell modeldata = 
-                new TabellenModell(adr, bit, laenge, isMessstrecke);
-        this.tabellenElemente
-                [Integer.parseInt(adr)][Integer.parseInt(bit)] 
+
+        TabellenModell modeldata
+                = new TabellenModell(adr, bit, laenge, isMessstrecke);
+        // Element merken zum spaeteren auffinden
+        this.tabellenElemente[Integer.parseInt(adr)][Integer.parseInt(bit)]
                 = modeldata;
-        
+
         this.data.add(modeldata);
     }
 
@@ -296,7 +289,7 @@ public class Gleisabschnittstabelle extends VBox {
         private final SimpleBooleanProperty istMessstrecke;
         private final SimpleStringProperty messwert;
 
-        private TabellenModell(String adresse, String bit, String laenge, 
+        private TabellenModell(String adresse, String bit, String laenge,
                 boolean istMessstrecke) {
             this.adresse = new SimpleStringProperty(adresse);
             this.bit = new SimpleStringProperty(bit);
@@ -342,7 +335,7 @@ public class Gleisabschnittstabelle extends VBox {
         public String getMesswert() {
             return messwert.get();
         }
-        
+
         public void setMesswert(String messwert) {
             this.messwert.set(messwert);
         }
