@@ -34,7 +34,7 @@ import javafx.scene.input.TransferMode;
 import vtfx.Einstellungen;
 
 /**
- *
+ * 
  * @author Manuel Eble
  */
 public class Gleisabschnittstabelle extends VBox {
@@ -176,13 +176,13 @@ public class Gleisabschnittstabelle extends VBox {
             return row;
         });
 
-        final NumberTextField addAdresse = new NumberTextField(true);
+        final NumberTextField addAdresse = new NumberTextField(true, 3, "[0-1]");
         addAdresse.setPromptText("Adresse");
         addAdresse.setMaxWidth(adressenSpalte.getPrefWidth());
-        final NumberTextField addBit = new NumberTextField(true);
+        final NumberTextField addBit = new NumberTextField(true, 1, "[0-9]");
         addBit.setMaxWidth(bitSpalte.getPrefWidth());
         addBit.setPromptText("Bit");
-        final NumberTextField addLaenge = new NumberTextField(true);
+        final NumberTextField addLaenge = new NumberTextField(true, 5, "[0-9,]");
         addLaenge.setMaxWidth(laengenSpalte.getPrefWidth());
         addLaenge.setPromptText("Länge");
         final CheckBox addIstMessstrecke = new CheckBox("Messstrecke");
@@ -202,7 +202,7 @@ public class Gleisabschnittstabelle extends VBox {
                         Integer.parseInt(addBit.getText())
                 );
                 gleisabschnitt.setMessstrecke(addIstMessstrecke.isSelected());
-                gleisabschnitt.setLaenge(Double.parseDouble(addLaenge.getText()));
+                gleisabschnitt.setLaenge(Double.parseDouble(addLaenge.getText().replaceAll(",", ".")));
                 Gleisbild.getGleisbild().add(gleisabschnitt);
                 addAdresse.clear();
                 addBit.clear();
