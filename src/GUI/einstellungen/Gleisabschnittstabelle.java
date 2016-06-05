@@ -34,7 +34,7 @@ import javafx.scene.input.TransferMode;
 import vtfx.Einstellungen;
 
 /**
- * 
+ *
  * @author Manuel Eble
  */
 public class Gleisabschnittstabelle extends VBox {
@@ -176,7 +176,7 @@ public class Gleisabschnittstabelle extends VBox {
             return row;
         });
 
-        final NumberTextField addAdresse = new NumberTextField(true, 3, "[0-1]");
+        final NumberTextField addAdresse = new NumberTextField(true, 3, "[0-9]");
         addAdresse.setPromptText("Adresse");
         addAdresse.setMaxWidth(adressenSpalte.getPrefWidth());
         final NumberTextField addBit = new NumberTextField(true, 1, "[0-9]");
@@ -208,6 +208,7 @@ public class Gleisabschnittstabelle extends VBox {
                 addBit.clear();
                 addLaenge.clear();
                 addIstMessstrecke.setSelected(true);
+                markiereZeile(gleisabschnitt);
             }
         });
 
@@ -279,6 +280,17 @@ public class Gleisabschnittstabelle extends VBox {
                 = modeldata;
 
         this.data.add(modeldata);
+    }
+
+    /**
+     * Markiert die Zeile mit dem uebergebenen Gleisabschnitt.
+     *
+     * @param g Gleisabschnitt der momentan befahren wird und dessen Eintrag in
+     * der Tabelle markiert werden soll.
+     */
+    public void markiereZeile(Gleisabschnitt g) {
+        int index = table.getItems().indexOf(getTabelleneintragOfGleis(g));
+        table.getSelectionModel().select(index);
     }
 
     public static class TabellenModell {
