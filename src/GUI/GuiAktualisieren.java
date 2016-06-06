@@ -28,7 +28,6 @@ public class GuiAktualisieren {
     public static final int TRENNT = 3;
     public static final int GETRENNT = 4;
 
-    private static final Circle roterKreis = new Circle(5, 5, 6, Color.RED);
     private static final Polygon gruenerPfeil = new Polygon(new double[]{
         0, 0,
         10, 5,
@@ -150,7 +149,7 @@ public class GuiAktualisieren {
                         scene.setCursor(Cursor.DEFAULT);
                         messungStartenButton.setDisable(false);
                         verbindenButton.setStyle(null);
-                        verbindenButton.setGraphic(roterKreis);
+                        verbindenButton.setGraphic(getRedDot());
                         verbindenButton.setText("Trennen");
                         verbindenButton.setDisable(false);
                         footer.setVerbindungsstatus("Verbunden ");
@@ -189,36 +188,53 @@ public class GuiAktualisieren {
 
     public static void setMessungsstatus(final String messungsstatus) {
 
-        Button messungStartenButton = Fenster.getFenster().getHeader().getMessungStartenButton();
         Footer footer = Fenster.getFenster().getFooter();
 
-        switch (messungsstatus) {
-            case "MISST":
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        messungStartenButton.setDisable(false);
-                        messungStartenButton.setText("Messung abbrechen");
-                        messungStartenButton.setGraphic(roterKreis);
-                        footer.setMessungsstatus("Misst...");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                switch (messungsstatus) {
+                    case "MESSUNG_GESTARTET":
+                        footer.setMessungsstatus("Messung läuft...");
                         footer.setMessungsstatusFarbe(Color.GREEN);
-                    }
-                });
-                break;
-            case "MESSUNG_GESTOPPT":
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        messungStartenButton.setDisable(false);
-                        messungStartenButton.setText("Messung starten");
-                        gruenerPfeil.setFill(Color.GREEN);
-                        messungStartenButton.setGraphic(gruenerPfeil);
+                        disableMessbutton();
+                        break;
+                    case "MESSUNG_GESTOPPT":
                         footer.setMessungsstatus("Messung gestoppt");
                         footer.setMessungsstatusFarbe(Color.RED);
-                    }
-                });
-                break;
-        }
-
+                        enableMessbutton();
+                        break;
+                    case "MESSUNG_ABGEBROCHEN":
+                        footer.setMessungsstatus("Messung abgebrochen "
+                                + "- Verbindungsfehler!");
+                        footer.setMessungsstatusFarbe(Color.RED);
+                        enableMessbutton();
+                        break;
+                }
+        }});
+    }
+    
+    private static void disableMessbutton() {
+        Button messungStartenButton = Fenster.getFenster().getHeader()
+                .getMessungStartenButton();
+        messungStartenButton.setDisable(false);
+        messungStartenButton.setText("Messung abbrechen");
+        messungStartenButton.setGraphic(getRedDot());
+    }
+    
+    private static void enableMessbutton() {
+        Button messungStartenButton = Fenster.getFenster().getHeader()
+               .getMessungStartenButton();
+        messungStartenButton.setDisable(false);
+        messungStartenButton.setText("Messung starten");
+        gruenerPfeil.setFill(Color.GREEN);
+        messungStartenButton.setGraphic(gruenerPfeil);
+    }
+    
+    /**
+     * Stellt den roten Punkt für die Buttons (trennen/beenden) zur Verfügung.
+     */
+    private static Circle getRedDot() {
+        return new Circle(5, 5, 6, Color.RED);
     }
 }

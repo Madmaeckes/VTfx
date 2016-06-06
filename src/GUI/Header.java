@@ -160,7 +160,9 @@ public class Header extends GridPane {
         } else {
             try {
                 GuiAktualisieren.setVerbindungsstatus(3);
-                Funktionen.trennen();
+                //falls beim trennen Messung aktiv:
+                GuiAktualisieren.setMessungsstatus("MESSUNG_GESTOPPT");
+                //Funktionen.trennen();
             } catch (Exception e) {
                 popAlert(e);
             }
@@ -173,7 +175,7 @@ public class Header extends GridPane {
     public void messungStartenButtonActionPerformed() {
         if (messungStartenButton.getText().equals("Messung starten")) {
         try {
-            GuiAktualisieren.setMessungsstatus("MISST");
+            GuiAktualisieren.setMessungsstatus("MESSUNG_GESTARTET");
             Funktionen.messungStarten();
         } catch (Exception e) {
             popAlert(e);

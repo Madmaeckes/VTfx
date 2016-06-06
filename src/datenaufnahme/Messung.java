@@ -140,21 +140,7 @@ public class Messung implements java.util.Observer {
             System.out.println("> " + (-1));
         }
     }
-
-
-    /* Getter & Setter */
-    public List<Gleisabschnitt> getGleisbild() {
-        return gleisbild;
-    }
-
-    public void setGleisbild(List<Gleisabschnitt> gleisbild) {
-        this.gleisbild = gleisbild;
-    }
-
-    public int getFahrstufe() {
-        return fahrstufe;
-    }
-
+    
     /**
      * Beobachtet Aenderungen von Fahrstufe / Fahrtrichtung / Gleisabschnitt.
      * Findet beim Durchfahren einer Messstrecke eine Aenderung von Fahrstufe /
@@ -178,5 +164,22 @@ public class Messung implements java.util.Observer {
         } catch (Exception e) {
             System.out.println("!!! " + e.getLocalizedMessage());
         }
+    }
+
+    /* Getter & Setter */
+    public List<Gleisabschnitt> getGleisbild() {
+        return gleisbild;
+    }
+
+    public void setGleisbild(List<Gleisabschnitt> gleisbild) {
+        this.gleisbild = gleisbild;
+    }
+
+    public int getFahrstufe() {
+        return fahrstufe;
+    }
+    
+    public boolean isAktiv() {
+        return messungAktiv;
     }
 }

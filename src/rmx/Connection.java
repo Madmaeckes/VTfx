@@ -1,6 +1,7 @@
 package rmx;
 
 import GUI.GuiAktualisieren;
+import datenaufnahme.Fahrtstatus;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ConnectException;
@@ -345,6 +346,10 @@ public class Connection {
                                         .add("While connected: connection timed out. Closing connection.");
                                 connectionStatus = DISCONNECTING;
                                 System.err.println("RMX-Verbindung unterbrochen");
+                                //Fehlermeldung in der Statusleiste falls Messung aktiv war:
+                                if (Fahrtstatus.getMessung().isAktiv()) {
+                                    GuiAktualisieren.setMessungsstatus("MESSUNG_ABGEBROCHEN");
+                                }
                                 Funktionen.trennen();
                             }
                         } catch (IOException e) {

@@ -39,8 +39,9 @@ public class Funktionen {
      * Trennt die Verbindung zur RMX-PC-Zentrale, sofern vorhanden.
      */
     public static void trennen() {
-        //messung abbrechen
-        if (VTfx.rmxVerbindung.getVerbindungsStatus() == RMXconnector.VERBUNDEN) {
+        Fahrtstatus.getMessung().stop(); //falls Messung aktiv -> stoppen
+        if (VTfx.rmxVerbindung.getVerbindungsStatus() 
+                == RMXconnector.VERBUNDEN) {
             VTfx.rmxVerbindung.trennen();
         }
     }
@@ -51,7 +52,8 @@ public class Funktionen {
      *                     oder das Gleisbild nichthinreichend definiert ist.
      */
     public static void messungStarten() throws Exception {
-        if (VTfx.rmxVerbindung.getVerbindungsStatus() == RMXconnector.VERBUNDEN) {
+        if (VTfx.rmxVerbindung.getVerbindungsStatus() 
+                == RMXconnector.VERBUNDEN) {
             Fahrtstatus.getFahrtstatus().getMessung().start();
         } else {
             throw new Exception ("Nur bei bestehender Verbindung "
