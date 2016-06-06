@@ -35,7 +35,7 @@ public class GuiAktualisieren {
         0, 10,});
 
     private static Gleisabschnittstabelle gleisabschnittstabelle
-            = vtfx.VTfx.getFenster().getReiterleiste().messabschnittstabelle;
+            = Fenster.getFenster().getReiterleiste().messabschnittstabelle;
 
     /**
      * Setzt die momentane Geschwindigkeit, sodass diese von der Klasse
@@ -44,7 +44,7 @@ public class GuiAktualisieren {
      * @param geschw momentane Geschwindigkeit zwischen 0 und 999.99
      */
     public static void setMomentaneGeschw(double geschw) {
-        Geschwindigkeitsanzeige geschwindigkeitsanzeige = vtfx.VTfx.getFenster().getReiterleiste().getGeschwindigkeitsanzeige();
+        Geschwindigkeitsanzeige geschwindigkeitsanzeige = Fenster.getFenster().getReiterleiste().getGeschwindigkeitsanzeige();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -59,7 +59,7 @@ public class GuiAktualisieren {
      * @param onColor Farbe der aktiven Digitalen Ziffern
      */
     public static void setFarbeFuerDigitalanzeige(Color onColor) {
-        Geschwindigkeitsanzeige geschwindigkeitsanzeige = vtfx.VTfx.getFenster().getReiterleiste().getGeschwindigkeitsanzeige();
+        Geschwindigkeitsanzeige geschwindigkeitsanzeige = Fenster.getFenster().getReiterleiste().getGeschwindigkeitsanzeige();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -76,7 +76,7 @@ public class GuiAktualisieren {
      * @param geschw Geschwindigkeit zur übergebenen Fahrstufe als double
      */
     public static void setGeschwFuerFahrstufe(int fahrstufe, double geschw) {
-        SaulenDiagramm saulenDiagramm = vtfx.VTfx.getFenster().getReiterleiste().getSaulenDiagramm();
+        SaulenDiagramm saulenDiagramm = Fenster.getFenster().getReiterleiste().getSaulenDiagramm();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -126,10 +126,10 @@ public class GuiAktualisieren {
      */
     public static void setVerbindungsstatus(final int verbindungsstatus) {
 
-        Scene scene = vtfx.VTfx.getFenster().getScene();
-        Button verbindenButton = vtfx.VTfx.getFenster().getHeader().getVerbindenButton();
-        Button messungStartenButton = vtfx.VTfx.getFenster().getHeader().getMessungStartenButton();
-        Footer footer = vtfx.VTfx.getFenster().getFooter();
+        Scene scene = Fenster.getFenster().getScene();
+        Button verbindenButton = Fenster.getFenster().getHeader().getVerbindenButton();
+        Button messungStartenButton = Fenster.getFenster().getHeader().getMessungStartenButton();
+        Footer footer = Fenster.getFenster().getFooter();
 
         switch (verbindungsstatus) {
             case VERBINDET:
@@ -189,8 +189,8 @@ public class GuiAktualisieren {
 
     public static void setMessungsstatus(final String messungsstatus) {
 
-        Button messungStartenButton = vtfx.VTfx.getFenster().getHeader().getMessungStartenButton();
-        Footer footer = vtfx.VTfx.getFenster().getFooter();
+        Button messungStartenButton = Fenster.getFenster().getHeader().getMessungStartenButton();
+        Footer footer = Fenster.getFenster().getFooter();
 
         switch (messungsstatus) {
             case "MISST":

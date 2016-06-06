@@ -17,11 +17,18 @@ import javafx.stage.Stage;
  * @author Manuel Eble
  */
 public class Fenster {
-
-    private Scene scene;
+    
+    /**
+     * Pseudosingletoninstanz
+     * (Zuletzt erzeugtes Fenster. Fenster sollte nur einmal bei Programmstart erzeugt werden.)
+     */
+    private static Fenster fenster;
+    
+    private final Scene scene;
+    private final Stage stage;
     private final Header header;
     private final Footer footer;
-    private Reiterleiste reiterleiste;
+    private final Reiterleiste reiterleiste;
 
     public Fenster(Stage primaryStage) {
 
@@ -37,6 +44,16 @@ public class Fenster {
         primaryStage.setTitle("VisTrain");
         primaryStage.setScene(scene);
         primaryStage.show();
+        this.stage = primaryStage;
+        this.fenster = this;
+    }
+    
+    public static Fenster getFenster() {
+        return fenster;
+    }
+    
+    public Stage getStage() {
+        return stage;
     }
 
     public Scene getScene() {

@@ -16,11 +16,7 @@ import rmx.RMXconnector;
  * @author Manuel Eble
  */
 public class VTfx extends Application {
-
-    /**
-     * Programmfenster
-     */
-    public static Fenster fenster;
+    
     /**
      * Verwaltet die Verbindung zur RMX-PC-Zentrale (Singleton-Objekt)
      */
@@ -28,7 +24,7 @@ public class VTfx extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        fenster = new Fenster(primaryStage);
+        new Fenster(primaryStage);
     }
 
     /**
@@ -36,9 +32,5 @@ public class VTfx extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-    }
-
-    public static Fenster getFenster() {
-        return fenster;
     }
 }

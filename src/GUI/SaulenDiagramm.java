@@ -20,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseButton;
 
 /**
  *
@@ -50,6 +51,15 @@ public class SaulenDiagramm extends Pane {
         bc.setTitle("Fahrstufendiagramm");
         xAxis.setLabel("Fahrstufe");
         yAxis.setLabel("Geschwindigkeit");
+        bc.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(MouseButton.SECONDARY.equals(event.getButton())) {
+                    FahrstufendiagrammContextMenuFactory.getContextMenu()
+                            .show(Fenster.getFenster().getStage(), event.getScreenX(), event.getScreenY());
+                }
+            }
+        });
             
         this.getChildren().add(bc);
         this.clear();
