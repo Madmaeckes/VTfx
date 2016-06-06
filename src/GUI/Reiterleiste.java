@@ -25,7 +25,7 @@ public class Reiterleiste extends TabPane {
     
     private final Tab momentaneGeschwTab;
     private final Tab graphTab;
-    private final SaulenDiagramm saulenDiagramm;
+    private final Fahrstufendiagramm fahrstufendiagramm;
 
     private final Geschwindigkeitsanzeige geschwindigkeitsanzeige;
     private final Button fahrstufeButton;
@@ -36,9 +36,9 @@ public class Reiterleiste extends TabPane {
     public Reiterleiste() {        
         setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         momentaneGeschwTab = new Tab("Momentane Geschw.");
-        graphTab = new Tab("Säulendiagramm");
+        graphTab = new Tab("Fahrstufendiagramm");
 
-        saulenDiagramm = new SaulenDiagramm();
+        fahrstufendiagramm = new Fahrstufendiagramm();
 
         fahrstufeButton = new Button("Test");
         fahrstufeButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -74,7 +74,7 @@ public class Reiterleiste extends TabPane {
         
         BorderPane b2 = new BorderPane();
         b2.setRight(fahrstufeButton);
-        b2.setCenter(saulenDiagramm);
+        b2.setCenter(fahrstufendiagramm);
         graphTab.setContent(b2);
         graphTab.setContent(b2);
 
@@ -86,8 +86,8 @@ public class Reiterleiste extends TabPane {
         return geschwindigkeitsanzeige;
     }
 
-    public SaulenDiagramm getSaulenDiagramm() {
-        return saulenDiagramm;
+    public Fahrstufendiagramm getFahrstufendiagramm() {
+        return fahrstufendiagramm;
     }
 
 }

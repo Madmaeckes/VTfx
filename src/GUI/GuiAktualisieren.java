@@ -76,7 +76,7 @@ public class GuiAktualisieren {
      * @param geschw Geschwindigkeit zur übergebenen Fahrstufe als double
      */
     public static void setGeschwFuerFahrstufe(int fahrstufe, double geschw) {
-        SaulenDiagramm saulenDiagramm = Fenster.getFenster().getReiterleiste().getSaulenDiagramm();
+        Fahrstufendiagramm saulenDiagramm = Fenster.getFenster().getReiterleiste().getFahrstufendiagramm();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

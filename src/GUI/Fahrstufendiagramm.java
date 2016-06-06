@@ -5,20 +5,15 @@
  */
 package GUI;
 
-import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 
@@ -26,7 +21,7 @@ import javafx.scene.input.MouseButton;
  *
  * @author Manuel Eble, Manuel Weber
  */
-public class SaulenDiagramm extends Pane {
+public class Fahrstufendiagramm extends Pane {
 
     private final BarChart<String, Number> bc;
     
@@ -40,7 +35,7 @@ public class SaulenDiagramm extends Pane {
      * Erzeugt ein Säulendiagramm auf dem über die Methode
      * setGeschwFuerFahrstufe() neue Säulen gesetzt werden können
      */
-    public SaulenDiagramm() {
+    public Fahrstufendiagramm() {
 
         bc = new BarChart<>(xAxis, yAxis);
       //  scrollPane = new ScrollPane();
