@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -26,6 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.HBoxBuilder;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -40,6 +42,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.VBoxBuilder;
+import vtfx.Einstellungen;
 
 /**
  *
@@ -47,8 +50,9 @@ import javafx.scene.layout.VBoxBuilder;
  */
 public class Einstellungsfenster extends Application {
 
-    private final ToggleButton tb1 = new ToggleButton("Pendelverkehr");
-    private final ToggleButton tb2 = new ToggleButton("Kreisverkehr");
+    private final ToggleButton tb1 = new ToggleButton("Vorwärts");
+    private final ToggleButton tb2 = new ToggleButton("Rückwärts");
+    private final ToggleButton tb3 = new ToggleButton("Beides");
     private final ColorPicker colorPicker = new ColorPicker(Color.GRAY);
     private ToolBar standardToolbar = ToolBarBuilder.create().items(colorPicker).build();
     private ComboBox<String> editableComboBox = new ComboBox<String>();
@@ -56,7 +60,8 @@ public class Einstellungsfenster extends Application {
             "H0", "H1", "0",
             "1", "2", "TT",
             "N", "Z");
-
+    private final Button buttonBestaetigung = new Button("\u00dc" + "bernehmen");
+    private Color tachofarbe;
     private void init(Stage primaryStage) {
         Group root = new Group();
         primaryStage.setScene(new Scene(root));
@@ -73,7 +78,7 @@ public class Einstellungsfenster extends Application {
     }
 
     public Einstellungsfenster() {
-        //Editable combobox. Use the default item display length
+        
 
         editableComboBox.setId("second-editable");
         editableComboBox.setPromptText("Edit or Choose...");
@@ -85,14 +90,14 @@ public class Einstellungsfenster extends Application {
         ToggleGroup group = new ToggleGroup();
         tb1.setToggleGroup(group);
         tb2.setToggleGroup(group);
-                colorPicker.setOnAction(new EventHandler() {
- 
+        tb3.setToggleGroup(group);
+        colorPicker.setOnAction(new EventHandler() {
+
             public void handle(Event t) {
-                Color newColor = colorPicker.getValue();
-;
+                tachofarbe = colorPicker.getValue();
             }
         });
- 
+
 //        VBox coloredObjectsVBox = VBoxBuilder.create().alignment(Pos.CENTER).spacing(20).children(coloredText, coloredButton).build();        
 //        VBox outerVBox = VBoxBuilder.create().alignment(Pos.CENTER).spacing(150).padding(new Insets(0, 0, 120, 0)).children(standardToolbar, coloredObjectsVBox).build();
         // select the first button to start with
@@ -100,12 +105,13 @@ public class Einstellungsfenster extends Application {
         // add buttons and label to grid and set their positions
         GridPane.setConstraints(tb1, 0, 0);
         GridPane.setConstraints(tb2, 1, 0);
+        GridPane.setConstraints(tb3, 2, 0);
 //        GridPane.setConstraints(label,0,1,3,1);
         GridPane grid = new GridPane();
         grid.setVgap(20);
         grid.setHgap(10);
 //        root.getChildren().add(grid);
-        grid.getChildren().addAll(tb1, tb2);
+        grid.getChildren().addAll(tb1, tb2, tb3);
 
         final Stage stage = new Stage();
         stage.setWidth(500);
@@ -150,16 +156,24 @@ public class Einstellungsfenster extends Application {
         tilePane.getChildren().add(grid);
         tilePane.getChildren().add(text2);
         tilePane.getChildren().add(colorPicker);
+        tilePane.getChildren().add(buttonBestaetigung);
+        buttonBestaetigung.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                einstellungenSichern();
+            }
+        });
+
         
         border.setCenter(tilePane);
 
         rootGroup.getChildren().add(border);
-
+        einstellungenLaden();
     }
 
 
     public double massstabAuslesen(ComboBox c) {
-        String s = c.getSelectionModel().toString();
+        String s = c.getSelectionModel().getSelectedItem().toString();
         double massstab = 0;
         if (s == "2") {
             massstab = 22.5;
@@ -179,7 +193,7 @@ public class Einstellungsfenster extends Application {
             massstab = 220;
         } else if (Pattern.matches("[1][:][0-9.]*", s)) {
             int l = s.length();
-            massstab = s.indexOf(2, l);
+            massstab = Double.parseDouble(s.substring(2, l)); 
         }
 
         return massstab;
@@ -193,7 +207,39 @@ public class Einstellungsfenster extends Application {
         if (tb2.isSelected()) {
             betriebsart = 1;
         }
+        if (tb3.isSelected())
+            betriebsart = 2;
         return betriebsart;
     }
+   
+    /**
+     * Liest die Einstellungen aus der Registry aus.
+     */
+    private void einstellungenLaden() {
 
+        double massstab = Einstellungen.getEinstellungen().getMassstab();
+        String s = String.valueOf(massstab);
+        editableComboBox.setValue(s);
+        
+        int betriebsart = Einstellungen.getEinstellungen().getBetriebsart();
+        if (betriebsart == 0)
+            tb1.setSelected(true);
+        if (betriebsart == 1)
+            tb2.setSelected(true);
+        if (betriebsart == 2)
+            tb3.setSelected(true);
+        Color tachofarbe = Einstellungen.getEinstellungen().getTachofarbe();
+        colorPicker.setValue(tachofarbe);
+        
+    }
+        public void einstellungenSichern() {
+        Einstellungen.getEinstellungen().setMassstab(
+                (double) (massstabAuslesen(editableComboBox)));
+        
+        Einstellungen.getEinstellungen().setBetriebsart(
+                (int)  (betriebsartAuslesen()));
+        
+        Einstellungen.getEinstellungen().setTachofarbe(
+                (colorPicker.getValue()));
+        }
 }
