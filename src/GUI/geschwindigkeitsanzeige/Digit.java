@@ -62,5 +62,6 @@ public class Digit extends Parent {
 
     public void setFarbe(Color onColor) {
         this.onColor = onColor;
+        showNumber(0);
     }
 }
