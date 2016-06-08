@@ -31,6 +31,9 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Toggle;
@@ -53,8 +56,10 @@ public class Einstellungsfenster extends Application {
     private final ToggleButton tb1 = new ToggleButton("Vorwärts");
     private final ToggleButton tb2 = new ToggleButton("Rückwärts");
     private final ToggleButton tb3 = new ToggleButton("Beides");
-    private final ColorPicker colorPicker = new ColorPicker(Color.GRAY);
+    private final ColorPicker colorPicker = new ColorPicker();
+    private final ColorPicker colorPicker2 = new ColorPicker();
     private ToolBar standardToolbar = ToolBarBuilder.create().items(colorPicker).build();
+    private ToolBar standardToolbar2 = ToolBarBuilder.create().items(colorPicker2).build();
     private ComboBox<String> editableComboBox = new ComboBox<String>();
     private final ObservableList strings = FXCollections.observableArrayList(
             "H0", "H1", "0",
@@ -62,6 +67,8 @@ public class Einstellungsfenster extends Application {
             "N", "Z");
     private final Button buttonBestaetigung = new Button("\u00dc" + "bernehmen");
     private Color tachofarbe;
+    private Color diagrammfarbe;
+
     private void init(Stage primaryStage) {
         Group root = new Group();
         primaryStage.setScene(new Scene(root));
@@ -78,13 +85,11 @@ public class Einstellungsfenster extends Application {
     }
 
     public Einstellungsfenster() {
-        
 
         editableComboBox.setId("second-editable");
         editableComboBox.setPromptText("Edit or Choose...");
         editableComboBox.setItems(strings);
         editableComboBox.setEditable(true);
-
 
         // create 3 toggle buttons and a toogle group for them
         ToggleGroup group = new ToggleGroup();
@@ -95,6 +100,12 @@ public class Einstellungsfenster extends Application {
 
             public void handle(Event t) {
                 tachofarbe = colorPicker.getValue();
+            }
+        });
+        colorPicker2.setOnAction(new EventHandler() {
+
+            public void handle(Event t) {
+                diagrammfarbe = colorPicker2.getValue();
             }
         });
 
@@ -142,6 +153,9 @@ public class Einstellungsfenster extends Application {
 
         Text text2 = new Text(0, 500, "Tachofarbe");
         text2.setFont(Font.font(Font.getDefault().getFamily()));
+
+        Text text3 = new Text(0, 500, "Diagrammfarbe");
+        text2.setFont(Font.font(Font.getDefault().getFamily()));
         //add text to the main root group
         rootGroup.getChildren().add(text);
         //Rasterlayout
@@ -149,28 +163,28 @@ public class Einstellungsfenster extends Application {
         tilePane.setPrefColumns(2);
         tilePane.setAlignment(Pos.CENTER);
 
-
-        tilePane.getChildren().add(text);        
+        tilePane.getChildren().add(text);
         tilePane.getChildren().add(editableComboBox);
         tilePane.getChildren().add(text1);
         tilePane.getChildren().add(grid);
         tilePane.getChildren().add(text2);
         tilePane.getChildren().add(colorPicker);
+        tilePane.getChildren().add(text3);
+        tilePane.getChildren().add(colorPicker2);
         tilePane.getChildren().add(buttonBestaetigung);
         buttonBestaetigung.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 einstellungenSichern();
+                GuiAktualisieren.setFarbeFuerDigitalanzeige(tachofarbe);
             }
         });
 
-        
         border.setCenter(tilePane);
 
         rootGroup.getChildren().add(border);
         einstellungenLaden();
     }
-
 
     public double massstabAuslesen(ComboBox c) {
         String s = c.getSelectionModel().getSelectedItem().toString();
@@ -193,8 +207,17 @@ public class Einstellungsfenster extends Application {
             massstab = 220;
         } else if (Pattern.matches("[1][:][0-9.]*", s)) {
             int l = s.length();
-            massstab = Double.parseDouble(s.substring(2, l)); 
+            massstab = Double.parseDouble(s.substring(2, l));
         }
+        else {
+            Alert alert = new Alert(AlertType.WARNING, "Falsches Eingabeformat des Maßstabs, entweder aus Dropdown-Liste auswählen oder im Format 1:X!", ButtonType.CANCEL);
+alert.showAndWait();
+
+if (alert.getResult() == ButtonType.YES) {
+    //do stuff
+}
+        }
+
 
         return massstab;
     }
@@ -207,11 +230,12 @@ public class Einstellungsfenster extends Application {
         if (tb2.isSelected()) {
             betriebsart = 1;
         }
-        if (tb3.isSelected())
+        if (tb3.isSelected()) {
             betriebsart = 2;
+        }
         return betriebsart;
     }
-   
+
     /**
      * Liest die Einstellungen aus der Registry aus.
      */
@@ -219,27 +243,69 @@ public class Einstellungsfenster extends Application {
 
         double massstab = Einstellungen.getEinstellungen().getMassstab();
         String s = String.valueOf(massstab);
+        if (massstab == 22.5) {
+            s = "2";
+        } else if (massstab == 32) {
+            s = "1";
+        } else if (massstab == 45) {
+            s = "0";
+        } else if (massstab == 64) {
+            s = "H1";
+        } else if (massstab == 87) {
+            s = "H0";
+        } else if (massstab == 120) {
+            s = "TT";
+        } else if (massstab == 160) {
+            s = "N";
+        } else if (massstab == 220) {
+            s = "Z";
+        } else {
+
+            s = "1:" + (int) massstab;
+        }
         editableComboBox.setValue(s);
-        
+
         int betriebsart = Einstellungen.getEinstellungen().getBetriebsart();
-        if (betriebsart == 0)
+        if (betriebsart == 0) {
             tb1.setSelected(true);
-        if (betriebsart == 1)
+        }
+        if (betriebsart == 1) {
             tb2.setSelected(true);
-        if (betriebsart == 2)
+        }
+        if (betriebsart == 2) {
             tb3.setSelected(true);
-        Color tachofarbe = Einstellungen.getEinstellungen().getTachofarbe();
+        }
+        double tachored = Einstellungen.getEinstellungen().getTachored();
+        double tachogreen = Einstellungen.getEinstellungen().getTachogreen();
+        double tachoblue = Einstellungen.getEinstellungen().getTachoblue();
+        tachofarbe = Color.color(tachored, tachogreen, tachoblue);
         colorPicker.setValue(tachofarbe);
-        
+
+        double diagrammred = Einstellungen.getEinstellungen().getDiagrammred();
+        double diagrammgreen = Einstellungen.getEinstellungen().getDiagrammgreen();
+        double diagrammblue = Einstellungen.getEinstellungen().getDiagrammblue();
+        diagrammfarbe = Color.color(diagrammred, diagrammgreen, diagrammblue);
+        colorPicker2.setValue(diagrammfarbe);
     }
-        public void einstellungenSichern() {
+
+    private void einstellungenSichern() {
         Einstellungen.getEinstellungen().setMassstab(
                 (double) (massstabAuslesen(editableComboBox)));
-        
+
         Einstellungen.getEinstellungen().setBetriebsart(
-                (int)  (betriebsartAuslesen()));
-        
-        Einstellungen.getEinstellungen().setTachofarbe(
-                (colorPicker.getValue()));
-        }
+                (int) (betriebsartAuslesen()));
+
+        Einstellungen.getEinstellungen().setTachored(colorPicker.getValue().getRed());
+
+        Einstellungen.getEinstellungen().setTachogreen(colorPicker.getValue().getGreen());
+
+        Einstellungen.getEinstellungen().setTachoblue(colorPicker.getValue().getBlue());
+
+        Einstellungen.getEinstellungen().setDiagrammred(colorPicker2.getValue().getRed());
+
+        Einstellungen.getEinstellungen().setDiagrammgreen(colorPicker2.getValue().getGreen());
+
+        Einstellungen.getEinstellungen().setDiagrammblue(colorPicker2.getValue().getBlue());
+
+    }
 }
