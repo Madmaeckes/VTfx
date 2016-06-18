@@ -104,7 +104,7 @@ public class Fahrstufendiagramm extends Pane {
      * @param geschwindigkeit Die gemessene Geschwindigkeit der Lok
      */
     public void setGeschwFuerFahrstufe(int fahrstufe, double geschwindigkeit) {
-
+        System.out.println("Diagram " + fahrstufe + "  " + geschwindigkeit);
         XYChart.Data data =  new XYChart.Data(
                         String.valueOf(fahrstufe), geschwindigkeit);
         
