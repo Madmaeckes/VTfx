@@ -137,6 +137,7 @@ public class GuiAktualisieren {
                     public void run() {
                         scene.setCursor(Cursor.WAIT);
                         verbindenButton.setDisable(true);
+                        messungStartenButton.setDisable(true);
                         footer.setVerbindungsstatus("Verbindet... ");
                         footer.setVerbindungsstatusFarbe(Color.BLACK);
                     }
@@ -147,11 +148,11 @@ public class GuiAktualisieren {
                     @Override
                     public void run() {
                         scene.setCursor(Cursor.DEFAULT);
-                        messungStartenButton.setDisable(false);
                         verbindenButton.setStyle(null);
                         verbindenButton.setGraphic(getRedDot());
                         verbindenButton.setText("Trennen");
                         verbindenButton.setDisable(false);
+                        messungStartenButton.setDisable(false);
                         footer.setVerbindungsstatus("Verbunden ");
                         footer.setVerbindungsstatusFarbe(Color.GREEN);
                     }
@@ -163,6 +164,7 @@ public class GuiAktualisieren {
                     public void run() {
                         scene.setCursor(Cursor.WAIT);
                         verbindenButton.setDisable(true);
+                        messungStartenButton.setDisable(true);
                         footer.setVerbindungsstatus("Trennt... ");
                         footer.setVerbindungsstatusFarbe(Color.BLACK);
                     }
@@ -173,11 +175,11 @@ public class GuiAktualisieren {
                     @Override
                     public void run() {
                         scene.setCursor(Cursor.DEFAULT);
-                        messungStartenButton.setDisable(true);
                         verbindenButton.setGraphic(null);
                         verbindenButton.setStyle("-fx-base: green;");
                         verbindenButton.setText("Verbinden");
                         verbindenButton.setDisable(false);
+                        messungStartenButton.setDisable(true);
                         footer.setVerbindungsstatus("Getrennt ");
                         footer.setVerbindungsstatusFarbe(Color.RED);
                     }
@@ -217,7 +219,6 @@ public class GuiAktualisieren {
     private static void disableMessbutton() {
         Button messungStartenButton = Fenster.getFenster().getHeader()
                 .getMessungStartenButton();
-        messungStartenButton.setDisable(false);
         messungStartenButton.setText("Messung abbrechen");
         messungStartenButton.setGraphic(getRedDot());
     }
@@ -225,7 +226,6 @@ public class GuiAktualisieren {
     private static void enableMessbutton() {
         Button messungStartenButton = Fenster.getFenster().getHeader()
                .getMessungStartenButton();
-        messungStartenButton.setDisable(false);
         messungStartenButton.setText("Messung starten");
         gruenerPfeil.setFill(Color.GREEN);
         messungStartenButton.setGraphic(gruenerPfeil);

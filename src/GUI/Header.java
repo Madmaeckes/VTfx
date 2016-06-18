@@ -162,7 +162,7 @@ public class Header extends GridPane {
                 GuiAktualisieren.setVerbindungsstatus(3);
                 //falls beim trennen Messung aktiv:
                 GuiAktualisieren.setMessungsstatus("MESSUNG_GESTOPPT");
-                //Funktionen.trennen();
+                Funktionen.trennen();
             } catch (Exception e) {
                 popAlert(e);
             }
