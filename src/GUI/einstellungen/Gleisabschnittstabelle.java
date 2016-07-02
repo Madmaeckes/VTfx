@@ -44,13 +44,7 @@ public class Gleisabschnittstabelle extends VBox {
 
     private TableView<TabellenModell> table = new TableView<TabellenModell>();
     private final ObservableList<TabellenModell> data
-            = FXCollections.observableArrayList(
-                    new TabellenModell("0", "02", "10", true),
-                    new TabellenModell("0", "01", "35", true),
-                    new TabellenModell("1", "02", "28", false),
-                    new TabellenModell("0", "03", "42", true),
-                    new TabellenModell("1", "01", "21", false)
-            );
+            = FXCollections.observableArrayList();
 
     /**
      * Speichert die in die Tabelle eingetragenen Elemente sortiert nach Adresse
@@ -279,6 +273,17 @@ public class Gleisabschnittstabelle extends VBox {
     public void updateMesswert(Gleisabschnitt g, String messwert) {
         TabellenModell modeldata = getTabelleneintragOfGleis(g);
         modeldata.setMesswert(messwert);
+        refresh();
+    }
+    
+    /**
+     * Erzwingt das Neuzeichnen der Tabelle.
+     */
+    private void refresh() {    
+        ObservableList<TabellenModell> content = table.getItems();
+        table.setItems(null);
+        table.layout();
+        table.setItems(content);
     }
 
     /**

@@ -1,5 +1,7 @@
 package datenaufnahme;
 
+import GUI.GuiAktualisieren;
+
 /**
  * Verkettete Liste aller definierten Gleisabschnitte.
  *
@@ -21,26 +23,31 @@ public class Gleisbild {
         anzahlMessstrecken = 0;
 
         //Test-Gleisbild
-        Gleisabschnitt g1 = new Gleisabschnitt(0, 2);
-        Gleisabschnitt g2 = new Gleisabschnitt(0, 3);
-        Gleisabschnitt g3 = new Gleisabschnitt(0, 4);
-        Gleisabschnitt g4 = new Gleisabschnitt(0, 5);
-        Gleisabschnitt g5 = new Gleisabschnitt(1, 1);
+        Gleisabschnitt g1 = new Gleisabschnitt(0, 1);
+        Gleisabschnitt g2 = new Gleisabschnitt(0, 2);
+        Gleisabschnitt g3 = new Gleisabschnitt(0, 3);
+        Gleisabschnitt g4 = new Gleisabschnitt(0, 4);
+        Gleisabschnitt g5 = new Gleisabschnitt(0, 5);
         g1.setLaenge(56.2);
         g2.setLaenge(23);
         g3.setLaenge(23);
         g4.setLaenge(23);
         g5.setLaenge(23);
-        g1.setMessstrecke(false);
+        g1.setMessstrecke(true);
         g2.setMessstrecke(true);
         g3.setMessstrecke(true);
         g4.setMessstrecke(true);
-        g5.setMessstrecke(false);
+        g5.setMessstrecke(true);
         add(g1);
         add(g2);
         add(g3);
         add(g4);
         add(g5);
+        GuiAktualisieren.addGleisabschnitt(g1);
+        GuiAktualisieren.addGleisabschnitt(g2);
+        GuiAktualisieren.addGleisabschnitt(g3);
+        GuiAktualisieren.addGleisabschnitt(g4);
+        GuiAktualisieren.addGleisabschnitt(g5);
     }
 
     /**

@@ -8,6 +8,7 @@ package GUI;
 import GUI.einstellungen.Gleisabschnittstabelle;
 import GUI.geschwindigkeitsanzeige.Geschwindigkeitsanzeige;
 import datenaufnahme.Gleisabschnitt;
+import java.text.DecimalFormat;
 import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -68,21 +69,35 @@ public class GuiAktualisieren {
     }
 
     /**
-     * Setzt eine neue Säule im Säulendiagramm, mit übergebener Fahrstufe als
+     * Setzt eine neue Säule im Fahrstufendiagramm, mit übergebener Fahrstufe als
      * Beschriftung und übergebener Geschwindigkeit als Säulenhöhe
      *
-     * @param fahrstufe Bezeichnung der momentanen Fahrstufe als String
+     * @param fahrstufe Bezeichnug der momentanen Fahrstufe als String
      * @param geschw Geschwindigkeit zur übergebenen Fahrstufe als double
      */
     public static void setGeschwFuerFahrstufe(int fahrstufe, double geschw) {
-        Fahrstufendiagramm saulenDiagramm = Fenster.getFenster().getReiterleiste().getFahrstufendiagramm();
-        Platform.runLater(new Runnable() {
+          Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                saulenDiagramm.setGeschwFuerFahrstufe(fahrstufe, geschw);
+                Fahrstufendiagramm diagramm = Fenster.getFenster().getReiterleiste().getFahrstufendiagramm();
+                diagramm.setGeschwFuerFahrstufe(fahrstufe, geschw);
             }
         });
     }
+    
+    /**
+     * Leert den Inhalt des momentan angezeigten Fahrstufendiagramms.
+     */
+    public static void clearFahrstufendiagramm () {
+                 Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Fahrstufendiagramm diagramm = Fenster.getFenster().getReiterleiste().getFahrstufendiagramm();
+                diagramm.clear();
+            }
+        });
+    }
+    
 
     /**
      * Traegt einen uebergebenen Gleisabschnitt in die Gleisabschnittstabelle
@@ -105,7 +120,13 @@ public class GuiAktualisieren {
      * @param v gemessene Geschnidigkeit
      */
     public static void updateMesswet(Gleisabschnitt g, double v) {
-        gleisabschnittstabelle.updateMesswert(g, String.valueOf(v) + "cm/s");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                DecimalFormat f = new DecimalFormat("#0.00");
+                gleisabschnittstabelle.updateMesswert(g, String.valueOf(f.format(v)) + " cm/s");
+            }
+        });
     }
 
     /**
