@@ -75,9 +75,11 @@ public class Fahrtstatus extends Observable {
             //unbekannten Gleisabschnitt gefunden
             g = new Gleisabschnitt(adrRMX, bit);
             System.out.println("new Gleis");
-            Gleisbild.getGleisbild().add(g);
             //ggf. Gui updaten:
-            GuiAktualisieren.addGleisabschnitt(g);
+            if (vtfx.Einstellungen.getEinstellungen().isGleisexploration()) {
+                Gleisbild.getGleisbild().add(g);
+                GuiAktualisieren.addGleisabschnitt(g);
+            }
         }
 
         /* Besetzmeldungsoptimierung (Einfahren in momentan besetzten
