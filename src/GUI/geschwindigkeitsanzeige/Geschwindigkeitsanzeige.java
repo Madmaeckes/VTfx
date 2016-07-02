@@ -1,5 +1,6 @@
 package GUI.geschwindigkeitsanzeige;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -65,31 +66,49 @@ public class Geschwindigkeitsanzeige extends Parent {
       //  getChildren().add(kmhLabel);
     }
 
-
+    /**
+     * Gibt die uebergebene Geschwindigkeit auf der digitalen 
+     * Geschwindigkeitsanzeige aus.
+     * Zulaessiger Wertebereich: [0, 999.99]
+     * Rundet hierfür auf 2 Nachkommastellen, 
+     * gibt Zahlen >999.99 als exakt 999.99
+     * und negative Zahlen als exakt 0 aus!
+     * 
+     * @param geschw 
+     */
     public void setMomentaneGeschw(double geschw) {
         //Auf zwei Nachkommastellen runden
-        String s = Double.toString(Math.round(geschw * 100) / 100.0);
-        //Ziffern des double geschw in String[] umspeichern
+        DecimalFormat f = new DecimalFormat("#0.00");
+        String s = f.format(geschw);
+        //Ziffern din String[] umspeichern
         String[] digits2 = s.split("(?<=.)");
+
+        //Zu kleine Zahlen abfangen
+        if (geschw < 0) {
+            setMomentaneGeschw(0);
+            return;
+        }
         //Vorangehende Ziffern bei kleineren Geschwindigkeiten ausschalten
-        if (geschw <= 10) {
+        if (geschw < 10) {
             digits[0].showNumber(10);
             digits[1].showNumber(10);
             digits[2].showNumber(Integer.parseInt(digits2[0]));
             digits[3].showNumber(Integer.parseInt(digits2[2]));
             digits[4].showNumber(Integer.parseInt(digits2[3]));
-        } else if (geschw <= 100) {
+        } else if (geschw < 100) {
             digits[0].showNumber(10);
             digits[1].showNumber(Integer.parseInt(digits2[0]));
             digits[2].showNumber(Integer.parseInt(digits2[1]));
             digits[3].showNumber(Integer.parseInt(digits2[3]));
             digits[4].showNumber(Integer.parseInt(digits2[4]));
-        } else {
+        } else if (geschw < 999.99) {
             digits[0].showNumber(Integer.parseInt(digits2[0]));
             digits[1].showNumber(Integer.parseInt(digits2[1]));
             digits[2].showNumber(Integer.parseInt(digits2[2]));
             digits[3].showNumber(Integer.parseInt(digits2[4]));
             digits[4].showNumber(Integer.parseInt(digits2[5]));
+        } else { //Zu große Zahlen abfangen
+            setMomentaneGeschw(999.99);
         }
     }
 
