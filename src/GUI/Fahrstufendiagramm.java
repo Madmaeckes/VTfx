@@ -23,11 +23,11 @@ import javafx.scene.input.MouseButton;
  */
 public class Fahrstufendiagramm extends Pane {
 
-    private final BarChart<String, Number> bc;
+    private BarChart<String, Number> bc;
     
     private XYChart.Series series = new XYChart.Series<>();
-    private final CategoryAxis xAxis = new CategoryAxis();
-    private final NumberAxis yAxis = new NumberAxis();
+    private CategoryAxis xAxis = new CategoryAxis();
+    private NumberAxis yAxis = new NumberAxis();
     
     ScrollPane scrollPane;
 
@@ -37,6 +37,13 @@ public class Fahrstufendiagramm extends Pane {
      */
     public Fahrstufendiagramm() {
 
+       bc = null;
+       initialize();
+
+    }
+    
+    private void initialize() {
+        
         bc = new BarChart<>(xAxis, yAxis);
       //  scrollPane = new ScrollPane();
         
@@ -44,7 +51,9 @@ public class Fahrstufendiagramm extends Pane {
 //        scrollPane.setContent(bc);
 //        scrollPane.setPannable(true);
         bc.setTitle("Fahrstufendiagramm");
+        xAxis = new CategoryAxis();
         xAxis.setLabel("Fahrstufe");
+        yAxis = new NumberAxis();
         yAxis.setLabel("Geschwindigkeit");
         bc.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -56,9 +65,11 @@ public class Fahrstufendiagramm extends Pane {
             }
         });
             
+        this.getChildren().clear();
         this.getChildren().add(bc);
-        this.clear();
   
+        series = new XYChart.Series<>();
+        series.setName("Fahrstufenmessung");
         bc.getData().add(series);
         bc.getXAxis().setAnimated(false);
         bc.getXAxis().setAutoRanging(false);
@@ -66,6 +77,7 @@ public class Fahrstufendiagramm extends Pane {
         bc.getYAxis().setAutoRanging(true);
         bc.setBarGap(-3);
         
+          
         // Zoom mit Mausrad ---
         
         final double SCALE_DELTA = 1.1;
@@ -93,7 +105,6 @@ public class Fahrstufendiagramm extends Pane {
                 }
             }
         });
-        // ---
     }
 
     /**
@@ -122,7 +133,7 @@ public class Fahrstufendiagramm extends Pane {
      * Leert das monentane Fahrstufendiagramm.
      */
     public void clear() {
-        series = new XYChart.Series<>();
-        series.setName("Fahrstufenmessung");
+        System.out.println("clear Diagramm");
+        initialize();
     }
 }

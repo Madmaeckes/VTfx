@@ -75,6 +75,7 @@ public class Messung implements java.util.Observer {
                     + "angelegten Messstrecke gestartet werden!");
         }
         this.messungAktiv = true;
+        GuiAktualisieren.clearFahrstufendiagramm();
     }
 
     public void stop() {
